@@ -1,8 +1,8 @@
-# 1 "enemy.c"
+# 1 "enemySprite.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
-# 1 "enemy.c"
-# 17 "enemy.c"
+# 1 "enemySprite.c"
+# 17 "enemySprite.c"
 const unsigned short enemyTiles[10000] __attribute__((aligned(4)))=
 {
  0x1111,0x1111,0x1111,0x1111,0x1111,0x1111,0x1111,0x1111,

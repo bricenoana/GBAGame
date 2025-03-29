@@ -3,17 +3,19 @@
 #define PLAYER_H
 
 typedef struct {
-    int x;           
-    int y;           
-    int width;         
-    int height;     
-    int xVel;         
-    int yVel;         
-    int currentFrame;  
-    int numFrames;    
+    int x, y;
+    int width, height;
+    int xVel, yVel;
+    int currentFrame, numFrames;
     int timeUntilNextFrame;
     int isAnimating;
     int direction;
 } Player;
+
+extern Player player;
+
+void initPlayer(void);
+void updatePlayer(void);
+void drawPlayer(int hOff, int vOff);
 
 #endif

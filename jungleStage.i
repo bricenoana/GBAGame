@@ -114,14 +114,14 @@ typedef struct {
     u8 oamIndex;
 } SPRITE;
 # 4 "jungleStage.c" 2
-# 1 "bug.h" 1
-# 21 "bug.h"
-extern const unsigned short bugTiles[11264];
+# 1 "boofBG.h" 1
+# 21 "boofBG.h"
+extern const unsigned short boofBGTiles[10000];
 
 
-extern const unsigned short bugPal[256];
+extern const unsigned short boofBGPal[256];
 # 5 "jungleStage.c" 2
-# 1 "bugLair.h" 1
+# 1 "boofMap.h" 1
 
 
 
@@ -129,7 +129,7 @@ extern const unsigned short bugPal[256];
 
 
 
-extern const unsigned short bugLairMap[4096];
+extern const unsigned short boofMapMap[1024];
 # 6 "jungleStage.c" 2
 # 1 "spritesheet.h" 1
 # 21 "spritesheet.h"
@@ -144,44 +144,25 @@ extern const unsigned short spritesheetPal[256];
 
 
 typedef struct {
-    int x;
-    int y;
-    int width;
-    int height;
-    int xVel;
-    int yVel;
-    int currentFrame;
-    int numFrames;
+    int x, y;
+    int width, height;
+    int xVel, yVel;
+    int currentFrame, numFrames;
     int timeUntilNextFrame;
     int isAnimating;
     int direction;
 } Player;
+
+extern Player player;
+
+void initPlayer(void);
+void updatePlayer(void);
+void drawPlayer(int hOff, int vOff);
 # 8 "jungleStage.c" 2
-# 1 "boofBG.h" 1
-# 21 "boofBG.h"
-extern const unsigned short boofBGTiles[10000];
-
-
-extern const unsigned short boofBGPal[256];
-# 9 "jungleStage.c" 2
-# 1 "boofMap.h" 1
-
-
-
-
-
-
-
-extern const unsigned short boofMapMap[1024];
-# 10 "jungleStage.c" 2
 
 OBJ_ATTR shadowOAM[128];
 
-
-
-
 int hOff, vOff;
-Player player;
 
 void initJungleStage(void) {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
@@ -194,18 +175,7 @@ void initJungleStage(void) {
     DMANow(3, spritesheetTiles, &((CB*) 0x6010000)[4], 32768 / 2);
     DMANow(3, spritesheetPal, ((u16 *)0x5000200), 512 / 2);
 
-    player.width = 16;
-    player.height = 16;
-    player.x = 100;
-    player.y = 100;
-    player.xVel = 1;
-    player.yVel = 1;
-    player.numFrames = 3;
-    player.currentFrame = 0;
-    player.timeUntilNextFrame = 10;
-    player.isAnimating = 0;
-    player.direction = 0;
-
+    initPlayer();
     hOff = 0;
     vOff = 0;
 
@@ -214,49 +184,12 @@ void initJungleStage(void) {
 }
 
 void updateJungleStage(void) {
-    player.isAnimating = 0;
-
-    if ((~(buttons) & ((1<<6)))) {
-        player.y -= player.yVel;
-        player.isAnimating = 1;
-        player.direction = 1;
-    }
-    if ((~(buttons) & ((1<<7)))) {
-        player.y += player.yVel;
-        player.isAnimating = 1;
-        player.direction = 0;
-    }
-    if ((~(buttons) & ((1<<5)))) {
-        player.x -= player.xVel;
-        player.isAnimating = 1;
-        player.direction = 2;
-    }
-    if ((~(buttons) & ((1<<4)))) {
-        player.x += player.xVel;
-        player.isAnimating = 1;
-        player.direction = 3;
-    }
-    if (player.isAnimating) {
-        player.timeUntilNextFrame--;
-        if (player.timeUntilNextFrame == 0) {
-            player.currentFrame = (player.currentFrame + 1) % player.numFrames;
-            player.timeUntilNextFrame = 10;
-        }
-    } else {
-        player.currentFrame = 0;
-        player.timeUntilNextFrame = 10;
-    }
-
-    if (player.x < 0) player.x = 0;
-    if (player.x > 512 - player.width) player.x = 512 - player.width;
-    if (player.y < 0) player.y = 0;
-    if (player.y > 512 - player.height) player.y = 512 - player.height;
+    updatePlayer();
 }
 
 void drawJungleStage(void) {
     hOff = player.x - (240 / 2);
     vOff = player.y - (160 / 2);
-
     if (hOff < 0) hOff = 0;
     if (hOff > 512 - 240) hOff = 512 - 240;
     if (vOff < 0) vOff = 0;
@@ -265,12 +198,7 @@ void drawJungleStage(void) {
     (*(volatile unsigned short*) 0x04000010) = hOff;
     (*(volatile unsigned short*) 0x04000012) = vOff;
 
-    int screenX = player.x - hOff;
-    int screenY = player.y - vOff;
-
-    shadowOAM[0].attr0 = (screenY & 0x00FF) | (0<<13) | (0<<14);
-    shadowOAM[0].attr1 = (screenX & 0x01FF) | (1<<14);
-    shadowOAM[0].attr2 = ((((player.direction * 2) * (32) + (player.currentFrame * 2))) & 0x3FF);
+    drawPlayer(hOff, vOff);
 
     for (int i = 1; i < 128; i++) {
         shadowOAM[i].attr0 = (2<<8);

@@ -8,7 +8,7 @@
 	.eabi_attribute 30, 2
 	.eabi_attribute 34, 0
 	.eabi_attribute 18, 4
-	.file	"enemy.c"
+	.file	"enemySprite.c"
 	.text
 	.global	enemyPal
 	.global	enemyTiles
