@@ -21,76 +21,61 @@ initJungleStage:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	mov	r2, #67108864
+	push	{r4, r5, r6, lr}
 	mov	r3, #4352
-	mov	r1, #7040
-	push	{r4, lr}
-	mov	r0, #3
+	mov	r5, #67108864
+	mov	r2, #2048
 	ldr	r4, .L4
-	strh	r3, [r2]	@ movhi
-	strh	r1, [r2, #8]	@ movhi
-	ldr	r3, .L4+4
-	ldr	r2, .L4+8
+	strh	r3, [r5]	@ movhi
+	mov	r0, #3
+	strh	r2, [r5, #8]	@ movhi
+	mov	r3, #256
+	mov	r2, #83886080
+	ldr	r1, .L4+4
+	mov	lr, pc
+	bx	r4
+	mov	r2, #100663296
+	mov	r0, #3
+	ldr	r3, .L4+8
 	ldr	r1, .L4+12
 	mov	lr, pc
 	bx	r4
-	mov	r3, #1024
+	ldr	r3, .L4+16
 	mov	r0, #3
-	ldr	r2, .L4+16
-	ldr	r1, .L4+20
+	mov	r1, r3
+	ldr	r2, .L4+20
 	mov	lr, pc
 	bx	r4
-	mov	r3, #256
-	mov	r2, #83886080
-	mov	r0, #3
-	ldr	r1, .L4+24
-	mov	lr, pc
-	bx	r4
-	mov	r3, #16384
-	mov	r0, #3
-	ldr	r2, .L4+28
-	ldr	r1, .L4+32
-	mov	lr, pc
-	bx	r4
-	mov	r0, #3
-	ldr	r2, .L4+36
-	ldr	r1, .L4+40
-	mov	r3, #256
-	mov	lr, pc
-	bx	r4
-	ldr	r3, .L4+44
+	ldr	r3, .L4+24
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
-	ldr	r0, .L4+48
-	ldr	r1, .L4+52
-	ldr	r2, .L4+56
-	str	r3, [r0]
+	ldr	r1, .L4+28
+	ldr	r2, .L4+32
 	str	r3, [r1]
+	str	r3, [r2]
+	strh	r3, [r5, #16]	@ movhi
+	ldr	r2, .L4+36
+	strh	r3, [r5, #18]	@ movhi
 	mov	lr, pc
 	bx	r2
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L4+60
+	ldr	r1, .L4+40
 	mov	lr, pc
 	bx	r4
-	pop	{r4, lr}
+	pop	{r4, r5, r6, lr}
 	bx	lr
 .L5:
 	.align	2
 .L4:
 	.word	DMANow
-	.word	10000
-	.word	100728832
-	.word	boofBGTiles
-	.word	100718592
-	.word	boofMapMap
 	.word	boofBGPal
-	.word	100794368
-	.word	spritesheetTiles
-	.word	83886592
-	.word	spritesheetPal
+	.word	10000
+	.word	boofBGTiles
+	.word	boofMapMap
+	.word	100679680
 	.word	initPlayer
 	.word	hOff
 	.word	vOff

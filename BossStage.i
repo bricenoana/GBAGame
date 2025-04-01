@@ -13,6 +13,7 @@ typedef struct {
     int height;
     int health;
     int maxHealth;
+    int defeated;
 } Boss;
 
 extern Boss boss;
@@ -80,6 +81,7 @@ void initBossStage(void) {
     boss.height = 32;
     boss.maxHealth = 100;
     boss.health = boss.maxHealth;
+    boss.defeated = 0;
 }
 
 void updateBossStage(void) {

@@ -123,49 +123,106 @@ void initPlayer(void);
 void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
 # 4 "player.c" 2
+# 1 "mode0.h" 1
+# 32 "mode0.h"
+typedef struct {
+ u16 tileimg[8192];
+} CB;
+
+
+
+typedef struct {
+ u16 tilemap[1024];
+} SB;
+# 5 "player.c" 2
+# 1 "collisionMap.h" 1
+# 21 "collisionMap.h"
+extern const unsigned short collisionMapBitmap[65536];
+
+
+extern const unsigned short collisionMapPal[256];
+# 6 "player.c" 2
+# 1 "boofCollisionMap.h" 1
+# 21 "boofCollisionMap.h"
+extern const unsigned short boofCollisionMapBitmap[32768];
+
+
+extern const unsigned short boofCollisionMapPal[256];
+# 7 "player.c" 2
+
+
+
 
 
 
 
 Player player;
 
+typedef enum {DOWN, UP, LEFT, RIGHT} DIRECTION;
+
+inline unsigned char colorAt(int x, int y){
+    return ((unsigned char *) boofCollisionMapBitmap) [((y) * (512) + (x))];
+}
+
 void initPlayer(void) {
     player.width = 16;
     player.height = 16;
-    player.x = 100;
+    player.x = 40;
     player.y = 100;
+    player.numFrames = 3;
+    player.direction = DOWN;
+    player.timeUntilNextFrame = 10;
     player.xVel = 1;
     player.yVel = 1;
-    player.numFrames = 3;
-    player.currentFrame = 0;
-    player.timeUntilNextFrame = 10;
-    player.isAnimating = 0;
-    player.direction = 0;
 }
 
 void updatePlayer(void) {
     player.isAnimating = 0;
+
     if ((~(buttons) & ((1<<6)))) {
-        player.y -= player.yVel;
-        player.isAnimating = 1;
-        player.direction = 1;
+        player.direction = UP;
+        int newY = player.y - player.yVel;
+        if (newY >= 0) {
+            if (colorAt(player.x, newY) != 0 &&
+                colorAt(player.x + player.width - 1, newY) != 0) {
+                player.y = newY;
+            }
+        }
     }
     if ((~(buttons) & ((1<<7)))) {
-        player.y += player.yVel;
-        player.isAnimating = 1;
-        player.direction = 0;
+        player.direction = DOWN;
+        int newBottom = player.y + player.height - 1 + player.yVel;
+        if (newBottom < 512) {
+            if (colorAt(player.x, newBottom) != 0 &&
+                colorAt(player.x + player.width - 1, newBottom) != 0) {
+                player.y += player.yVel;
+            }
+        }
     }
     if ((~(buttons) & ((1<<5)))) {
-        player.x -= player.xVel;
-        player.isAnimating = 1;
-        player.direction = 2;
+        player.direction = LEFT;
+        int newX = player.x - player.xVel;
+        if (newX >= 0) {
+            if (colorAt(newX, player.y) != 0 &&
+                colorAt(newX, player.y + player.height - 1) != 0) {
+                player.x = newX;
+            }
+        }
     }
     if ((~(buttons) & ((1<<4)))) {
-        player.x += player.xVel;
-        player.isAnimating = 1;
-        player.direction = 3;
+        player.direction = RIGHT;
+        int newX = player.x + player.xVel;
+        if (newX + player.width - 1 < 512) {
+            if (colorAt(newX + player.width - 1, player.y) != 0 &&
+                colorAt(newX + player.width - 1, player.y + player.height - 1) != 0) {
+                player.x = newX;
+            }
+        }
     }
-    if (player.isAnimating) {
+
+    if ((~(buttons) & ((1<<6))) || (~(buttons) & ((1<<7))) ||
+        (~(buttons) & ((1<<5))) || (~(buttons) & ((1<<4)))) {
+        player.isAnimating = 1;
         player.timeUntilNextFrame--;
         if (player.timeUntilNextFrame == 0) {
             player.currentFrame = (player.currentFrame + 1) % player.numFrames;
@@ -175,16 +232,35 @@ void updatePlayer(void) {
         player.currentFrame = 0;
         player.timeUntilNextFrame = 10;
     }
-    if (player.x < 0) player.x = 0;
-    if (player.x > 512 - player.width) player.x = 512 - player.width;
-    if (player.y < 0) player.y = 0;
-    if (player.y > 512 - player.height) player.y = 512 - player.height;
 }
+
 
 void drawPlayer(int hOff, int vOff) {
     int screenX = player.x - hOff;
     int screenY = player.y - vOff;
-    shadowOAM[0].attr0 = (screenY & 0x00FF) | (0<<13) | (0<<14);
-    shadowOAM[0].attr1 = (screenX & 0x01FF) | (1<<14);
-    shadowOAM[0].attr2 = ((((player.direction * 2) * (32) + (player.currentFrame * 2))) & 0x3FF);
+
+    shadowOAM[0].attr0 = ((screenY) & 0xFF) | (2<<14);
+    shadowOAM[0].attr1 = ((screenX) & 0x1FF) | (2<<14);
+    shadowOAM[0].attr2 = ((((player.currentFrame * 4) * (32) + (player.direction * 2))) & 0x3FF);
+
+    hOff = player.x - 240 / 2;
+    vOff = player.y - 160 / 2;
+
+    if (hOff < 0) {
+        hOff = 0;
+    } else if (hOff > 512 - 240) {
+        hOff = 512 - 240;
+    }
+
+    if (vOff < 0) {
+        vOff = 0;
+    } else if (vOff > 512 - 160) {
+        vOff = 512 - 160;
+    }
+
+    (*(volatile unsigned short*) 0x04000010) = hOff;
+    (*(volatile unsigned short*) 0x04000012) = vOff;
+
+    waitForVBlank();
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128*4);
 }

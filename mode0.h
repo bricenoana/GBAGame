@@ -32,7 +32,7 @@
 typedef struct {
 	u16 tileimg[8192];
 } CB;
-#define CHARBLOCK ((CB*) 0x6010000) // Character blocks (tilesets)
+#define CHARBLOCK ((CB*) 0x6000000) // Character blocks (tilesets)
 
 // Screenblocks
 typedef struct {

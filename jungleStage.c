@@ -5,6 +5,8 @@
 #include "boofMap.h"
 #include "spritesheet.h"
 #include "player.h"
+#include "jungleBG.h" // tilemap
+#include "jungleTiles.h" // usenti file
 
 OBJ_ATTR shadowOAM[128];
 
@@ -12,18 +14,20 @@ int hOff, vOff;
 
 void initJungleStage(void) {
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
-    REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(27) | BG_SIZE_SMALL | BG_8BPP;
+    REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(8) | BG_SIZE_SMALL;
 
-    DMANow(3, boofBGTiles, &CHARBLOCK[0], boofBGTilesLen / 2);
-    DMANow(3, boofMapMap, &SCREENBLOCK[27], boofMapLen / 2);
-    DMANow(3, boofBGPal, BG_PALETTE, boofBGPalLen/2);
+    DMANow(3, boofBGPal, BG_PALETTE, 256); //tiles
+    DMANow(3, boofBGTiles, &CHARBLOCK[0], boofBGTilesLen / 2); //tiles
 
-    DMANow(3, spritesheetTiles, &CHARBLOCK[4], spritesheetTilesLen / 2);
-    DMANow(3, spritesheetPal, SPRITE_PAL, spritesheetPalLen / 2);
+    DMANow(3, boofMapMap, &SCREENBLOCK[8], boofMapMap);
+
+
 
     initPlayer();
     hOff = 0;
     vOff = 0;
+    REG_BG0HOFF = hOff;
+    REG_BG0VOFF = vOff;
 
     hideSprites();
     DMANow(3, shadowOAM, OAM, 128 * 4);

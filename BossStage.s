@@ -21,21 +21,25 @@ initBossStage:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	@ link register save eliminated.
+	str	lr, [sp, #-4]!
 	mov	r1, #32
+	mov	lr, #120
 	mov	r2, #100
-	mov	ip, #120
-	mov	r0, #80
-	ldr	r3, .L3
-	stmib	r3, {r0, r1}
-	str	ip, [r3]
+	mov	ip, #80
+	mov	r0, #0
+	ldr	r3, .L4
+	str	lr, [r3]
+	str	ip, [r3, #4]
+	str	r0, [r3, #24]
+	str	r1, [r3, #8]
 	str	r1, [r3, #12]
 	str	r2, [r3, #20]
 	str	r2, [r3, #16]
+	ldr	lr, [sp], #4
 	bx	lr
-.L4:
+.L5:
 	.align	2
-.L3:
+.L4:
 	.word	boss
 	.size	initBossStage, .-initBossStage
 	.align	2
@@ -49,23 +53,23 @@ updateBossStage:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	ldr	r3, .L10
+	ldr	r3, .L11
 	ldrh	r3, [r3]
 	tst	r3, #1
 	bxeq	lr
-	ldr	r3, .L10+4
+	ldr	r3, .L11+4
 	ldrh	r3, [r3]
 	ands	r3, r3, #1
 	bxne	lr
-	ldr	r1, .L10+8
+	ldr	r1, .L11+8
 	ldr	r2, [r1, #16]
 	subs	r2, r2, #10
 	movpl	r3, r2
 	str	r3, [r1, #16]
 	bx	lr
-.L11:
+.L12:
 	.align	2
-.L10:
+.L11:
 	.word	oldButtons
 	.word	buttons
 	.word	boss
@@ -83,5 +87,5 @@ drawBossStage:
 	@ link register save eliminated.
 	bx	lr
 	.size	drawBossStage, .-drawBossStage
-	.comm	boss,24,4
+	.comm	boss,28,4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

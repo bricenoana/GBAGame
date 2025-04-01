@@ -159,6 +159,23 @@ void initPlayer(void);
 void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
 # 8 "jungleStage.c" 2
+# 1 "jungleBG.h" 1
+
+
+
+
+
+
+
+extern const unsigned short jungleBGMap[2048];
+# 9 "jungleStage.c" 2
+# 1 "jungleTiles.h" 1
+# 21 "jungleTiles.h"
+extern const unsigned short jungleTilesTiles[18496];
+
+
+extern const unsigned short jungleTilesPal[256];
+# 10 "jungleStage.c" 2
 
 OBJ_ATTR shadowOAM[128];
 
@@ -166,18 +183,20 @@ int hOff, vOff;
 
 void initJungleStage(void) {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
-    (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (0 << 14) | (1 << 7);
+    (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((8) << 8) | (0 << 14);
 
-    DMANow(3, boofBGTiles, &((CB*) 0x6010000)[0], 20000 / 2);
-    DMANow(3, boofMapMap, &((SB*) 0x6000000)[27], (2048) / 2);
-    DMANow(3, boofBGPal, ((unsigned short *)0x5000000), 512/2);
+    DMANow(3, boofBGPal, ((unsigned short *)0x5000000), 256);
+    DMANow(3, boofBGTiles, &((CB*) 0x6000000)[0], 20000 / 2);
 
-    DMANow(3, spritesheetTiles, &((CB*) 0x6010000)[4], 32768 / 2);
-    DMANow(3, spritesheetPal, ((u16 *)0x5000200), 512 / 2);
+    DMANow(3, boofMapMap, &((SB*) 0x6000000)[8], boofMapMap);
+
+
 
     initPlayer();
     hOff = 0;
     vOff = 0;
+    (*(volatile unsigned short*) 0x04000010) = hOff;
+    (*(volatile unsigned short*) 0x04000012) = vOff;
 
     hideSprites();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
