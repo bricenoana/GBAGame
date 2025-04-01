@@ -123,6 +123,20 @@ void initPlayer(void);
 void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
 # 4 "player.c" 2
+# 1 "spritesheet.h" 1
+# 21 "spritesheet.h"
+extern const unsigned short spritesheetTiles[16384];
+
+
+extern const unsigned short spritesheetPal[256];
+# 5 "player.c" 2
+# 1 "spriteNormal.h" 1
+# 21 "spriteNormal.h"
+extern const unsigned short spriteNormalTiles[16384];
+
+
+extern const unsigned short spriteNormalPal[256];
+# 6 "player.c" 2
 # 1 "mode0.h" 1
 # 32 "mode0.h"
 typedef struct {
@@ -134,21 +148,21 @@ typedef struct {
 typedef struct {
  u16 tilemap[1024];
 } SB;
-# 5 "player.c" 2
+# 7 "player.c" 2
 # 1 "collisionMap.h" 1
 # 21 "collisionMap.h"
 extern const unsigned short collisionMapBitmap[65536];
 
 
 extern const unsigned short collisionMapPal[256];
-# 6 "player.c" 2
+# 8 "player.c" 2
 # 1 "boofCollisionMap.h" 1
 # 21 "boofCollisionMap.h"
 extern const unsigned short boofCollisionMapBitmap[32768];
 
 
 extern const unsigned short boofCollisionMapPal[256];
-# 7 "player.c" 2
+# 9 "player.c" 2
 
 
 
@@ -160,20 +174,25 @@ Player player;
 
 typedef enum {DOWN, UP, LEFT, RIGHT} DIRECTION;
 
-inline unsigned char colorAt(int x, int y){
-    return ((unsigned char *) boofCollisionMapBitmap) [((y) * (512) + (x))];
-}
+
+
+
 
 void initPlayer(void) {
     player.width = 16;
-    player.height = 16;
+    player.height = 32;
     player.x = 40;
-    player.y = 100;
+    player.y = 140;
     player.numFrames = 3;
     player.direction = DOWN;
     player.timeUntilNextFrame = 10;
-    player.xVel = 1;
-    player.yVel = 1;
+    player.xVel = 2;
+    player.yVel = 2;
+
+    DMANow(3, spriteNormalTiles, &((CB*) 0x6000000)[4], 32768/2);
+    DMANow(3, spriteNormalPal, ((u16 *)0x5000200), 256);
+    hideSprites();
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
 }
 
 void updatePlayer(void) {
@@ -183,40 +202,44 @@ void updatePlayer(void) {
         player.direction = UP;
         int newY = player.y - player.yVel;
         if (newY >= 0) {
-            if (colorAt(player.x, newY) != 0 &&
-                colorAt(player.x + player.width - 1, newY) != 0) {
+
+
+
                 player.y = newY;
-            }
+
         }
     }
     if ((~(buttons) & ((1<<7)))) {
         player.direction = DOWN;
         int newBottom = player.y + player.height - 1 + player.yVel;
         if (newBottom < 512) {
-            if (colorAt(player.x, newBottom) != 0 &&
-                colorAt(player.x + player.width - 1, newBottom) != 0) {
+
+
+
                 player.y += player.yVel;
-            }
+
         }
     }
     if ((~(buttons) & ((1<<5)))) {
         player.direction = LEFT;
         int newX = player.x - player.xVel;
         if (newX >= 0) {
-            if (colorAt(newX, player.y) != 0 &&
-                colorAt(newX, player.y + player.height - 1) != 0) {
+
+
+
                 player.x = newX;
-            }
+
         }
     }
     if ((~(buttons) & ((1<<4)))) {
         player.direction = RIGHT;
         int newX = player.x + player.xVel;
         if (newX + player.width - 1 < 512) {
-            if (colorAt(newX + player.width - 1, player.y) != 0 &&
-                colorAt(newX + player.width - 1, player.y + player.height - 1) != 0) {
+
+
+
                 player.x = newX;
-            }
+
         }
     }
 
@@ -234,14 +257,33 @@ void updatePlayer(void) {
     }
 }
 
-
 void drawPlayer(int hOff, int vOff) {
     int screenX = player.x - hOff;
     int screenY = player.y - vOff;
 
     shadowOAM[0].attr0 = ((screenY) & 0xFF) | (2<<14);
     shadowOAM[0].attr1 = ((screenX) & 0x1FF) | (2<<14);
-    shadowOAM[0].attr2 = ((((player.currentFrame * 4) * (32) + (player.direction * 2))) & 0x3FF);
+
+    int tileRow;
+    switch (player.direction) {
+        case DOWN:
+            tileRow = 0;
+            break;
+        case UP:
+            tileRow = 4;
+            break;
+        case LEFT:
+            tileRow = 8;
+            break;
+        case RIGHT:
+            tileRow = 12;
+            break;
+        default:
+            tileRow = 0;
+            break;
+    }
+
+    shadowOAM[0].attr2 = ((((tileRow) * (32) + (player.currentFrame * 2))) & 0x3FF);
 
     hOff = player.x - 240 / 2;
     vOff = player.y - 160 / 2;
@@ -251,7 +293,6 @@ void drawPlayer(int hOff, int vOff) {
     } else if (hOff > 512 - 240) {
         hOff = 512 - 240;
     }
-
     if (vOff < 0) {
         vOff = 0;
     } else if (vOff > 512 - 160) {
@@ -262,5 +303,5 @@ void drawPlayer(int hOff, int vOff) {
     (*(volatile unsigned short*) 0x04000012) = vOff;
 
     waitForVBlank();
-    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128*4);
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
 }

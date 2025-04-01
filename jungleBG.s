@@ -1289,6 +1289,9 @@ jungleBGMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	664
+	.short	664
+	.short	665
 	.short	0
 	.short	0
 	.short	0
@@ -1318,6 +1321,9 @@ jungleBGMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	664
+	.short	664
+	.short	664
 	.short	0
 	.short	0
 	.short	0
@@ -1347,6 +1353,9 @@ jungleBGMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	664
+	.short	664
+	.short	664
 	.short	0
 	.short	0
 	.short	0
@@ -1376,6 +1385,9 @@ jungleBGMap:
 	.short	0
 	.short	0
 	.short	0
+	.short	664
+	.short	664
+	.short	664
 	.short	0
 	.short	0
 	.short	0
@@ -1407,19 +1419,7 @@ jungleBGMap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	664
 	.short	0
 	.short	0
 	.short	0

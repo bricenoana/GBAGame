@@ -24,7 +24,7 @@ initJungleStage:
 	push	{r4, r5, r6, lr}
 	mov	r3, #4352
 	mov	r5, #67108864
-	mov	r2, #2048
+	mov	r2, #23296
 	ldr	r4, .L4
 	strh	r3, [r5]	@ movhi
 	mov	r0, #3
@@ -34,35 +34,35 @@ initJungleStage:
 	ldr	r1, .L4+4
 	mov	lr, pc
 	bx	r4
+	mov	r3, #5632
 	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r3, .L4+8
-	ldr	r1, .L4+12
+	ldr	r1, .L4+8
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L4+16
 	mov	r0, #3
-	mov	r1, r3
-	ldr	r2, .L4+20
+	ldr	r2, .L4+12
+	ldr	r1, .L4+16
+	mov	r3, #2048
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L4+24
+	ldr	r3, .L4+20
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
-	ldr	r1, .L4+28
-	ldr	r2, .L4+32
+	ldr	r1, .L4+24
+	ldr	r2, .L4+28
 	str	r3, [r1]
 	str	r3, [r2]
 	strh	r3, [r5, #16]	@ movhi
-	ldr	r2, .L4+36
+	ldr	r2, .L4+32
 	strh	r3, [r5, #18]	@ movhi
 	mov	lr, pc
 	bx	r2
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L4+40
+	ldr	r1, .L4+36
 	mov	lr, pc
 	bx	r4
 	pop	{r4, r5, r6, lr}
@@ -71,11 +71,10 @@ initJungleStage:
 	.align	2
 .L4:
 	.word	DMANow
-	.word	boofBGPal
-	.word	10000
-	.word	boofBGTiles
-	.word	boofMapMap
-	.word	100679680
+	.word	singleLayerJunglePal
+	.word	singleLayerJungleTiles
+	.word	100718592
+	.word	singleLayerMapMap
 	.word	initPlayer
 	.word	hOff
 	.word	vOff

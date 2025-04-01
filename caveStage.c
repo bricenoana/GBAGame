@@ -1,0 +1,6 @@
+#include "gba.h" 
+#include "mode0.h"
+#include "sprites.h"
+#include "boofBG.h"
+#include "spritesheet.h"
+#include "player.h"

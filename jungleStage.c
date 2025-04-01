@@ -1,12 +1,18 @@
 #include "gba.h" 
 #include "mode0.h"
 #include "sprites.h"
+#include "bug.h"
+#include "bugLair.h"
 #include "boofBG.h"
-#include "boofMap.h"
 #include "spritesheet.h"
 #include "player.h"
 #include "jungleBG.h" // tilemap
+#include "testJungle.h" //tilemap
 #include "jungleTiles.h" // usenti file
+#include "boofMapWide.h"
+#include "jungleTilesNew.h"
+#include "singleLayerJungle.h" //tiles
+#include "singleLayerMap.h" //map
 
 OBJ_ATTR shadowOAM[128];
 
@@ -14,14 +20,11 @@ int hOff, vOff;
 
 void initJungleStage(void) {
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
-    REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(8) | BG_SIZE_SMALL;
+    REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(27) | BG_SIZE_WIDE;
 
-    DMANow(3, boofBGPal, BG_PALETTE, 256); //tiles
-    DMANow(3, boofBGTiles, &CHARBLOCK[0], boofBGTilesLen / 2); //tiles
-
-    DMANow(3, boofMapMap, &SCREENBLOCK[8], boofMapMap);
-
-
+    DMANow(3, singleLayerJunglePal, BG_PALETTE, singleLayerJunglePalLen/2); //tiles
+    DMANow(3, singleLayerJungleTiles, &CHARBLOCK[0], singleLayerJungleTilesLen / 2); //tiles
+    DMANow(3, singleLayerMapMap, &SCREENBLOCK[27], singleLayerMapLen/2); //map
 
     initPlayer();
     hOff = 0;
