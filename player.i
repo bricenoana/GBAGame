@@ -156,13 +156,6 @@ extern const unsigned short collisionMapBitmap[65536];
 
 extern const unsigned short collisionMapPal[256];
 # 8 "player.c" 2
-# 1 "boofCollisionMap.h" 1
-# 21 "boofCollisionMap.h"
-extern const unsigned short boofCollisionMapBitmap[32768];
-
-
-extern const unsigned short boofCollisionMapPal[256];
-# 9 "player.c" 2
 
 
 
@@ -174,9 +167,9 @@ Player player;
 
 typedef enum {DOWN, UP, LEFT, RIGHT} DIRECTION;
 
-
-
-
+inline unsigned char colorAt(int x, int y){
+    return ((unsigned char *) collisionMapBitmap) [((y) * (512) + (x))];
+}
 
 void initPlayer(void) {
     player.width = 16;
@@ -189,7 +182,7 @@ void initPlayer(void) {
     player.xVel = 2;
     player.yVel = 2;
 
-    DMANow(3, spriteNormalTiles, &((CB*) 0x6000000)[4], 32768/2);
+    DMANow(3, spriteNormalTiles, &((CB*) 0x6000000)[4], 32768 / 2);
     DMANow(3, spriteNormalPal, ((u16 *)0x5000200), 256);
     hideSprites();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
@@ -202,44 +195,40 @@ void updatePlayer(void) {
         player.direction = UP;
         int newY = player.y - player.yVel;
         if (newY >= 0) {
-
-
-
+            if (colorAt(player.x, newY) != 0 &&
+                colorAt(player.x + player.width - 1, newY) != 0) {
                 player.y = newY;
-
+            }
         }
     }
     if ((~(buttons) & ((1<<7)))) {
         player.direction = DOWN;
         int newBottom = player.y + player.height - 1 + player.yVel;
-        if (newBottom < 512) {
-
-
-
+        if (newBottom < 274) {
+            if (colorAt(player.x, newBottom) != 0 &&
+                colorAt(player.x + player.width - 1, newBottom) != 0) {
                 player.y += player.yVel;
-
+            }
         }
     }
     if ((~(buttons) & ((1<<5)))) {
         player.direction = LEFT;
         int newX = player.x - player.xVel;
         if (newX >= 0) {
-
-
-
+            if (colorAt(newX, player.y) != 0 &&
+                colorAt(newX, player.y + player.height - 1) != 0) {
                 player.x = newX;
-
+            }
         }
     }
     if ((~(buttons) & ((1<<4)))) {
         player.direction = RIGHT;
         int newX = player.x + player.xVel;
         if (newX + player.width - 1 < 512) {
-
-
-
+            if (colorAt(newX + player.width - 1, player.y) != 0 &&
+                colorAt(newX + player.width - 1, player.y + player.height - 1) != 0) {
                 player.x = newX;
-
+            }
         }
     }
 
@@ -256,6 +245,7 @@ void updatePlayer(void) {
         player.timeUntilNextFrame = 10;
     }
 }
+
 
 void drawPlayer(int hOff, int vOff) {
     int screenX = player.x - hOff;
@@ -295,8 +285,8 @@ void drawPlayer(int hOff, int vOff) {
     }
     if (vOff < 0) {
         vOff = 0;
-    } else if (vOff > 512 - 160) {
-        vOff = 512 - 160;
+    } else if (vOff > 274 - 160) {
+        vOff = 274 - 160;
     }
 
     (*(volatile unsigned short*) 0x04000010) = hOff;

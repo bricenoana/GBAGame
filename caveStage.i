@@ -121,13 +121,23 @@ extern const unsigned short boofBGTiles[10000];
 
 extern const unsigned short boofBGPal[256];
 # 5 "caveStage.c" 2
+# 1 "boofMap.h" 1
+
+
+
+
+
+
+
+extern const unsigned short boofMapMap[1024];
+# 6 "caveStage.c" 2
 # 1 "spritesheet.h" 1
 # 21 "spritesheet.h"
 extern const unsigned short spritesheetTiles[16384];
 
 
 extern const unsigned short spritesheetPal[256];
-# 6 "caveStage.c" 2
+# 7 "caveStage.c" 2
 # 1 "player.h" 1
 
 
@@ -148,4 +158,41 @@ extern Player player;
 void initPlayer(void);
 void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
-# 6 "caveStage.c" 2
+# 8 "caveStage.c" 2
+# 1 "backgroundCaveTiles.h" 1
+# 21 "backgroundCaveTiles.h"
+extern const unsigned short backgroundCaveTilesTiles[9600];
+
+
+extern const unsigned short backgroundCaveTilesPal[256];
+# 9 "caveStage.c" 2
+# 1 "backgroundCaveMap.h" 1
+
+
+
+
+
+
+
+extern const unsigned short backgroundCaveMapMap[1024];
+# 10 "caveStage.c" 2
+
+int hOff, vOff;
+
+void initCaveStage() {
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
+    (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (0 << 14);
+
+    DMANow(3, boofBGPal, ((unsigned short *)0x5000000), 512/2);
+    DMANow(3, boofBGTiles, &((CB*) 0x6000000)[0], 20000 / 2);
+    DMANow(3, boofMapMap, &((SB*) 0x6000000)[27], (2048)/2);
+
+    initPlayer();
+    hOff = 0;
+    vOff = 0;
+    (*(volatile unsigned short*) 0x04000010) = hOff;
+    (*(volatile unsigned short*) 0x04000012) = vOff;
+
+    hideSprites();
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
+}

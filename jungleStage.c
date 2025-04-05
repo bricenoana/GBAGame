@@ -1,16 +1,8 @@
 #include "gba.h" 
 #include "mode0.h"
 #include "sprites.h"
-#include "bug.h"
-#include "bugLair.h"
-#include "boofBG.h"
 #include "spritesheet.h"
 #include "player.h"
-#include "jungleBG.h" // tilemap
-#include "testJungle.h" //tilemap
-#include "jungleTiles.h" // usenti file
-#include "boofMapWide.h"
-#include "jungleTilesNew.h"
 #include "singleLayerJungle.h" //tiles
 #include "singleLayerMap.h" //map
 
@@ -22,11 +14,13 @@ void initJungleStage(void) {
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
     REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(27) | BG_SIZE_WIDE;
 
-    DMANow(3, singleLayerJunglePal, BG_PALETTE, singleLayerJunglePalLen/2); //tiles
-    DMANow(3, singleLayerJungleTiles, &CHARBLOCK[0], singleLayerJungleTilesLen / 2); //tiles
-    DMANow(3, singleLayerMapMap, &SCREENBLOCK[27], singleLayerMapLen/2); //map
+    DMANow(3, singleLayerJunglePal, BG_PALETTE, singleLayerJunglePalLen/2);
+    DMANow(3, singleLayerJungleTiles, &CHARBLOCK[0], singleLayerJungleTilesLen / 2);
+    DMANow(3, singleLayerMapMap, &SCREENBLOCK[27], singleLayerMapLen/2);
 
     initPlayer();
+    initTemple();
+    
     hOff = 0;
     vOff = 0;
     REG_BG0HOFF = hOff;
@@ -36,9 +30,15 @@ void initJungleStage(void) {
     DMANow(3, shadowOAM, OAM, 128 * 4);
 }
 
+
 void updateJungleStage(void) {
     updatePlayer();
+
+    if (checkTempleCollision(player.x, player.y, player.width, player.height)) {
+        goToBossStage();
+    }
 }
+
 
 void drawJungleStage(void) {
     hOff = player.x - (SCREENWIDTH / 2);

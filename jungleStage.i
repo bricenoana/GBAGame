@@ -114,37 +114,13 @@ typedef struct {
     u8 oamIndex;
 } SPRITE;
 # 4 "jungleStage.c" 2
-# 1 "bug.h" 1
-# 21 "bug.h"
-extern const unsigned short bugTiles[11264];
-
-
-extern const unsigned short bugPal[256];
-# 5 "jungleStage.c" 2
-# 1 "bugLair.h" 1
-
-
-
-
-
-
-
-extern const unsigned short bugLairMap[4096];
-# 6 "jungleStage.c" 2
-# 1 "boofBG.h" 1
-# 21 "boofBG.h"
-extern const unsigned short boofBGTiles[10000];
-
-
-extern const unsigned short boofBGPal[256];
-# 7 "jungleStage.c" 2
 # 1 "spritesheet.h" 1
 # 21 "spritesheet.h"
 extern const unsigned short spritesheetTiles[16384];
 
 
 extern const unsigned short spritesheetPal[256];
-# 8 "jungleStage.c" 2
+# 5 "jungleStage.c" 2
 # 1 "player.h" 1
 
 
@@ -165,58 +141,14 @@ extern Player player;
 void initPlayer(void);
 void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
-# 9 "jungleStage.c" 2
-# 1 "jungleBG.h" 1
-
-
-
-
-
-
-
-extern const unsigned short jungleBGMap[2048];
-# 10 "jungleStage.c" 2
-# 1 "testJungle.h" 1
-
-
-
-
-
-
-
-extern const unsigned short testJungleMap[2048];
-# 11 "jungleStage.c" 2
-# 1 "jungleTiles.h" 1
-# 21 "jungleTiles.h"
-extern const unsigned short jungleTilesTiles[18496];
-
-
-extern const unsigned short jungleTilesPal[256];
-# 12 "jungleStage.c" 2
-# 1 "boofMapWide.h" 1
-
-
-
-
-
-
-
-extern const unsigned short boofMapWideMap[2048];
-# 13 "jungleStage.c" 2
-# 1 "jungleTilesNew.h" 1
-# 21 "jungleTilesNew.h"
-extern const unsigned short jungleTilesNewTiles[7744];
-
-
-extern const unsigned short jungleTilesNewPal[256];
-# 14 "jungleStage.c" 2
+# 6 "jungleStage.c" 2
 # 1 "singleLayerJungle.h" 1
 # 21 "singleLayerJungle.h"
 extern const unsigned short singleLayerJungleTiles[5632];
 
 
 extern const unsigned short singleLayerJunglePal[256];
-# 15 "jungleStage.c" 2
+# 7 "jungleStage.c" 2
 # 1 "singleLayerMap.h" 1
 
 
@@ -226,7 +158,7 @@ extern const unsigned short singleLayerJunglePal[256];
 
 
 extern const unsigned short singleLayerMapMap[2048];
-# 16 "jungleStage.c" 2
+# 8 "jungleStage.c" 2
 
 OBJ_ATTR shadowOAM[128];
 
@@ -236,20 +168,13 @@ void initJungleStage(void) {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (1 << 14);
 
-
-
-
-
     DMANow(3, singleLayerJunglePal, ((unsigned short *)0x5000000), 512/2);
     DMANow(3, singleLayerJungleTiles, &((CB*) 0x6000000)[0], 11264 / 2);
     DMANow(3, singleLayerMapMap, &((SB*) 0x6000000)[27], (4096)/2);
 
-
-
-
-
-
     initPlayer();
+    initTemple();
+
     hOff = 0;
     vOff = 0;
     (*(volatile unsigned short*) 0x04000010) = hOff;
@@ -259,9 +184,15 @@ void initJungleStage(void) {
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
 }
 
+
 void updateJungleStage(void) {
     updatePlayer();
+
+    if (checkTempleCollision(player.x, player.y, player.width, player.height)) {
+        goToBossStage();
+    }
 }
+
 
 void drawJungleStage(void) {
     hOff = player.x - (240 / 2);

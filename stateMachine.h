@@ -4,7 +4,9 @@
 typedef enum {
     START,
     INSTRUCTIONS,
+    CAVE,
     GAME,
+    BOSS,
     PAUSE,
     WIN,
     LOSE

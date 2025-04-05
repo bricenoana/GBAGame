@@ -67,6 +67,16 @@ void goToLose(void) {
     state = LOSE;
 }
 
+void goToBossStage(void) {
+    // go to boss stage when player collides w temple
+    resetSprites();
+    
+    initBossStage();
+
+    state = BOSS;  
+}
+
+
 static void startState(void) {
     //move thru start screen
     if (BUTTON_PRESSED(BUTTON_START)) {
@@ -80,8 +90,6 @@ static void startState(void) {
 static void instructionsState(void) {
     //move thru instruction screen
     drawFullscreenImage4(INSTRUCTIONSBitmap);
-    waitForVBlank();
-    flipPage();
     if (BUTTON_PRESSED(BUTTON_B)) {
         goToStart();
     } else if (BUTTON_PRESSED(BUTTON_A)) {
@@ -89,6 +97,8 @@ static void instructionsState(void) {
     } else if (BUTTON_PRESSED(BUTTON_SELECT)) {
         goToStart();
     }
+    waitForVBlank();
+    flipPage();
 }
 
 
@@ -99,6 +109,12 @@ static void gameState(void) {
     updateJungleStage();
     drawJungleStage();
 }
+
+static void bossState(void) {
+    updateBossStage();
+    drawBossStage();
+}
+
 
 static void pauseState(void) {
     drawFullscreenImage4(pauseBitmap);
@@ -125,6 +141,13 @@ void initStateMachine(void) {
     goToStart();
 }
 
+void resetSprites(void) {
+    for (int i = 0; i < 128; i++) {
+        shadowOAM[i].attr0 = ATTR0_HIDE;
+    }
+    DMANow(3, shadowOAM, OAM, 128 * 4);
+}
+
 void updateStateMachine(void) {
     switch (state) {
         case START:
@@ -138,6 +161,9 @@ void updateStateMachine(void) {
             break;
         case PAUSE:
             pauseState();
+            break;
+        case BOSS:
+            bossState();
             break;
         case WIN:
             winState();

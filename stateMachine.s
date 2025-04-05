@@ -99,7 +99,7 @@ goToGame:
 	ldr	r3, .L15
 	mov	lr, pc
 	bx	r3
-	mov	r2, #2
+	mov	r2, #3
 	ldr	r3, .L15+4
 	strb	r2, [r3]
 	pop	{r4, lr}
@@ -210,7 +210,7 @@ goToPause:
 	ldr	r3, .L27+28
 	mov	lr, pc
 	bx	r3
-	mov	r2, #3
+	mov	r2, #5
 	ldr	r3, .L27+32
 	strb	r2, [r3]
 	pop	{r4, lr}
@@ -239,7 +239,7 @@ goToWin:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	mov	r2, #4
+	mov	r2, #6
 	ldr	r3, .L30
 	strb	r2, [r3]
 	bx	lr
@@ -259,7 +259,7 @@ goToLose:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	mov	r2, #5
+	mov	r2, #7
 	ldr	r3, .L33
 	strb	r2, [r3]
 	bx	lr
@@ -282,6 +282,65 @@ initStateMachine:
 	b	goToStart
 	.size	initStateMachine, .-initStateMachine
 	.align	2
+	.global	resetSprites
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	resetSprites, %function
+resetSprites:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	mov	r1, #512
+	push	{r4, lr}
+	ldr	r3, .L40
+	add	r2, r3, #1024
+.L37:
+	strh	r1, [r3], #8	@ movhi
+	cmp	r3, r2
+	bne	.L37
+	ldr	r4, .L40+4
+	mov	r3, #512
+	mov	r2, #117440512
+	mov	r0, #3
+	ldr	r1, .L40
+	mov	lr, pc
+	bx	r4
+	pop	{r4, lr}
+	bx	lr
+.L41:
+	.align	2
+.L40:
+	.word	shadowOAM
+	.word	DMANow
+	.size	resetSprites, .-resetSprites
+	.align	2
+	.global	goToBossStage
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	goToBossStage, %function
+goToBossStage:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, lr}
+	bl	resetSprites
+	ldr	r3, .L44
+	mov	lr, pc
+	bx	r3
+	mov	r2, #4
+	ldr	r3, .L44+4
+	strb	r2, [r3]
+	pop	{r4, lr}
+	bx	lr
+.L45:
+	.align	2
+.L44:
+	.word	initBossStage
+	.word	.LANCHOR0
+	.size	goToBossStage, .-goToBossStage
+	.align	2
 	.global	updateStateMachine
 	.syntax unified
 	.arm
@@ -292,150 +351,170 @@ updateStateMachine:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	ldr	r4, .L80
+	ldr	r4, .L89
 	ldrb	r3, [r4]	@ zero_extendqisi2
-	cmp	r3, #5
+	cmp	r3, #7
 	ldrls	pc, [pc, r3, asl #2]
-	b	.L36
-.L39:
-	.word	.L44
-	.word	.L43
-	.word	.L42
-	.word	.L41
-	.word	.L40
-	.word	.L38
-.L43:
-	ldr	r0, .L80+4
-	ldr	r3, .L80+8
+	b	.L46
+.L49:
+	.word	.L55
+	.word	.L54
+	.word	.L46
+	.word	.L53
+	.word	.L52
+	.word	.L51
+	.word	.L50
+	.word	.L48
+.L51:
+	ldr	r0, .L89+4
+	ldr	r3, .L89+8
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L80+12
+	ldr	r3, .L89+12
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L80+16
+	ldr	r3, .L89+16
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L80+20
+	ldr	r3, .L89+20
 	ldrh	r3, [r3]
-	tst	r3, #2
-	beq	.L48
-	ldr	r2, .L80+24
-	ldrh	r2, [r2]
-	tst	r2, #2
-	beq	.L50
-.L48:
-	tst	r3, #1
-	beq	.L49
-	ldr	r2, .L80+24
-	ldrh	r2, [r2]
-	tst	r2, #1
-	bne	.L49
-.L52:
-	ldr	r3, .L80+28
+	tst	r3, #4
+	beq	.L46
+	ldr	r3, .L89+24
+	ldrh	r3, [r3]
+	tst	r3, #4
+	bne	.L46
+	ldr	r3, .L89+28
 	mov	lr, pc
 	bx	r3
-	mov	r3, #2
+	mov	r3, #3
 	strb	r3, [r4]
-.L36:
+.L46:
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L38:
+.L48:
 	pop	{r4, r5, r6, lr}
 	b	loseState
-.L44:
-	ldr	r5, .L80+20
+.L55:
+	ldr	r5, .L89+20
 	ldrh	r3, [r5]
 	tst	r3, #8
-	beq	.L45
-	ldr	r2, .L80+24
+	beq	.L56
+	ldr	r2, .L89+24
 	ldrh	r2, [r2]
 	tst	r2, #8
-	beq	.L78
-.L45:
+	beq	.L86
+.L56:
 	tst	r3, #4
-	beq	.L36
-	ldr	r3, .L80+24
+	beq	.L46
+	ldr	r3, .L89+24
 	ldrh	r3, [r3]
 	tst	r3, #4
-	bne	.L36
+	bne	.L46
 	pop	{r4, r5, r6, lr}
 	b	goToInstructions
-.L41:
-	ldr	r0, .L80+32
-	ldr	r3, .L80+8
+.L54:
+	ldr	r3, .L89+8
+	ldr	r0, .L89+32
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L80+12
+	ldr	r3, .L89+20
+	ldrh	r3, [r3]
+	tst	r3, #2
+	beq	.L59
+	ldr	r2, .L89+24
+	ldrh	r2, [r2]
+	tst	r2, #2
+	beq	.L62
+.L59:
+	tst	r3, #1
+	beq	.L61
+	ldr	r2, .L89+24
+	ldrh	r2, [r2]
+	tst	r2, #1
+	beq	.L87
+.L61:
+	tst	r3, #4
+	beq	.L60
+	ldr	r3, .L89+24
+	ldrh	r3, [r3]
+	tst	r3, #4
+	bne	.L60
+.L62:
+	bl	goToStart
+.L60:
+	ldr	r3, .L89+12
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L80+16
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L80+20
-	ldrh	r3, [r3]
-	tst	r3, #4
-	beq	.L36
-	ldr	r3, .L80+24
-	ldrh	r3, [r3]
-	tst	r3, #4
-	bne	.L36
-	b	.L52
-.L42:
-	ldr	r3, .L80+20
-	ldrh	r3, [r3]
-	tst	r3, #4
-	beq	.L51
-	ldr	r3, .L80+24
-	ldrh	r3, [r3]
-	tst	r3, #4
-	beq	.L79
-.L51:
-	ldr	r3, .L80+36
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L80+40
+	ldr	r3, .L89+16
 	mov	lr, pc
 	bx	r3
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L40:
-	pop	{r4, r5, r6, lr}
-	b	winState
-.L49:
-	tst	r3, #4
-	beq	.L36
-	ldr	r3, .L80+24
+.L53:
+	ldr	r3, .L89+20
 	ldrh	r3, [r3]
 	tst	r3, #4
-	bne	.L36
-.L50:
-	pop	{r4, r5, r6, lr}
-	b	goToStart
-.L79:
-	bl	goToPause
-	b	.L51
-.L78:
-	ldr	r3, .L80+28
+	beq	.L63
+	ldr	r3, .L89+24
+	ldrh	r3, [r3]
+	tst	r3, #4
+	beq	.L88
+.L63:
+	ldr	r3, .L89+36
 	mov	lr, pc
 	bx	r3
-	mov	r2, #2
+	ldr	r3, .L89+40
+	mov	lr, pc
+	bx	r3
+	pop	{r4, r5, r6, lr}
+	bx	lr
+.L52:
+	ldr	r3, .L89+44
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L89+48
+	mov	lr, pc
+	bx	r3
+	pop	{r4, r5, r6, lr}
+	bx	lr
+.L50:
+	pop	{r4, r5, r6, lr}
+	b	winState
+.L86:
+	ldr	r3, .L89+28
+	mov	lr, pc
+	bx	r3
+	mov	r2, #3
 	ldrh	r3, [r5]
 	strb	r2, [r4]
-	b	.L45
-.L81:
+	b	.L56
+.L88:
+	bl	goToPause
+	b	.L63
+.L87:
+	ldr	r3, .L89+28
+	mov	lr, pc
+	bx	r3
+	mov	r3, #3
+	strb	r3, [r4]
+	b	.L60
+.L90:
 	.align	2
-.L80:
+.L89:
 	.word	.LANCHOR0
-	.word	INSTRUCTIONSBitmap
+	.word	pauseBitmap
 	.word	drawFullscreenImage4
 	.word	waitForVBlank
 	.word	flipPage
 	.word	oldButtons
 	.word	buttons
 	.word	initJungleStage
-	.word	pauseBitmap
+	.word	INSTRUCTIONSBitmap
 	.word	updateJungleStage
 	.word	drawJungleStage
+	.word	updateBossStage
+	.word	drawBossStage
 	.size	updateStateMachine, .-updateStateMachine
 	.comm	shadowOAM,1024,4
 	.bss

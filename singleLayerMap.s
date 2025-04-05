@@ -32,10 +32,10 @@ singleLayerMapMap:
 	.short	189
 	.short	190
 	.short	191
-	.short	88
-	.short	89
-	.short	90
-	.short	91
+	.short	116
+	.short	117
+	.short	118
+	.short	119
 	.short	128
 	.short	129
 	.short	2
@@ -64,10 +64,10 @@ singleLayerMapMap:
 	.short	205
 	.short	206
 	.short	207
-	.short	104
-	.short	105
-	.short	106
-	.short	107
+	.short	132
+	.short	133
+	.short	134
+	.short	135
 	.short	144
 	.short	145
 	.short	18
@@ -96,10 +96,10 @@ singleLayerMapMap:
 	.short	221
 	.short	222
 	.short	223
-	.short	120
-	.short	121
-	.short	122
-	.short	123
+	.short	148
+	.short	149
+	.short	150
+	.short	151
 	.short	32
 	.short	128
 	.short	129
@@ -128,10 +128,10 @@ singleLayerMapMap:
 	.short	237
 	.short	238
 	.short	239
-	.short	136
-	.short	137
-	.short	138
-	.short	139
+	.short	164
+	.short	165
+	.short	166
+	.short	167
 	.short	0
 	.short	144
 	.short	145
@@ -160,10 +160,10 @@ singleLayerMapMap:
 	.short	253
 	.short	254
 	.short	255
-	.short	152
-	.short	153
-	.short	154
-	.short	155
+	.short	180
+	.short	181
+	.short	182
+	.short	183
 	.short	128
 	.short	129
 	.short	18
@@ -940,10 +940,10 @@ singleLayerMapMap:
 	.short	65
 	.short	66
 	.short	67
-	.short	16
-	.short	17
-	.short	18
-	.short	19
+	.short	128
+	.short	129
+	.short	130
+	.short	131
 	.short	80
 	.short	81
 	.short	82
@@ -972,42 +972,42 @@ singleLayerMapMap:
 	.short	81
 	.short	82
 	.short	83
-	.short	32
-	.short	33
+	.short	144
+	.short	145
+	.short	146
+	.short	147
+	.short	96
+	.short	97
+	.short	98
+	.short	99
+	.short	96
+	.short	97
+	.short	98
+	.short	99
+	.short	96
+	.short	97
+	.short	98
+	.short	99
+	.short	96
+	.short	97
+	.short	98
+	.short	99
+	.short	96
+	.short	97
+	.short	98
+	.short	99
+	.short	96
+	.short	97
+	.short	98
+	.short	99
+	.short	96
+	.short	97
+	.short	98
+	.short	99
 	.short	34
-	.short	35
-	.short	96
-	.short	97
-	.short	98
-	.short	99
-	.short	96
-	.short	97
-	.short	98
-	.short	99
-	.short	96
-	.short	97
-	.short	98
-	.short	99
-	.short	96
-	.short	97
-	.short	98
-	.short	99
-	.short	96
-	.short	97
-	.short	98
-	.short	99
-	.short	96
-	.short	97
-	.short	98
-	.short	99
-	.short	96
-	.short	97
-	.short	98
-	.short	99
-	.short	116
-	.short	117
-	.short	118
-	.short	119
+	.short	321
+	.short	128
+	.short	129
 	.short	112
 	.short	113
 	.short	114
@@ -1036,10 +1036,10 @@ singleLayerMapMap:
 	.short	113
 	.short	114
 	.short	115
-	.short	132
-	.short	133
-	.short	134
-	.short	135
+	.short	34
+	.short	321
+	.short	144
+	.short	145
 	.short	194
 	.short	193
 	.short	194
@@ -1049,14 +1049,14 @@ singleLayerMapMap:
 	.short	194
 	.short	195
 	.short	196
-	.short	204
-	.short	205
-	.short	206
-	.short	207
-	.short	204
-	.short	205
-	.short	206
-	.short	207
+	.short	116
+	.short	117
+	.short	118
+	.short	119
+	.short	116
+	.short	117
+	.short	118
+	.short	119
 	.short	1
 	.short	2
 	.short	3
@@ -1081,15 +1081,15 @@ singleLayerMapMap:
 	.short	210
 	.short	211
 	.short	212
-	.short	220
-	.short	221
-	.short	222
-	.short	223
-	.short	220
-	.short	221
-	.short	222
-	.short	223
-	.short	17
+	.short	132
+	.short	133
+	.short	134
+	.short	135
+	.short	132
+	.short	133
+	.short	134
+	.short	135
+	.short	1
 	.short	18
 	.short	19
 	.short	16
@@ -1113,15 +1113,15 @@ singleLayerMapMap:
 	.short	226
 	.short	227
 	.short	228
-	.short	236
-	.short	237
-	.short	238
-	.short	239
-	.short	236
-	.short	237
-	.short	238
-	.short	239
-	.short	33
+	.short	148
+	.short	149
+	.short	150
+	.short	151
+	.short	148
+	.short	149
+	.short	150
+	.short	151
+	.short	17
 	.short	34
 	.short	35
 	.short	32
@@ -1145,15 +1145,15 @@ singleLayerMapMap:
 	.short	226
 	.short	227
 	.short	228
-	.short	252
-	.short	253
-	.short	254
-	.short	255
-	.short	252
-	.short	253
-	.short	254
-	.short	255
-	.short	1
+	.short	164
+	.short	165
+	.short	166
+	.short	167
+	.short	164
+	.short	165
+	.short	166
+	.short	167
+	.short	33
 	.short	2
 	.short	3
 	.short	40
@@ -1177,15 +1177,15 @@ singleLayerMapMap:
 	.short	242
 	.short	243
 	.short	244
-	.short	188
-	.short	189
-	.short	190
-	.short	191
-	.short	188
-	.short	189
-	.short	190
-	.short	191
-	.short	17
+	.short	180
+	.short	181
+	.short	182
+	.short	183
+	.short	180
+	.short	181
+	.short	182
+	.short	183
+	.short	1
 	.short	18
 	.short	19
 	.short	56
@@ -1209,15 +1209,15 @@ singleLayerMapMap:
 	.short	258
 	.short	259
 	.short	260
-	.short	204
-	.short	205
-	.short	206
-	.short	207
-	.short	204
-	.short	205
-	.short	206
-	.short	207
-	.short	33
+	.short	188
+	.short	189
+	.short	190
+	.short	191
+	.short	188
+	.short	189
+	.short	190
+	.short	191
+	.short	17
 	.short	34
 	.short	35
 	.short	40
@@ -1241,15 +1241,15 @@ singleLayerMapMap:
 	.short	226
 	.short	227
 	.short	228
-	.short	220
-	.short	221
-	.short	222
-	.short	223
-	.short	220
-	.short	221
-	.short	222
-	.short	223
-	.short	1
+	.short	204
+	.short	205
+	.short	206
+	.short	207
+	.short	204
+	.short	205
+	.short	206
+	.short	207
+	.short	33
 	.short	2
 	.short	3
 	.short	56
@@ -1273,15 +1273,15 @@ singleLayerMapMap:
 	.short	258
 	.short	259
 	.short	260
-	.short	236
-	.short	237
-	.short	238
-	.short	239
-	.short	236
-	.short	237
-	.short	238
-	.short	239
-	.short	17
+	.short	220
+	.short	221
+	.short	222
+	.short	223
+	.short	220
+	.short	221
+	.short	222
+	.short	223
+	.short	1
 	.short	18
 	.short	19
 	.short	16
@@ -1305,14 +1305,14 @@ singleLayerMapMap:
 	.short	273
 	.short	275
 	.short	276
-	.short	252
-	.short	253
-	.short	254
-	.short	255
-	.short	252
-	.short	253
-	.short	254
-	.short	255
+	.short	236
+	.short	237
+	.short	238
+	.short	239
+	.short	236
+	.short	237
+	.short	238
+	.short	239
 	.short	128
 	.short	129
 	.short	130
@@ -1337,14 +1337,14 @@ singleLayerMapMap:
 	.short	289
 	.short	291
 	.short	292
-	.short	268
-	.short	269
-	.short	270
-	.short	271
-	.short	268
-	.short	269
-	.short	270
-	.short	271
+	.short	252
+	.short	253
+	.short	254
+	.short	255
+	.short	252
+	.short	253
+	.short	254
+	.short	255
 	.short	144
 	.short	145
 	.short	146
@@ -1369,15 +1369,15 @@ singleLayerMapMap:
 	.short	18
 	.short	19
 	.short	16
-	.short	17
-	.short	18
-	.short	19
-	.short	16
-	.short	17
-	.short	18
-	.short	19
-	.short	16
-	.short	160
+	.short	268
+	.short	269
+	.short	270
+	.short	271
+	.short	268
+	.short	269
+	.short	270
+	.short	271
+	.short	144
 	.short	161
 	.short	162
 	.short	163
@@ -1906,10 +1906,10 @@ singleLayerMapMap:
 	.short	191
 	.short	155
 	.short	1
-	.short	2
-	.short	3
-	.short	0
-	.short	1
+	.short	116
+	.short	117
+	.short	118
+	.short	119
 	.short	128
 	.short	129
 	.short	130
@@ -1918,9 +1918,9 @@ singleLayerMapMap:
 	.short	117
 	.short	118
 	.short	119
-	.short	2
-	.short	3
-	.short	0
+	.short	305
+	.short	305
+	.short	306
 	.short	136
 	.short	137
 	.short	138
@@ -1936,12 +1936,12 @@ singleLayerMapMap:
 	.short	205
 	.short	206
 	.short	207
-	.short	16
-	.short	17
-	.short	18
-	.short	19
-	.short	16
-	.short	17
+	.short	130
+	.short	131
+	.short	132
+	.short	133
+	.short	134
+	.short	135
 	.short	144
 	.short	145
 	.short	146
@@ -1950,9 +1950,9 @@ singleLayerMapMap:
 	.short	133
 	.short	134
 	.short	135
-	.short	18
-	.short	19
-	.short	16
+	.short	305
+	.short	162
+	.short	163
 	.short	152
 	.short	153
 	.short	154
@@ -1962,18 +1962,18 @@ singleLayerMapMap:
 	.short	274
 	.short	275
 	.short	276
-	.short	18
-	.short	19
+	.short	162
+	.short	163
 	.short	220
 	.short	221
 	.short	222
 	.short	223
-	.short	32
-	.short	33
-	.short	34
-	.short	35
-	.short	32
-	.short	33
+	.short	146
+	.short	147
+	.short	148
+	.short	149
+	.short	150
+	.short	151
 	.short	160
 	.short	161
 	.short	162
@@ -1982,10 +1982,10 @@ singleLayerMapMap:
 	.short	149
 	.short	150
 	.short	151
-	.short	34
-	.short	35
-	.short	32
-	.short	33
+	.short	305
+	.short	178
+	.short	179
+	.short	322
 	.short	34
 	.short	35
 	.short	32
@@ -1994,18 +1994,18 @@ singleLayerMapMap:
 	.short	290
 	.short	291
 	.short	292
-	.short	34
-	.short	35
+	.short	178
+	.short	179
 	.short	236
 	.short	237
 	.short	238
 	.short	239
-	.short	0
-	.short	1
-	.short	2
-	.short	3
-	.short	40
-	.short	41
+	.short	130
+	.short	131
+	.short	164
+	.short	165
+	.short	166
+	.short	167
 	.short	176
 	.short	177
 	.short	178
@@ -2014,11 +2014,11 @@ singleLayerMapMap:
 	.short	165
 	.short	166
 	.short	167
-	.short	2
-	.short	3
-	.short	116
-	.short	117
-	.short	118
+	.short	128
+	.short	129
+	.short	130
+	.short	131
+	.short	34
 	.short	119
 	.short	0
 	.short	1
@@ -2032,12 +2032,12 @@ singleLayerMapMap:
 	.short	253
 	.short	254
 	.short	255
-	.short	16
-	.short	17
-	.short	18
-	.short	19
-	.short	56
-	.short	57
+	.short	146
+	.short	147
+	.short	180
+	.short	181
+	.short	182
+	.short	183
 	.short	18
 	.short	19
 	.short	16
@@ -2046,12 +2046,12 @@ singleLayerMapMap:
 	.short	181
 	.short	182
 	.short	183
-	.short	18
-	.short	19
-	.short	132
-	.short	133
-	.short	134
-	.short	135
+	.short	144
+	.short	145
+	.short	146
+	.short	147
+	.short	34
+	.short	34
 	.short	16
 	.short	17
 	.short	18

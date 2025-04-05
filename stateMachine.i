@@ -49,7 +49,9 @@ void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int c
 typedef enum {
     START,
     INSTRUCTIONS,
+    CAVE,
     GAME,
+    BOSS,
     PAUSE,
     WIN,
     LOSE
@@ -437,6 +439,16 @@ void goToLose(void) {
     state = LOSE;
 }
 
+void goToBossStage(void) {
+
+    resetSprites();
+
+    initBossStage();
+
+    state = BOSS;
+}
+
+
 static void startState(void) {
 
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
@@ -450,8 +462,6 @@ static void startState(void) {
 static void instructionsState(void) {
 
     drawFullscreenImage4(INSTRUCTIONSBitmap);
-    waitForVBlank();
-    flipPage();
     if ((!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
         goToStart();
     } else if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
@@ -459,6 +469,8 @@ static void instructionsState(void) {
     } else if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
         goToStart();
     }
+    waitForVBlank();
+    flipPage();
 }
 
 
@@ -469,6 +481,12 @@ static void gameState(void) {
     updateJungleStage();
     drawJungleStage();
 }
+
+static void bossState(void) {
+    updateBossStage();
+    drawBossStage();
+}
+
 
 static void pauseState(void) {
     drawFullscreenImage4(pauseBitmap);
@@ -495,6 +513,13 @@ void initStateMachine(void) {
     goToStart();
 }
 
+void resetSprites(void) {
+    for (int i = 0; i < 128; i++) {
+        shadowOAM[i].attr0 = (2<<8);
+    }
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
+}
+
 void updateStateMachine(void) {
     switch (state) {
         case START:
@@ -508,6 +533,9 @@ void updateStateMachine(void) {
             break;
         case PAUSE:
             pauseState();
+            break;
+        case BOSS:
+            bossState();
             break;
         case WIN:
             winState();
