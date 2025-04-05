@@ -536,7 +536,7 @@ static void caveState(void) {
         goToPause();
     }
     updateCaveStage();
-    drawBossStage();
+    drawCaveStage();
 }
 
 static void gameState(void) {

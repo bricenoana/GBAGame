@@ -35,7 +35,6 @@ void updateCaveStage(void) {
 }
 
 void drawCaveStage(void) {
-    // Calculate camera offsets based on player's position.
     hOff = player.x - (SCREENWIDTH / 2);
     vOff = player.y - (SCREENHEIGHT / 2);
     if (hOff < 0) hOff = 0;
@@ -46,15 +45,12 @@ void drawCaveStage(void) {
     REG_BG0HOFF = hOff;
     REG_BG0VOFF = vOff;
 
-    // Update the player sprite.
     drawPlayer(hOff, vOff);
 
-    // Hide all other sprites.
     for (int i = 1; i < 128; i++) {
         shadowOAM[i].attr0 = ATTR0_HIDE;
     }
 
-    // Now update the entire OAM once and wait for VBlank.
     DMANow(3, shadowOAM, OAM, 128 * 4);
     waitForVBlank();
 }

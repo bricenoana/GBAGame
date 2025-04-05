@@ -531,7 +531,7 @@ updateStateMachine:
 	ldr	r3, .L108+52
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L108+40
+	ldr	r3, .L108+56
 	mov	lr, pc
 	bx	r3
 	pop	{r4, r5, r6, lr}
@@ -553,7 +553,7 @@ updateStateMachine:
 	bl	goToPause
 	b	.L69
 .L103:
-	ldr	r3, .L108+56
+	ldr	r3, .L108+60
 	mov	lr, pc
 	bx	r3
 	mov	r2, #2
@@ -569,7 +569,7 @@ updateStateMachine:
 	strb	r2, [r4]
 	b	.L62
 .L107:
-	ldr	r3, .L108+56
+	ldr	r3, .L108+60
 	mov	lr, pc
 	bx	r3
 	mov	r3, #2
@@ -592,10 +592,11 @@ updateStateMachine:
 	.word	initJungleStage
 	.word	INSTRUCTIONSBitmap
 	.word	updateCaveStage
-	.word	drawBossStage
+	.word	drawCaveStage
 	.word	updateJungleStage
 	.word	drawJungleStage
 	.word	updateBossStage
+	.word	drawBossStage
 	.word	initCaveStage
 	.size	updateStateMachine, .-updateStateMachine
 	.comm	shadowOAM,1024,4

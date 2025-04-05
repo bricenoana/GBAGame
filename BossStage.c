@@ -22,11 +22,9 @@ void initBossStage(void) {
     DMANow(3, bossBGTestMap, &SCREENBLOCK[27], bossBGTestLen / 2);
     initPlayer();
 
-    // Set starting position for the boss stage.
     player.x = 16;
     player.y = 16;
 
-    // Disable collision checks in boss stage.
     collisionEnabled = 0;
 
     boss.x = 120;
@@ -51,20 +49,15 @@ void updateBossStage(void) {
 }
 
 void drawBossStage(void) {
-     // Calculate camera offsets based on player's position.
-
      REG_BG0HOFF = 0;
      REG_BG0VOFF = 0;
  
-     // Update the player sprite.
      drawPlayer(0, 0);
  
-     // Hide all other sprites.
      for (int i = 1; i < 128; i++) {
          shadowOAM[i].attr0 = ATTR0_HIDE;
      }
  
-     // Now update the entire OAM once and wait for VBlank.
      DMANow(3, shadowOAM, OAM, 128 * 4);
      waitForVBlank();
 }
