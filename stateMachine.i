@@ -379,6 +379,56 @@ extern const unsigned short INSTRUCTIONSBitmap[19200];
 
 extern const unsigned short INSTRUCTIONSPal[256];
 # 10 "stateMachine.c" 2
+# 1 "player.h" 1
+
+
+
+typedef struct {
+    int x, y;
+    int width, height;
+    int xVel, yVel;
+    int currentFrame, numFrames;
+    int timeUntilNextFrame;
+    int isAnimating;
+    int direction;
+} Player;
+
+extern Player player;
+
+extern int collisionEnabled;
+
+void initPlayer(void);
+void updatePlayer(void);
+void drawPlayer(int hOff, int vOff);
+# 11 "stateMachine.c" 2
+# 1 "BossStage.h" 1
+
+
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int health;
+    int maxHealth;
+    int defeated;
+} Boss;
+
+extern Boss boss;
+
+void initBossStage(void);
+void updateBossStage(void);
+void drawBossStage(void);
+# 12 "stateMachine.c" 2
+# 1 "caveStage.h" 1
+
+
+
+void initCaveStage(void);
+void updateCaveStage(void);
+void drawCaveStage(void);
+# 13 "stateMachine.c" 2
 
 extern unsigned short buttons;
 extern unsigned short oldButtons;
@@ -395,11 +445,15 @@ void goToStart(void) {
     state = START;
 }
 
+void goToCave(void) {
+    initCaveStage();
+    state = CAVE;
+}
+
 void goToGame(void) {
     initJungleStage();
     state = GAME;
 }
-
 
 void goToInstructions(void) {
 
@@ -440,18 +494,22 @@ void goToLose(void) {
 }
 
 void goToBossStage(void) {
-
     resetSprites();
 
+    player.x = 32;
+    player.y = 32;
     initBossStage();
-
     state = BOSS;
 }
+
 
 
 static void startState(void) {
 
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        goToCave();
+    }
+    if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
         goToGame();
     }
     if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
@@ -473,10 +531,20 @@ static void instructionsState(void) {
     flipPage();
 }
 
+static void caveState(void) {
+    if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
+        goToPause();
+    }
+    updateCaveStage();
+    drawBossStage();
+}
 
 static void gameState(void) {
     if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
         goToPause();
+    }
+    if ((!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
+        goToCave();
     }
     updateJungleStage();
     drawJungleStage();
@@ -527,6 +595,9 @@ void updateStateMachine(void) {
             break;
         case INSTRUCTIONS:
             instructionsState();
+            break;
+        case CAVE:
+            caveState();
             break;
         case GAME:
             gameState();

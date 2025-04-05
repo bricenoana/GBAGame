@@ -23,8 +23,8 @@ Temple temple;
 
 void initTemple(void) {
     temple.x = 452;
-    temple.y = 55;
-    temple.width = 50;
+    temple.y = 25;
+    temple.width = 30;
     temple.height = 40;
 }
 

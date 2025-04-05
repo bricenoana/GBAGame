@@ -169,7 +169,6 @@ extern const unsigned short spritesheetPal[256];
 
 
 
-
 typedef struct {
     int x, y;
     int width, height;
@@ -182,12 +181,15 @@ typedef struct {
 
 extern Player player;
 
+extern int collisionEnabled;
+
 void initPlayer(void);
 void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
 # 10 "BossStage.c" 2
 
 Boss boss;
+int hOff, vOff;
 
 
 
@@ -198,6 +200,14 @@ void initBossStage(void) {
     DMANow(3, singleLayerJunglePal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, singleLayerJungleTiles, &((CB*) 0x6000000)[0], 11264 / 2);
     DMANow(3, bossBGTestMap, &((SB*) 0x6000000)[27], (2048) / 2);
+    initPlayer();
+
+
+    player.x = 16;
+    player.y = 16;
+
+
+    collisionEnabled = 0;
 
     boss.x = 120;
     boss.y = 80;
@@ -209,22 +219,32 @@ void initBossStage(void) {
 }
 
 
-void updateBossStage(void) {
 
-    if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
-        boss.health -= 10;
-        if (boss.health < 0) {
-            boss.health = 0;
-        }
-    }
+
+void updateBossStage(void) {
+    updatePlayer();
+
+    if (player.x < 0) player.x = 0;
+    if (player.x > 240 - player.width) player.x = 240 - player.width;
+    if (player.y < 0) player.y = 0;
+    if (player.y > 160 - player.height) player.y = 160 - player.height;
 }
 
 void drawBossStage(void) {
-    resetSprites();
 
-    shadowOAM[0].attr0 = ((boss.y) & 0xFF) | (2<<14);
-    shadowOAM[0].attr1 = ((boss.x) & 0x1FF) | (2<<14);
-    shadowOAM[0].attr2 = ((((0) * (32) + (0))) & 0x3FF);
-    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
-    waitForVBlank();
+
+     (*(volatile unsigned short*) 0x04000010) = 0;
+     (*(volatile unsigned short*) 0x04000012) = 0;
+
+
+     drawPlayer(0, 0);
+
+
+     for (int i = 1; i < 128; i++) {
+         shadowOAM[i].attr0 = (2<<8);
+     }
+
+
+     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
+     waitForVBlank();
 }

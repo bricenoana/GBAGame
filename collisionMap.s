@@ -2930,7 +2930,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -3442,7 +3442,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -3698,7 +3698,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -3954,7 +3954,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -6514,7 +6514,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -7026,7 +7026,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -7538,7 +7538,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -7794,7 +7794,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -8050,7 +8050,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -8562,7 +8562,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -8818,7 +8818,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -9330,7 +9330,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -10866,7 +10866,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -11122,7 +11122,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -11378,7 +11378,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
+	.short	1
 	.short	0
 	.short	0
 	.short	0
@@ -34145,12 +34145,12 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	256
-	.short	1
 	.short	257
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -36201,7 +36201,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -36457,7 +36457,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -36713,7 +36713,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -36969,7 +36969,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -37225,7 +37225,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -37469,8 +37469,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	1
-	.short	0
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -37482,6 +37481,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -37737,7 +37737,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -37981,8 +37981,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	1
-	.short	0
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -37994,6 +37993,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -38237,8 +38237,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	1
-	.short	0
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -38250,6 +38249,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -38493,8 +38493,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	1
-	.short	0
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -38506,6 +38505,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -38749,8 +38749,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	1
-	.short	0
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -38762,6 +38761,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -39017,7 +39017,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -39261,8 +39261,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	1
-	.short	0
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -39274,6 +39273,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -39517,8 +39517,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	1
-	.short	0
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -39530,6 +39529,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -39785,7 +39785,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -40029,8 +40029,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	1
-	.short	0
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -40042,6 +40041,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -40297,7 +40297,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -40553,7 +40553,7 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
+	.short	256
 	.short	257
 	.short	257
 	.short	257
@@ -40798,18 +40798,14 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -40948,6 +40944,10 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -41054,18 +41054,6 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
 	.short	257
 	.short	257
 	.short	257
@@ -41204,6 +41192,18 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -41310,18 +41310,14 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -41460,6 +41456,10 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -41566,18 +41566,6 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
 	.short	257
 	.short	257
 	.short	257
@@ -41716,6 +41704,18 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -41822,18 +41822,14 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -41972,6 +41968,10 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -42078,18 +42078,6 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
 	.short	257
 	.short	257
 	.short	257
@@ -42228,6 +42216,18 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -42334,18 +42334,6 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
 	.short	257
 	.short	257
 	.short	257
@@ -42484,15 +42472,22 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	0
+	.short	0
+	.short	0
+	.short	0
 	.short	0
 	.short	0
 	.short	0
@@ -42514,6 +42509,11 @@ collisionMapBitmap:
 	.short	0
 	.short	0
 	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
 	.short	256
 	.short	257
 	.short	257
@@ -42590,18 +42590,13 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -42740,6 +42735,11 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -42846,18 +42846,13 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -42996,6 +42991,11 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -43103,14 +43103,11 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	256
 	.short	257
-	.short	1
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -43252,6 +43249,9 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -53385,20 +53385,13 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -53420,6 +53413,13 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	1
 	.short	0
 	.short	0
@@ -53641,20 +53641,9 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -53676,6 +53665,17 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	1
 	.short	0
 	.short	0
@@ -53897,20 +53897,13 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -53932,6 +53925,13 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	1
 	.short	0
 	.short	0
@@ -54153,20 +54153,17 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -54188,6 +54185,9 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	1
 	.short	0
 	.short	0
@@ -54409,20 +54409,13 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -54444,6 +54437,13 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	1
 	.short	0
 	.short	0
@@ -54665,20 +54665,9 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -54700,6 +54689,17 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	1
 	.short	0
 	.short	0
@@ -54921,20 +54921,15 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -54956,6 +54951,11 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	1
 	.short	0
 	.short	0
@@ -55177,20 +55177,12 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -55212,6 +55204,14 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	1
 	.short	0
 	.short	0
@@ -55433,20 +55433,10 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -55515,6 +55505,16 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -55689,20 +55689,16 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -55771,6 +55767,10 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -55945,20 +55945,14 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -55995,6 +55989,12 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -56201,20 +56201,12 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -56251,6 +56243,14 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	1
 	.short	0
 	.short	0
@@ -56457,20 +56457,18 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -56507,6 +56505,8 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
 	.short	1
 	.short	0
 	.short	0
@@ -56713,20 +56713,7 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -56763,6 +56750,19 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	0
 	.short	0
 	.short	0
@@ -56969,20 +56969,13 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257
@@ -57019,6 +57012,13 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	1
 	.short	0
 	.short	0
@@ -57225,20 +57225,20 @@ collisionMapBitmap:
 	.short	257
 	.short	257
 	.short	257
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	256
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
+	.short	257
 	.short	257
 	.short	257
 	.short	257

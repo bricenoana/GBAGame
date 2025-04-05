@@ -23,8 +23,8 @@ initTemple:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
 	mov	ip, #452
-	mov	r0, #55
-	mov	r1, #50
+	mov	r0, #25
+	mov	r1, #30
 	mov	r2, #40
 	ldr	r3, .L3
 	stmib	r3, {r0, r1, r2}

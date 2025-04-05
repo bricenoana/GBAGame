@@ -1,24 +1,26 @@
 #include "gba.h" 
 #include "mode0.h"
 #include "sprites.h"
-#include "boofBG.h" //tiles
-#include "boofMap.h" //map
 #include "spritesheet.h"
 #include "player.h"
 #include "backgroundCaveTiles.h" //tiles
-#include "backgroundCaveMap.h" //map //implement after testing
+#include "backgroundCaveMap.h" //map
 
 int hOff, vOff;
 
-void initCaveStage() {
+void initCaveStage(void) {
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
-    REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(27) | BG_SIZE_SMALL;
+    REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(27) | BG_SIZE_WIDE;
 
-    DMANow(3, boofBGPal, BG_PALETTE, boofBGPalLen/2); //tiles
-    DMANow(3, boofBGTiles, &CHARBLOCK[0], boofBGTilesLen / 2); //tiles
-    DMANow(3, boofMapMap, &SCREENBLOCK[27], boofMapLen/2); //map
+    DMANow(3, backgroundCaveTilesPal, BG_PALETTE, backgroundCaveTilesPalLen / 2);
+    DMANow(3, backgroundCaveTilesTiles, &CHARBLOCK[0], backgroundCaveTilesTilesLen / 2);
+    DMANow(3, backgroundCaveMapMap, &SCREENBLOCK[27], backgroundCaveMapLen / 2);
 
     initPlayer();
+    player.x = 16;
+    player.y = 16;
+    collisionEnabled = 0;
+
     hOff = 0;
     vOff = 0;
     REG_BG0HOFF = hOff;
@@ -28,3 +30,31 @@ void initCaveStage() {
     DMANow(3, shadowOAM, OAM, 128 * 4);
 }
 
+void updateCaveStage(void) {
+    updatePlayer();
+}
+
+void drawCaveStage(void) {
+    // Calculate camera offsets based on player's position.
+    hOff = player.x - (SCREENWIDTH / 2);
+    vOff = player.y - (SCREENHEIGHT / 2);
+    if (hOff < 0) hOff = 0;
+    if (hOff > 512 - SCREENWIDTH) hOff = 512 - SCREENWIDTH;
+    if (vOff < 0) vOff = 0;
+    if (vOff > 512 - SCREENHEIGHT) vOff = 512 - SCREENHEIGHT;
+
+    REG_BG0HOFF = hOff;
+    REG_BG0VOFF = vOff;
+
+    // Update the player sprite.
+    drawPlayer(hOff, vOff);
+
+    // Hide all other sprites.
+    for (int i = 1; i < 128; i++) {
+        shadowOAM[i].attr0 = ATTR0_HIDE;
+    }
+
+    // Now update the entire OAM once and wait for VBlank.
+    DMANow(3, shadowOAM, OAM, 128 * 4);
+    waitForVBlank();
+}

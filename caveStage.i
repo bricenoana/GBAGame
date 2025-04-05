@@ -114,32 +114,14 @@ typedef struct {
     u8 oamIndex;
 } SPRITE;
 # 4 "caveStage.c" 2
-# 1 "boofBG.h" 1
-# 21 "boofBG.h"
-extern const unsigned short boofBGTiles[10000];
-
-
-extern const unsigned short boofBGPal[256];
-# 5 "caveStage.c" 2
-# 1 "boofMap.h" 1
-
-
-
-
-
-
-
-extern const unsigned short boofMapMap[1024];
-# 6 "caveStage.c" 2
 # 1 "spritesheet.h" 1
 # 21 "spritesheet.h"
 extern const unsigned short spritesheetTiles[16384];
 
 
 extern const unsigned short spritesheetPal[256];
-# 7 "caveStage.c" 2
+# 5 "caveStage.c" 2
 # 1 "player.h" 1
-
 
 
 
@@ -155,17 +137,19 @@ typedef struct {
 
 extern Player player;
 
+extern int collisionEnabled;
+
 void initPlayer(void);
 void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
-# 8 "caveStage.c" 2
+# 6 "caveStage.c" 2
 # 1 "backgroundCaveTiles.h" 1
 # 21 "backgroundCaveTiles.h"
 extern const unsigned short backgroundCaveTilesTiles[9600];
 
 
 extern const unsigned short backgroundCaveTilesPal[256];
-# 9 "caveStage.c" 2
+# 7 "caveStage.c" 2
 # 1 "backgroundCaveMap.h" 1
 
 
@@ -174,20 +158,24 @@ extern const unsigned short backgroundCaveTilesPal[256];
 
 
 
-extern const unsigned short backgroundCaveMapMap[1024];
-# 10 "caveStage.c" 2
+extern const unsigned short backgroundCaveMapMap[2048];
+# 8 "caveStage.c" 2
 
 int hOff, vOff;
 
-void initCaveStage() {
+void initCaveStage(void) {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
-    (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (0 << 14);
+    (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (1 << 14);
 
-    DMANow(3, boofBGPal, ((unsigned short *)0x5000000), 512/2);
-    DMANow(3, boofBGTiles, &((CB*) 0x6000000)[0], 20000 / 2);
-    DMANow(3, boofMapMap, &((SB*) 0x6000000)[27], (2048)/2);
+    DMANow(3, backgroundCaveTilesPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, backgroundCaveTilesTiles, &((CB*) 0x6000000)[0], 19200 / 2);
+    DMANow(3, backgroundCaveMapMap, &((SB*) 0x6000000)[27], (4096) / 2);
 
     initPlayer();
+    player.x = 16;
+    player.y = 16;
+    collisionEnabled = 0;
+
     hOff = 0;
     vOff = 0;
     (*(volatile unsigned short*) 0x04000010) = hOff;
@@ -195,4 +183,33 @@ void initCaveStage() {
 
     hideSprites();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
+}
+
+void updateCaveStage(void) {
+    updatePlayer();
+}
+
+void drawCaveStage(void) {
+
+    hOff = player.x - (240 / 2);
+    vOff = player.y - (160 / 2);
+    if (hOff < 0) hOff = 0;
+    if (hOff > 512 - 240) hOff = 512 - 240;
+    if (vOff < 0) vOff = 0;
+    if (vOff > 512 - 160) vOff = 512 - 160;
+
+    (*(volatile unsigned short*) 0x04000010) = hOff;
+    (*(volatile unsigned short*) 0x04000012) = vOff;
+
+
+    drawPlayer(hOff, vOff);
+
+
+    for (int i = 1; i < 128; i++) {
+        shadowOAM[i].attr0 = (2<<8);
+    }
+
+
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
+    waitForVBlank();
 }

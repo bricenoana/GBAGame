@@ -40,20 +40,28 @@ initBossStage:
 	ldr	r1, .L4+8
 	mov	lr, pc
 	bx	r4
-	mov	r3, #1024
 	mov	r0, #3
 	ldr	r2, .L4+12
 	ldr	r1, .L4+16
+	mov	r3, #1024
 	mov	lr, pc
 	bx	r4
-	mov	lr, #120
+	ldr	r3, .L4+20
+	mov	lr, pc
+	bx	r3
+	mov	ip, #16
+	mov	r0, #0
+	mov	r4, #120
+	mov	lr, #80
 	mov	r1, #32
 	mov	r2, #100
-	mov	ip, #80
-	mov	r0, #0
-	ldr	r3, .L4+20
-	str	lr, [r3]
+	ldr	r3, .L4+24
+	str	ip, [r3]
 	str	ip, [r3, #4]
+	ldr	r3, .L4+28
+	str	r0, [r3]
+	ldr	r3, .L4+32
+	stm	r3, {r4, lr}
 	str	r0, [r3, #24]
 	str	r1, [r3, #8]
 	str	r1, [r3, #12]
@@ -69,6 +77,9 @@ initBossStage:
 	.word	singleLayerJungleTiles
 	.word	100718592
 	.word	bossBGTestMap
+	.word	initPlayer
+	.word	player
+	.word	collisionEnabled
 	.word	boss
 	.size	initBossStage, .-initBossStage
 	.align	2
@@ -81,27 +92,36 @@ updateBossStage:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	@ link register save eliminated.
-	ldr	r3, .L11
-	ldrh	r3, [r3]
-	tst	r3, #1
-	bxeq	lr
-	ldr	r3, .L11+4
-	ldrh	r3, [r3]
-	ands	r3, r3, #1
-	bxne	lr
-	ldr	r1, .L11+8
-	ldr	r2, [r1, #16]
-	subs	r2, r2, #10
-	movpl	r3, r2
-	str	r3, [r1, #16]
+	push	{r4, lr}
+	ldr	r3, .L12
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L12+4
+	ldr	r1, [r3]
+	cmp	r1, #0
+	movlt	r2, #0
+	movlt	r1, r2
+	strlt	r2, [r3]
+	ldr	r2, [r3, #8]
+	rsb	r2, r2, #240
+	cmp	r2, r1
+	ldr	r1, [r3, #4]
+	strlt	r2, [r3]
+	cmp	r1, #0
+	movlt	r2, #0
+	movlt	r1, r2
+	strlt	r2, [r3, #4]
+	ldr	r2, [r3, #12]
+	rsb	r2, r2, #160
+	cmp	r2, r1
+	strlt	r2, [r3, #4]
+	pop	{r4, lr}
 	bx	lr
-.L12:
+.L13:
 	.align	2
-.L11:
-	.word	oldButtons
-	.word	buttons
-	.word	boss
+.L12:
+	.word	updatePlayer
+	.word	player
 	.size	updateBossStage, .-updateBossStage
 	.align	2
 	.global	drawBossStage
@@ -113,44 +133,44 @@ drawBossStage:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
+	mov	r1, #0
+	mov	r3, #67108864
 	push	{r4, lr}
-	ldr	r3, .L15
+	mov	r0, r1
+	strh	r1, [r3, #16]	@ movhi
+	ldr	r2, .L18
+	strh	r1, [r3, #18]	@ movhi
 	mov	lr, pc
-	bx	r3
-	mov	lr, #0
-	ldr	r2, .L15+4
-	ldr	r3, [r2]
-	ldr	ip, .L15+8
-	ldrb	r0, [r2, #4]	@ zero_extendqisi2
-	lsl	r3, r3, #23
-	ldr	r1, .L15+12
-	lsr	r3, r3, #23
-	orr	r2, r3, ip
-	orr	r0, r0, ip
-	strh	r2, [r1, #2]	@ movhi
-	strh	r0, [r1]	@ movhi
-	strh	lr, [r1, #4]	@ movhi
+	bx	r2
+	mov	r1, #512
+	ldr	r3, .L18+4
+	add	r2, r3, #1016
+.L15:
+	strh	r1, [r3, #8]!	@ movhi
+	cmp	r3, r2
+	bne	.L15
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r4, .L15+16
+	ldr	r1, .L18+4
+	ldr	r4, .L18+8
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L15+20
+	ldr	r3, .L18+12
 	mov	lr, pc
 	bx	r3
 	pop	{r4, lr}
 	bx	lr
-.L16:
+.L19:
 	.align	2
-.L15:
-	.word	resetSprites
-	.word	boss
-	.word	-32768
+.L18:
+	.word	drawPlayer
 	.word	shadowOAM
 	.word	DMANow
 	.word	waitForVBlank
 	.size	drawBossStage, .-drawBossStage
+	.comm	vOff,4,4
+	.comm	hOff,4,4
 	.comm	boss,28,4
 	.comm	shadowOAM,1024,4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

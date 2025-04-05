@@ -7,6 +7,9 @@
 #include "startBG.h"
 #include "pause.h"
 #include "INSTRUCTIONS.h"
+#include "player.h"
+#include "BossStage.h"
+#include "caveStage.h"
 
 extern unsigned short buttons;
 extern unsigned short oldButtons;
@@ -23,11 +26,15 @@ void goToStart(void) {
     state = START;
 }
 
+void goToCave(void) {
+    initCaveStage();
+    state = CAVE;
+}
+
 void goToGame(void) {
     initJungleStage();
     state = GAME;
 }
-
 
 void goToInstructions(void) {
     //drawing the instruction screen
@@ -68,18 +75,22 @@ void goToLose(void) {
 }
 
 void goToBossStage(void) {
-    // go to boss stage when player collides w temple
-    resetSprites();
-    
+    resetSprites();    // Hide all lingering sprites.
+    // Optionally, reposition player off-screen:
+    player.x = 32;
+    player.y = 32;
     initBossStage();
-
     state = BOSS;  
 }
+
 
 
 static void startState(void) {
     //move thru start screen
     if (BUTTON_PRESSED(BUTTON_START)) {
+        goToCave();
+    }
+    if (BUTTON_PRESSED(BUTTON_A)) {
         goToGame();
     }
     if (BUTTON_PRESSED(BUTTON_SELECT)) {
@@ -101,10 +112,20 @@ static void instructionsState(void) {
     flipPage();
 }
 
+static void caveState(void) {
+    if (BUTTON_PRESSED(BUTTON_SELECT)) {
+        goToPause();
+    }
+    updateCaveStage();
+    drawBossStage();
+}
 
 static void gameState(void) {
     if (BUTTON_PRESSED(BUTTON_SELECT)) {
         goToPause();
+    }
+    if (BUTTON_PRESSED(BUTTON_B)) {
+        goToCave();
     }
     updateJungleStage();
     drawJungleStage();
@@ -155,6 +176,9 @@ void updateStateMachine(void) {
             break;
         case INSTRUCTIONS:
             instructionsState();
+            break;
+        case CAVE:
+            caveState();
             break;
         case GAME:
             gameState();

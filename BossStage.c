@@ -9,6 +9,7 @@
 #include "player.h"
 
 Boss boss;
+int hOff, vOff;
 
 // boss will be in the final stage of the game (still need a tilemap for it)
 
@@ -19,6 +20,14 @@ void initBossStage(void) {
     DMANow(3, singleLayerJunglePal, BG_PALETTE, singleLayerJunglePalLen / 2);
     DMANow(3, singleLayerJungleTiles, &CHARBLOCK[0], singleLayerJungleTilesLen / 2);
     DMANow(3, bossBGTestMap, &SCREENBLOCK[27], bossBGTestLen / 2);
+    initPlayer();
+
+    // Set starting position for the boss stage.
+    player.x = 16;
+    player.y = 16;
+
+    // Disable collision checks in boss stage.
+    collisionEnabled = 0;
 
     boss.x = 120;
     boss.y = 80;
@@ -30,22 +39,33 @@ void initBossStage(void) {
 }
 
 
+
+
 void updateBossStage(void) {
-    // simulate boss taking damage when the A button is pressed
-    if (BUTTON_PRESSED(BUTTON_A)) {
-        boss.health -= 10;
-        if (boss.health < 0) {
-            boss.health = 0;
-        }
-    }
+    updatePlayer();
+
+    if (player.x < 0) player.x = 0;
+    if (player.x > SCREENWIDTH - player.width) player.x = SCREENWIDTH - player.width;
+    if (player.y < 0) player.y = 0;
+    if (player.y > SCREENHEIGHT - player.height) player.y = SCREENHEIGHT - player.height;
 }
 
 void drawBossStage(void) {
-    resetSprites(); // Clear all sprites first.
-    // Now, set up the boss sprite.
-    shadowOAM[0].attr0 = ATTR0_Y(boss.y) | ATTR0_TALL;
-    shadowOAM[0].attr1 = ATTR1_X(boss.x) | ATTR1_MEDIUM;
-    shadowOAM[0].attr2 = ATTR2_TILEID(0, 0); // Use the appropriate tile indices for your boss sprite.
-    DMANow(3, shadowOAM, OAM, 128 * 4);
-    waitForVBlank();
+     // Calculate camera offsets based on player's position.
+
+     REG_BG0HOFF = 0;
+     REG_BG0VOFF = 0;
+ 
+     // Update the player sprite.
+     drawPlayer(0, 0);
+ 
+     // Hide all other sprites.
+     for (int i = 1; i < 128; i++) {
+         shadowOAM[i].attr0 = ATTR0_HIDE;
+     }
+ 
+     // Now update the entire OAM once and wait for VBlank.
+     DMANow(3, shadowOAM, OAM, 128 * 4);
+     waitForVBlank();
 }
+

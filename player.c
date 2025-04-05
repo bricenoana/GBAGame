@@ -13,11 +13,12 @@
 #define MAPHEIGHT 274
 
 Player player;
+int collisionEnabled = 1; // Default: collision enabled
 
 typedef enum {DOWN, UP, LEFT, RIGHT} DIRECTION;
 
-inline unsigned char colorAt(int x, int y){
-    return ((unsigned char *) collisionMapBitmap) [OFFSET(x, y, MAPWIDTH)];
+inline unsigned char colorAt(int x, int y) {
+    return ((unsigned char *) collisionMapBitmap)[OFFSET(x, y, MAPWIDTH)];
 }
 
 void initPlayer(void) {
@@ -28,8 +29,8 @@ void initPlayer(void) {
     player.numFrames = 3;
     player.direction = DOWN;
     player.timeUntilNextFrame = 10;
-    player.xVel = 2;
-    player.yVel = 2;
+    player.xVel = 1;
+    player.yVel = 1;
 
     DMANow(3, spriteNormalTiles, &CHARBLOCK[4], spriteNormalTilesLen / 2);
     DMANow(3, spriteNormalPal, SPRITE_PAL, 256);
@@ -44,8 +45,9 @@ void updatePlayer(void) {
         player.direction = UP;
         int newY = player.y - player.yVel;
         if (newY >= 0) {
-            if (colorAt(player.x, newY) != 0 &&
-                colorAt(player.x + player.width - 1, newY) != 0) {
+            if (!collisionEnabled || 
+                (colorAt(player.x, newY) != 0 &&
+                 colorAt(player.x + player.width - 1, newY) != 0)) {
                 player.y = newY;
             }
         }
@@ -54,8 +56,9 @@ void updatePlayer(void) {
         player.direction = DOWN;
         int newBottom = player.y + player.height - 1 + player.yVel;
         if (newBottom < MAPHEIGHT) {
-            if (colorAt(player.x, newBottom) != 0 &&
-                colorAt(player.x + player.width - 1, newBottom) != 0) {
+            if (!collisionEnabled ||
+                (colorAt(player.x, newBottom) != 0 &&
+                 colorAt(player.x + player.width - 1, newBottom) != 0)) {
                 player.y += player.yVel;
             }
         }
@@ -64,8 +67,9 @@ void updatePlayer(void) {
         player.direction = LEFT;
         int newX = player.x - player.xVel;
         if (newX >= 0) {
-            if (colorAt(newX, player.y) != 0 &&
-                colorAt(newX, player.y + player.height - 1) != 0) {
+            if (!collisionEnabled ||
+                (colorAt(newX, player.y) != 0 &&
+                 colorAt(newX, player.y + player.height - 1) != 0)) {
                 player.x = newX;
             }
         }
@@ -74,8 +78,9 @@ void updatePlayer(void) {
         player.direction = RIGHT;
         int newX = player.x + player.xVel;
         if (newX + player.width - 1 < MAPWIDTH) {
-            if (colorAt(newX + player.width - 1, player.y) != 0 &&
-                colorAt(newX + player.width - 1, player.y + player.height - 1) != 0) {
+            if (!collisionEnabled ||
+                (colorAt(newX + player.width - 1, player.y) != 0 &&
+                 colorAt(newX + player.width - 1, player.y + player.height - 1) != 0)) {
                 player.x = newX;
             }
         }
@@ -95,11 +100,10 @@ void updatePlayer(void) {
     }
 }
 
-
 void drawPlayer(int hOff, int vOff) {
     int screenX = player.x - hOff;
     int screenY = player.y - vOff;
-
+    
     shadowOAM[0].attr0 = ATTR0_Y(screenY) | ATTR0_TALL;
     shadowOAM[0].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
     
@@ -123,24 +127,4 @@ void drawPlayer(int hOff, int vOff) {
     }
     
     shadowOAM[0].attr2 = ATTR2_TILEID(player.currentFrame * 2, tileRow);
-
-    hOff = player.x - SCREENWIDTH / 2;
-    vOff = player.y - SCREENHEIGHT / 2;
-
-    if (hOff < 0) {
-        hOff = 0;
-    } else if (hOff > MAPWIDTH - SCREENWIDTH) {
-        hOff = MAPWIDTH - SCREENWIDTH;
-    }
-    if (vOff < 0) {
-        vOff = 0;
-    } else if (vOff > MAPHEIGHT - SCREENHEIGHT) {
-        vOff = MAPHEIGHT - SCREENHEIGHT;
-    }
-
-    REG_BG0HOFF = hOff;
-    REG_BG0VOFF = vOff;
-
-    waitForVBlank();
-    DMANow(3, shadowOAM, OAM, 128 * 4);
 }

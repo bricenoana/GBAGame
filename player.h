@@ -1,4 +1,3 @@
-
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -13,6 +12,8 @@ typedef struct {
 } Player;
 
 extern Player player;
+
+extern int collisionEnabled;
 
 void initPlayer(void);
 void updatePlayer(void);
