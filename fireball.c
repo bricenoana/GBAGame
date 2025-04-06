@@ -32,9 +32,8 @@ void updateFireballs(void) {
     }
 
     for (int i = 0; i < MAX_FIREBALLS; i++) {
-        if (fireballs[i].active && collision(player.x, player.y, player.width, player.height,
-                                             fireballs[i].x, fireballs[i].y, 16, 16)) {
-            player.health -= 0;
+        if (fireballs[i].active && collision(player.x, player.y, player.width, player.height, fireballs[i].x, fireballs[i].y, 16, 16)) {
+            player.health -= 20;
             fireballs[i].active = 0;
     
             if (player.health <= 0) {

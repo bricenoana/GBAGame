@@ -395,8 +395,8 @@ playerSlashActive:
 	.size	playerSlashTimer, 4
 playerSlashTimer:
 	.space	4
-	.type	winDelay.4147, %object
-	.size	winDelay.4147, 4
-winDelay.4147:
+	.type	winDelay.4145, %object
+	.size	winDelay.4145, 4
+winDelay.4145:
 	.space	4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

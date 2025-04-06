@@ -7,7 +7,7 @@ typedef struct {
     int currentFrame;
     int numFrames;
     int timeUntilNextFrame;
-    int isAnimating; // 0 = static, 1 = animating
+    int isAnimating;
 } Sword;
 
 extern Sword sword;

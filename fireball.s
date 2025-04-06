@@ -126,12 +126,14 @@ updateFireballs:
 	bx	r7
 	cmp	r0, #0
 	beq	.L12
-	mov	r3, #0
-	ldr	r2, [r6, #44]
-	cmp	r2, r3
-	str	r3, [r4, #24]
-	bgt	.L12
+	mov	r2, #0
+	ldr	r3, [r6, #44]
+	sub	r3, r3, #20
+	cmp	r3, r2
 	str	r3, [r6, #44]
+	str	r2, [r4, #24]
+	bgt	.L12
+	str	r2, [r6, #44]
 	mov	lr, pc
 	bx	r8
 	b	.L12

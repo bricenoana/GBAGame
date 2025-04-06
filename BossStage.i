@@ -10,13 +10,6 @@ void initBossStage(void);
 void updateBossStage(void);
 void drawBossStage(void);
 # 2 "BossStage.c" 2
-# 1 "enemySprite.h" 1
-# 21 "enemySprite.h"
-extern const unsigned short enemyTiles[10000];
-
-
-extern const unsigned short enemyPal[256];
-# 3 "BossStage.c" 2
 # 1 "gba.h" 1
 
 
@@ -56,7 +49,7 @@ typedef volatile struct {
 } DMAChannel;
 # 104 "gba.h"
 void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
-# 4 "BossStage.c" 2
+# 3 "BossStage.c" 2
 # 1 "mode0.h" 1
 # 32 "mode0.h"
 typedef struct {
@@ -68,7 +61,7 @@ typedef struct {
 typedef struct {
  u16 tilemap[1024];
 } SB;
-# 5 "BossStage.c" 2
+# 4 "BossStage.c" 2
 # 1 "bossBGTest.h" 1
 
 
@@ -78,14 +71,14 @@ typedef struct {
 
 
 extern const unsigned short bossBGTestMap[1024];
-# 6 "BossStage.c" 2
+# 5 "BossStage.c" 2
 # 1 "singleLayerJungle.h" 1
 # 21 "singleLayerJungle.h"
 extern const unsigned short singleLayerJungleTiles[5632];
 
 
 extern const unsigned short singleLayerJunglePal[256];
-# 7 "BossStage.c" 2
+# 6 "BossStage.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
 typedef struct {
@@ -145,14 +138,14 @@ typedef struct {
     int numFrames;
     u8 oamIndex;
 } SPRITE;
-# 8 "BossStage.c" 2
+# 7 "BossStage.c" 2
 # 1 "spritesheet.h" 1
 # 21 "spritesheet.h"
 extern const unsigned short spritesheetTiles[16384];
 
 
 extern const unsigned short spritesheetPal[256];
-# 9 "BossStage.c" 2
+# 8 "BossStage.c" 2
 # 1 "player.h" 1
 
 
@@ -177,7 +170,7 @@ extern int collisionEnabled;
 void initPlayer(void);
 void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
-# 10 "BossStage.c" 2
+# 9 "BossStage.c" 2
 # 1 "boss.h" 1
 
 
@@ -197,7 +190,7 @@ extern Boss boss;
 void initBoss(void);
 void updateBoss(void);
 void drawBoss(void);
-# 11 "BossStage.c" 2
+# 10 "BossStage.c" 2
 # 1 "fireball.h" 1
 
 
@@ -216,7 +209,7 @@ extern Fireball fireballs[5];
 void initFireballs(void);
 void updateFireballs(void);
 void drawFireballs(void);
-# 12 "BossStage.c" 2
+# 11 "BossStage.c" 2
 # 1 "slash.h" 1
 
 
@@ -234,7 +227,7 @@ extern Slash slash;
 void initSlash(void);
 void updateSlash(void);
 void drawSlash(int hOff, int vOff);
-# 13 "BossStage.c" 2
+# 12 "BossStage.c" 2
 
 int hOff, vOff;
 

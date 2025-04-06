@@ -1,5 +1,4 @@
 #include "BossStage.h"
-#include "enemySprite.h"
 #include "gba.h"
 #include "mode0.h"
 #include "bossBGTest.h"           // map

@@ -142,7 +142,7 @@ void fireBossFireball() {
     }
 }
 
-int isqrt(int n) { // approx square root function?? ask if can use math
+int isqrt(int n) { // approx square root function?? ask if easier way 
     int x = n;
     int y = (x + 1) / 2;
     while (y < x) {
