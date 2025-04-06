@@ -4,15 +4,15 @@
 #include "boss.h"
 #include "spriteNormal.h"
 #include "fireball.h"
+#include "player.h"
 
 Boss boss;
 static int bossFrame = 0;
-static int bossFrameDelay = 30;  // Delay between toggling frames
-static int bossMoveTimer = 60;   // Frames until a new random direction is chosen
+static int bossFrameDelay = 30;
+static int bossMoveTimer = 60;
 static int bossXVel = 0;
 static int bossYVel = 0;
 
-// Simple LCG for pseudo-random numbers.
 static unsigned int seed = 123456789;
 static unsigned int rand_int(void) {
     seed = seed * 1103515245 + 12345;
@@ -40,22 +40,26 @@ void initBoss(void) {
 }
 
 void updateBoss(void) {
-    // Damage handling and animation code...
+    static int fireballTimer = 90;
+
     if (boss.health <= 0) {
         boss.health = 0;
         boss.defeated = 1;
+        return;
     }
 
-    // Animate: alternate between frame 0 and 1 if alive.
-    if (boss.health > 0) {
-        bossFrameDelay--;
-        if (bossFrameDelay <= 0) {
-            bossFrame = (bossFrame == 0) ? 1 : 0;
-            bossFrameDelay = 30;
-        }
+    bossFrameDelay--;
+    if (bossFrameDelay <= 0) {
+        bossFrame = (bossFrame == 0) ? 1 : 0;
+        bossFrameDelay = 30;
     }
 
-    // Random movement (or your existing movement code):
+    fireballTimer--;
+    if (fireballTimer <= 0) {
+        fireBossFireball();
+        fireballTimer = 90;
+    }
+
     bossMoveTimer--;
     if(bossMoveTimer <= 0) {
         int dir = rand_int() % 4;
@@ -112,4 +116,35 @@ void drawBoss(void) {
     }
 
     shadowOAM[1].attr2 = ATTR2_TILEID(8 + frameToDraw * 8, 0) | (2 << 12);
+}
+
+void fireBossFireball() {
+    for (int i = 0; i < MAX_FIREBALLS; i++) {
+        if (!fireballs[i].active) {
+            fireballs[i].active = 1;
+            fireballs[i].x = boss.x + boss.width / 2 - 8;
+            fireballs[i].y = boss.y + boss.height / 2 - 8;
+
+            int dx = player.x - fireballs[i].x;
+            int dy = player.y - fireballs[i].y;
+
+            int magnitude = isqrt(dx * dx + dy * dy);
+            if (magnitude == 0) magnitude = 1;
+
+            fireballs[i].xVel = (dx * 4) / magnitude;
+            fireballs[i].yVel = (dy * 4) / magnitude;
+
+            break;
+        }
+    }
+}
+
+int isqrt(int n) {
+    int x = n;
+    int y = (x + 1) / 2;
+    while (y < x) {
+        x = y;
+        y = (x + n / x) / 2;
+    }
+    return x;
 }

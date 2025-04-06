@@ -17,4 +17,4 @@ void initBoss(void);
 void updateBoss(void);
 void drawBoss(void);
 
-#endif // BOSS_H
+#endif

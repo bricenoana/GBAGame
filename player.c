@@ -13,7 +13,7 @@
 #define MAPHEIGHT 274
 
 Player player;
-int collisionEnabled = 1; // Default: collision enabled
+int collisionEnabled = 1;
 
 typedef enum {DOWN, UP, LEFT, RIGHT} DIRECTION;
 

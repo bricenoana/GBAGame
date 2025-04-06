@@ -10612,38 +10612,38 @@ spriteNormalTiles:
 	.short	0
 	.short	0
 	.short	0
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	8192
+	.short	0
+	.short	-15840
+	.short	0
+	.short	-13118
+	.short	8192
+	.short	-13876
+	.short	-15872
+	.short	11420
+	.short	-15872
+	.short	11417
+	.short	0
+	.short	0
+	.short	8192
+	.short	2
+	.short	-15838
+	.short	34
+	.short	11468
+	.short	12
+	.short	8908
+	.short	2
+	.short	546
+	.short	0
+	.short	2
+	.short	0
+	.short	0
+	.short	0
 	.short	0
 	.short	0
 	.short	0
@@ -11124,38 +11124,38 @@ spriteNormalTiles:
 	.short	0
 	.short	0
 	.short	0
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
-	.short	-13108
+	.short	-28672
+	.short	-13159
+	.short	0
+	.short	-26215
+	.short	-26368
+	.short	-26215
+	.short	30464
+	.short	-26215
+	.short	8192
+	.short	30615
+	.short	0
+	.short	2
+	.short	0
+	.short	0
+	.short	0
+	.short	0
+	.short	2
+	.short	0
+	.short	28791
+	.short	0
+	.short	26489
+	.short	145
+	.short	-26215
+	.short	118
+	.short	30327
+	.short	105
+	.short	4369
+	.short	97
+	.short	0
+	.short	80
+	.short	0
+	.short	0
 	.short	0
 	.short	0
 	.short	0

@@ -75,34 +75,75 @@ updateFireballs:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, lr}
-	mov	r4, #0
-	ldr	r3, .L16
-	add	r0, r3, #140
+	push	{r4, r5, r6, r7, r8, lr}
+	ldr	r4, .L25
+	mov	lr, #0
+	mov	r3, r4
+	sub	sp, sp, #16
+	add	r5, r4, #140
 .L10:
 	ldr	r2, [r3, #24]
 	cmp	r2, #0
 	beq	.L8
 	ldr	r1, [r3]
 	ldr	r2, [r3, #4]
-	ldr	lr, [r3, #16]
-	ldr	ip, [r3, #20]
-	add	r1, r1, lr
-	add	r2, r2, ip
+	ldr	ip, [r3, #16]
+	ldr	r0, [r3, #20]
+	add	r1, r1, ip
+	add	r2, r2, r0
 	cmp	r2, #160
 	cmpls	r1, #240
 	stm	r3, {r1, r2}
-	strhi	r4, [r3, #24]
+	strhi	lr, [r3, #24]
 .L8:
 	add	r3, r3, #28
-	cmp	r3, r0
+	cmp	r3, r5
 	bne	.L10
-	pop	{r4, lr}
+	ldr	r6, .L25+4
+	ldr	r7, .L25+8
+	ldr	r8, .L25+12
+.L14:
+	ldr	r3, [r4, #24]
+	cmp	r3, #0
+	bne	.L24
+.L12:
+	add	r4, r4, #28
+	cmp	r4, r5
+	bne	.L14
+	add	sp, sp, #16
+	@ sp needed
+	pop	{r4, r5, r6, r7, r8, lr}
 	bx	lr
-.L17:
+.L24:
+	mov	r3, #16
+	ldr	r1, [r4, #4]
+	ldr	r2, [r4]
+	stmib	sp, {r1, r3}
+	str	r3, [sp, #12]
+	str	r2, [sp]
+	ldm	r6, {r0, r1, r2, r3}
+	mov	lr, pc
+	bx	r7
+	cmp	r0, #0
+	beq	.L12
+	mov	r2, #0
+	ldr	r3, [r6, #44]
+	sub	r3, r3, #20
+	cmp	r3, r2
+	str	r3, [r6, #44]
+	str	r2, [r4, #24]
+	bgt	.L12
+	str	r2, [r6, #44]
+	mov	lr, pc
+	bx	r8
+	b	.L12
+.L26:
 	.align	2
-.L16:
+.L25:
 	.word	fireballs
+	.word	player
+	.word	collision
+	.word	goToLose
 	.size	updateFireballs, .-updateFireballs
 	.align	2
 	.global	drawFireballs
@@ -114,39 +155,37 @@ drawFireballs:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, r5, r6, lr}
-	mov	r6, #512
-	ldr	r3, .L24
-	ldr	r2, .L24+4
-	ldr	r5, .L24+8
-	ldr	r4, .L24+12
-	ldr	lr, .L24+16
+	push	{r4, r5, lr}
+	mov	r5, #512
+	ldr	r3, .L33
+	ldr	r2, .L33+4
+	ldr	r4, .L33+8
+	ldr	lr, .L33+12
 	add	r0, r3, #140
-.L21:
+.L30:
 	ldr	r1, [r3, #24]
 	cmp	r1, #0
 	ldrne	r1, [r3]
 	ldrbne	ip, [r3, #4]	@ zero_extendqisi2
-	andne	r1, r1, r5
-	orrne	r1, r1, r4
+	andne	r1, r1, r4
+	orrne	r1, r1, #16384
 	add	r3, r3, #28
 	strhne	lr, [r2, #20]	@ movhi
 	strhne	r1, [r2, #18]	@ movhi
 	strhne	ip, [r2, #16]	@ movhi
-	strheq	r6, [r2, #16]	@ movhi
+	strheq	r5, [r2, #16]	@ movhi
 	cmp	r3, r0
 	add	r2, r2, #8
-	bne	.L21
-	pop	{r4, r5, r6, lr}
+	bne	.L30
+	pop	{r4, r5, lr}
 	bx	lr
-.L25:
+.L34:
 	.align	2
-.L24:
+.L33:
 	.word	fireballs
 	.word	shadowOAM
 	.word	511
-	.word	-32768
-	.word	12809
+	.word	8750
 	.size	drawFireballs, .-drawFireballs
 	.comm	fireballs,140,4
 	.comm	shadowOAM,1024,4

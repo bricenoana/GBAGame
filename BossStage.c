@@ -9,17 +9,15 @@
 #include "player.h"
 #include "boss.h"
 #include "fireball.h"
-#include "slash.h"  // for travelling slash
+#include "slash.h"
 
 int hOff, vOff;
 
-// Variables for the player's slash effect.
 static int playerSlashActive = 0;
 static int playerSlashTimer = 0;
 
 void initBossStage(void) {
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
-    // Load background into CHARBLOCK[0] and map into SCREENBLOCK[27]
     REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(27) | BG_SIZE_SMALL | BG_4BPP;
 
     DMANow(3, singleLayerJunglePal, BG_PALETTE, singleLayerJunglePalLen / 2);
@@ -29,7 +27,7 @@ void initBossStage(void) {
     initPlayer();
     initBoss();
     initFireballs();
-    initSlash();  // initialize travelling slash
+    initSlash();
 
     player.x = 200;
     player.y = 100;
@@ -43,15 +41,13 @@ void updateBossStage(void) {
     updatePlayer();
     updateBoss();
     updateFireballs();
-    updateSlash();  // update travelling slash
+    updateSlash();
 
-    // Clamp player's position.
     if (player.x < 0) player.x = 0;
     if (player.x > SCREENWIDTH - player.width) player.x = SCREENWIDTH - player.width;
     if (player.y < 0) player.y = 0;
     if (player.y > SCREENHEIGHT - player.height) player.y = SCREENHEIGHT - player.height;
     
-    // Check collision between player and boss.
     if (collision(player.x, player.y, player.width, player.height,
                   boss.x, boss.y, boss.width, boss.height)) {
         player.health -= 20;
@@ -75,24 +71,19 @@ void updateBossStage(void) {
         winDelay = 0;
     }
     
-    // When BUTTON_A is pressed, activate the player's slash effect and launch a travelling slash.
     if (BUTTON_PRESSED(BUTTON_A)) {
-        // Activate player's slash effect.
         playerSlashActive = 1;
-        playerSlashTimer = 20;  // Show slash for 20 frames.
+        playerSlashTimer = 20;
         
-        // Launch travelling slash if not already active.
         if (!slash.active) {
             slash.active = 1;
             slash.x = player.x;
             slash.y = player.y;
-            // Set velocity to move left.
             slash.xVel = -2;
             slash.yVel = 0;
         }
     }
     
-    // Update player's slash timer.
     if (playerSlashActive) {
         playerSlashTimer--;
         if (playerSlashTimer <= 0) {
@@ -102,7 +93,7 @@ void updateBossStage(void) {
 
     if (slash.active && collision(slash.x, slash.y, 16, 16, boss.x, boss.y, boss.width, boss.height)) {
         boss.health -= 10;
-        slash.active = 0;  // Deactivate the slash upon hit.
+        slash.active = 0;
         if (boss.health <= 0) {
             boss.health = 0;
             boss.defeated = 1;
@@ -110,10 +101,6 @@ void updateBossStage(void) {
     }
 }
 
-//
-// drawSwordSlash: draws the player's slash effect.
-// The sprite is 16x16 and located at tile (0,20) in spriteNormal.h.
-//
 void drawSwordSlash(int hOff, int vOff) {
     int screenX = player.x - hOff;
     int screenY = player.y - vOff;
@@ -127,7 +114,6 @@ void drawBossStage(void) {
     REG_BG0HOFF = 0;
     REG_BG0VOFF = 0;
  
-    // Draw player's sprite: if the slash effect is active, draw that instead.
     if (playerSlashActive) {
         drawSwordSlash(0, 0);
     } else {
@@ -136,9 +122,8 @@ void drawBossStage(void) {
     
     drawBoss();
     drawFireballs();
-    drawSlash(0, 0); // Draw travelling slash.
+    drawSlash(0, 0);
  
-    // Hide any remaining sprites.
     for (int i = 3 + MAX_FIREBALLS + 2; i < 128; i++) {
          shadowOAM[i].attr0 = ATTR0_HIDE;
     }

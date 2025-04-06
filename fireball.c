@@ -3,6 +3,7 @@
 #include "fireball.h"
 #include "spriteNormal.h"
 #include "mode0.h"
+#include "player.h"
 
 Fireball fireballs[MAX_FIREBALLS];
 
@@ -29,6 +30,19 @@ void updateFireballs(void) {
             }
         }
     }
+
+    for (int i = 0; i < MAX_FIREBALLS; i++) {
+        if (fireballs[i].active && collision(player.x, player.y, player.width, player.height,
+                                             fireballs[i].x, fireballs[i].y, 16, 16)) {
+            player.health -= 20;
+            fireballs[i].active = 0;
+    
+            if (player.health <= 0) {
+                player.health = 0;
+                goToLose();
+            }
+        }
+    }
 }
 
 void drawFireballs(void) {
@@ -38,10 +52,8 @@ void drawFireballs(void) {
             int screenX = fireballs[i].x;
             int screenY = fireballs[i].y;
             shadowOAM[2 + i].attr0 = ATTR0_Y(screenY) | ATTR0_SQUARE;
-            // For a 32x32 sprite, use ATTR1_LARGE (which sets the size bits appropriately)
-            shadowOAM[2 + i].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
-            // Set tile coordinate to T(9,16) from your spritesheet.
-            shadowOAM[2 + i].attr2 = ATTR2_TILEID(9, 16) | (3 << 12);
+            shadowOAM[2 + i].attr1 = ATTR1_X(screenX) | ATTR1_SMALL;
+            shadowOAM[2 + i].attr2 = ATTR2_TILEID(14, 17) | (2 << 12);
         } else {
             shadowOAM[2 + i].attr0 = ATTR0_HIDE;
         }

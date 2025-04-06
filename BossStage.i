@@ -240,13 +240,11 @@ void drawSlash(int hOff, int vOff);
 
 int hOff, vOff;
 
-
 static int playerSlashActive = 0;
 static int playerSlashTimer = 0;
 
 void initBossStage(void) {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
-
     (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (0 << 14) | (0 << 7);
 
     DMANow(3, singleLayerJunglePal, ((unsigned short *)0x5000000), 512 / 2);
@@ -272,12 +270,10 @@ void updateBossStage(void) {
     updateFireballs();
     updateSlash();
 
-
     if (player.x < 0) player.x = 0;
     if (player.x > 240 - player.width) player.x = 240 - player.width;
     if (player.y < 0) player.y = 0;
     if (player.y > 160 - player.height) player.y = 160 - player.height;
-
 
     if (collision(player.x, player.y, player.width, player.height,
                   boss.x, boss.y, boss.width, boss.height)) {
@@ -302,23 +298,18 @@ void updateBossStage(void) {
         winDelay = 0;
     }
 
-
     if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
-
         playerSlashActive = 1;
         playerSlashTimer = 20;
-
 
         if (!slash.active) {
             slash.active = 1;
             slash.x = player.x;
             slash.y = player.y;
-
             slash.xVel = -2;
             slash.yVel = 0;
         }
     }
-
 
     if (playerSlashActive) {
         playerSlashTimer--;
@@ -337,10 +328,6 @@ void updateBossStage(void) {
     }
 }
 
-
-
-
-
 void drawSwordSlash(int hOff, int vOff) {
     int screenX = player.x - hOff;
     int screenY = player.y - vOff;
@@ -354,7 +341,6 @@ void drawBossStage(void) {
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
 
-
     if (playerSlashActive) {
         drawSwordSlash(0, 0);
     } else {
@@ -364,7 +350,6 @@ void drawBossStage(void) {
     drawBoss();
     drawFireballs();
     drawSlash(0, 0);
-
 
     for (int i = 3 + 5 + 2; i < 128; i++) {
          shadowOAM[i].attr0 = (2<<8);

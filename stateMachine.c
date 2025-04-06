@@ -86,32 +86,23 @@ void goToPause(void) {
 void goToWin(void) {
     REG_DISPCTL = MODE(4) | BG2_ENABLE | DISP_BACKBUFFER;
     
-    // Clear both framebuffers.
     for (int i = 0; i < 240 * 160; i++) {
         FRONTBUFFER[i] = 0;
         BACKBUFFER[i] = 0;
     }
     
-    // Clear BG_PALETTE.
     for (int i = 0; i < 256; i++) {
         BG_PALETTE[i] = 0;
     }
     
-    // Load win screen palette.
     DMANow(3, winScreenPal, BG_PALETTE, winScreenPalLen / 2);
-    
-    // For debugging, fill the back buffer with a solid color.
-    // Uncomment to test:
 
     for (int i = 0; i < 240 * 160; i++) {
-        BACKBUFFER[i] = RGB(31, 31, 31); // white
+        BACKBUFFER[i] = RGB(31, 31, 31);
     }
     
-    // Draw your win screen bitmap.
-    // drawFullscreenImage4(winScreenBitmap);
-    
     waitForVBlank();
-    flipPage(); // Now the back buffer (with win screen) becomes visible.
+    flipPage();
     
     state = WIN;
 }
@@ -122,32 +113,25 @@ void goToWin(void) {
 void goToLose(void) {
     REG_DISPCTL = MODE(4) | BG2_ENABLE | DISP_BACKBUFFER;
     
-    // Clear both framebuffers.
     for (int i = 0; i < 240 * 160; i++) {
         FRONTBUFFER[i] = 0;
         BACKBUFFER[i] = 0;
     }
     
-    // Clear BG_PALETTE.
     for (int i = 0; i < 256; i++) {
         BG_PALETTE[i] = 0;
     }
     
-    // Load win screen palette.
     DMANow(3, loseScreenPal, BG_PALETTE, loseScreenPalLen / 2);
     
-    // For debugging, fill the back buffer with a solid color.
-    // Uncomment to test:
 
     for (int i = 0; i < 240 * 160; i++) {
-        BACKBUFFER[i] = RGB(31, 31, 31); // white
+        BACKBUFFER[i] = RGB(31, 31, 31); 
     }
-    
-    // Draw your win screen bitmap.
-    // drawFullscreenImage4(winScreenBitmap);
+
     
     waitForVBlank();
-    flipPage(); // Now the back buffer (with win screen) becomes visible.
+    flipPage();
     
     state = LOSE;
 }

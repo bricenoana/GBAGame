@@ -140,6 +140,31 @@ typedef struct {
  u16 tilemap[1024];
 } SB;
 # 6 "fireball.c" 2
+# 1 "player.h" 1
+
+
+
+typedef struct {
+    int x, y;
+    int width, height;
+    int xVel, yVel;
+    int currentFrame, numFrames;
+    int timeUntilNextFrame;
+    int isAnimating;
+    int direction;
+    int health;
+    int maxHealth;
+    int defeated;
+} Player;
+
+extern Player player;
+
+extern int collisionEnabled;
+
+void initPlayer(void);
+void updatePlayer(void);
+void drawPlayer(int hOff, int vOff);
+# 7 "fireball.c" 2
 
 Fireball fireballs[5];
 
@@ -166,6 +191,19 @@ void updateFireballs(void) {
             }
         }
     }
+
+    for (int i = 0; i < 5; i++) {
+        if (fireballs[i].active && collision(player.x, player.y, player.width, player.height,
+                                             fireballs[i].x, fireballs[i].y, 16, 16)) {
+            player.health -= 20;
+            fireballs[i].active = 0;
+
+            if (player.health <= 0) {
+                player.health = 0;
+                goToLose();
+            }
+        }
+    }
 }
 
 void drawFireballs(void) {
@@ -175,10 +213,8 @@ void drawFireballs(void) {
             int screenX = fireballs[i].x;
             int screenY = fireballs[i].y;
             shadowOAM[2 + i].attr0 = ((screenY) & 0xFF) | (0<<14);
-
-            shadowOAM[2 + i].attr1 = ((screenX) & 0x1FF) | (2<<14);
-
-            shadowOAM[2 + i].attr2 = ((((16) * (32) + (9))) & 0x3FF) | (3 << 12);
+            shadowOAM[2 + i].attr1 = ((screenX) & 0x1FF) | (1<<14);
+            shadowOAM[2 + i].attr2 = ((((17) * (32) + (14))) & 0x3FF) | (2 << 12);
         } else {
             shadowOAM[2 + i].attr0 = (2<<8);
         }

@@ -160,6 +160,31 @@ void initFireballs(void);
 void updateFireballs(void);
 void drawFireballs(void);
 # 7 "boss.c" 2
+# 1 "player.h" 1
+
+
+
+typedef struct {
+    int x, y;
+    int width, height;
+    int xVel, yVel;
+    int currentFrame, numFrames;
+    int timeUntilNextFrame;
+    int isAnimating;
+    int direction;
+    int health;
+    int maxHealth;
+    int defeated;
+} Player;
+
+extern Player player;
+
+extern int collisionEnabled;
+
+void initPlayer(void);
+void updatePlayer(void);
+void drawPlayer(int hOff, int vOff);
+# 8 "boss.c" 2
 
 Boss boss;
 static int bossFrame = 0;
@@ -167,7 +192,6 @@ static int bossFrameDelay = 30;
 static int bossMoveTimer = 60;
 static int bossXVel = 0;
 static int bossYVel = 0;
-
 
 static unsigned int seed = 123456789;
 static unsigned int rand_int(void) {
@@ -196,21 +220,25 @@ void initBoss(void) {
 }
 
 void updateBoss(void) {
+    static int fireballTimer = 90;
 
     if (boss.health <= 0) {
         boss.health = 0;
         boss.defeated = 1;
+        return;
     }
 
-
-    if (boss.health > 0) {
-        bossFrameDelay--;
-        if (bossFrameDelay <= 0) {
-            bossFrame = (bossFrame == 0) ? 1 : 0;
-            bossFrameDelay = 30;
-        }
+    bossFrameDelay--;
+    if (bossFrameDelay <= 0) {
+        bossFrame = (bossFrame == 0) ? 1 : 0;
+        bossFrameDelay = 30;
     }
 
+    fireballTimer--;
+    if (fireballTimer <= 0) {
+        fireBossFireball();
+        fireballTimer = 90;
+    }
 
     bossMoveTimer--;
     if(bossMoveTimer <= 0) {
@@ -268,4 +296,35 @@ void drawBoss(void) {
     }
 
     shadowOAM[1].attr2 = ((((0) * (32) + (8 + frameToDraw * 8))) & 0x3FF) | (2 << 12);
+}
+
+void fireBossFireball() {
+    for (int i = 0; i < 5; i++) {
+        if (!fireballs[i].active) {
+            fireballs[i].active = 1;
+            fireballs[i].x = boss.x + boss.width / 2 - 8;
+            fireballs[i].y = boss.y + boss.height / 2 - 8;
+
+            int dx = player.x - fireballs[i].x;
+            int dy = player.y - fireballs[i].y;
+
+            int magnitude = isqrt(dx * dx + dy * dy);
+            if (magnitude == 0) magnitude = 1;
+
+            fireballs[i].xVel = (dx * 4) / magnitude;
+            fireballs[i].yVel = (dy * 4) / magnitude;
+
+            break;
+        }
+    }
+}
+
+int isqrt(int n) {
+    int x = n;
+    int y = (x + 1) / 2;
+    while (y < x) {
+        x = y;
+        y = (x + n / x) / 2;
+    }
+    return x;
 }

@@ -510,29 +510,20 @@ void goToPause(void) {
 void goToWin(void) {
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | ((1 << (8 + (2 % 4)))) | (1 << 4);
 
-
     for (int i = 0; i < 240 * 160; i++) {
         ((unsigned short*) 0x06000000)[i] = 0;
         ((unsigned short*) 0x0600A000)[i] = 0;
     }
 
-
     for (int i = 0; i < 256; i++) {
         ((unsigned short *)0x5000000)[i] = 0;
     }
 
-
     DMANow(3, winScreenPal, ((unsigned short *)0x5000000), 512 / 2);
-
-
-
 
     for (int i = 0; i < 240 * 160; i++) {
         ((unsigned short*) 0x0600A000)[i] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
     }
-
-
-
 
     waitForVBlank();
     flipPage();
@@ -546,28 +537,21 @@ void goToWin(void) {
 void goToLose(void) {
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | ((1 << (8 + (2 % 4)))) | (1 << 4);
 
-
     for (int i = 0; i < 240 * 160; i++) {
         ((unsigned short*) 0x06000000)[i] = 0;
         ((unsigned short*) 0x0600A000)[i] = 0;
     }
 
-
     for (int i = 0; i < 256; i++) {
         ((unsigned short *)0x5000000)[i] = 0;
     }
 
-
     DMANow(3, loseScreenPal, ((unsigned short *)0x5000000), 512 / 2);
-
-
 
 
     for (int i = 0; i < 240 * 160; i++) {
         ((unsigned short*) 0x0600A000)[i] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
     }
-
-
 
 
     waitForVBlank();
