@@ -238,12 +238,11 @@ void updateSlash(void);
 void drawSlash(int hOff, int vOff);
 # 13 "BossStage.c" 2
 
-
 int hOff, vOff;
 
 
-static int slashActive = 0;
-static int slashTimer = 0;
+static int playerSlashActive = 0;
+static int playerSlashTimer = 0;
 
 void initBossStage(void) {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
@@ -257,14 +256,14 @@ void initBossStage(void) {
     initPlayer();
     initBoss();
     initFireballs();
+    initSlash();
 
     player.x = 200;
     player.y = 100;
     collisionEnabled = 0;
 
-
-    slashActive = 0;
-    slashTimer = 0;
+    playerSlashActive = 0;
+    playerSlashTimer = 0;
 }
 
 void updateBossStage(void) {
@@ -304,16 +303,27 @@ void updateBossStage(void) {
     }
 
 
-
     if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
+
+        playerSlashActive = 1;
+        playerSlashTimer = 20;
+
+
         if (!slash.active) {
             slash.active = 1;
-
             slash.x = player.x;
             slash.y = player.y;
 
             slash.xVel = -2;
             slash.yVel = 0;
+        }
+    }
+
+
+    if (playerSlashActive) {
+        playerSlashTimer--;
+        if (playerSlashTimer <= 0) {
+            playerSlashActive = 0;
         }
     }
 
@@ -329,6 +339,8 @@ void updateBossStage(void) {
 
 
 
+
+
 void drawSwordSlash(int hOff, int vOff) {
     int screenX = player.x - hOff;
     int screenY = player.y - vOff;
@@ -338,19 +350,24 @@ void drawSwordSlash(int hOff, int vOff) {
     shadowOAM[0].attr2 = ((((20) * (32) + (0))) & 0x3FF);
 }
 
-
-
 void drawBossStage(void) {
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
 
-    drawPlayer(0, 0);
+
+    if (playerSlashActive) {
+        drawSwordSlash(0, 0);
+    } else {
+        drawPlayer(0, 0);
+    }
+
     drawBoss();
     drawFireballs();
     drawSlash(0, 0);
 
-    for (int i = 3 + 5 + 1; i < 128; i++) {
-        shadowOAM[i].attr0 = (2<<8);
+
+    for (int i = 3 + 5 + 2; i < 128; i++) {
+         shadowOAM[i].attr0 = (2<<8);
     }
 
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);

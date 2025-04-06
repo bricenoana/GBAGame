@@ -2,7 +2,6 @@
 #include "sprites.h"
 #include "slash.h"
 #include "spriteNormal.h"
-#include "mode0.h"
 
 Slash slash;
 
