@@ -391,6 +391,9 @@ typedef struct {
     int timeUntilNextFrame;
     int isAnimating;
     int direction;
+    int health;
+    int maxHealth;
+    int defeated;
 } Player;
 
 extern Player player;
@@ -405,17 +408,7 @@ void drawPlayer(int hOff, int vOff);
 
 
 
-typedef struct {
-    int x;
-    int y;
-    int width;
-    int height;
-    int health;
-    int maxHealth;
-    int defeated;
-} Boss;
 
-extern Boss boss;
 
 void initBossStage(void);
 void updateBossStage(void);
@@ -429,6 +422,20 @@ void initCaveStage(void);
 void updateCaveStage(void);
 void drawCaveStage(void);
 # 13 "stateMachine.c" 2
+# 1 "winScreen.h" 1
+# 21 "winScreen.h"
+extern const unsigned short winScreenBitmap[19200];
+
+
+extern const unsigned short winScreenPal[256];
+# 14 "stateMachine.c" 2
+# 1 "loseScreen.h" 1
+# 21 "loseScreen.h"
+extern const unsigned short loseScreenBitmap[19200];
+
+
+extern const unsigned short loseScreenPal[256];
+# 15 "stateMachine.c" 2
 
 extern unsigned short buttons;
 extern unsigned short oldButtons;
@@ -436,14 +443,27 @@ extern unsigned short oldButtons;
 static GameState state;
 
 void goToStart(void) {
-
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | ((1 << (8 + (2 % 4)))) | (1 << 4);
+
+    for (int i = 0; i < 240 * 160; i++) {
+        ((unsigned short*) 0x06000000)[i] = 0;
+        ((unsigned short*) 0x0600A000)[i] = 0;
+    }
+
+    for (int i = 0; i < 256; i++) {
+        ((unsigned short *)0x5000000)[i] = 0;
+    }
+
     DMANow(3, startBGPal, ((unsigned short *)0x5000000), 512 / 2);
+
     drawFullscreenImage4(startBGBitmap);
+
     waitForVBlank();
     flipPage();
+
     state = START;
 }
+
 
 void goToCave(void) {
     initCaveStage();
@@ -451,9 +471,13 @@ void goToCave(void) {
 }
 
 void goToGame(void) {
+    for (int i = 0; i < 256; i++) {
+        ((unsigned short *)0x5000000)[i] = 0;
+    }
     initJungleStage();
     state = GAME;
 }
+
 
 void goToInstructions(void) {
 
@@ -484,18 +508,76 @@ void goToPause(void) {
 }
 
 void goToWin(void) {
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | ((1 << (8 + (2 % 4)))) | (1 << 4);
+
+
+    for (int i = 0; i < 240 * 160; i++) {
+        ((unsigned short*) 0x06000000)[i] = 0;
+        ((unsigned short*) 0x0600A000)[i] = 0;
+    }
+
+
+    for (int i = 0; i < 256; i++) {
+        ((unsigned short *)0x5000000)[i] = 0;
+    }
+
+
+    DMANow(3, winScreenPal, ((unsigned short *)0x5000000), 512 / 2);
+
+
+
+
+    for (int i = 0; i < 240 * 160; i++) {
+        ((unsigned short*) 0x0600A000)[i] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
+    }
+
+
+
+
+    waitForVBlank();
+    flipPage();
 
     state = WIN;
 }
 
+
+
+
 void goToLose(void) {
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | ((1 << (8 + (2 % 4)))) | (1 << 4);
+
+
+    for (int i = 0; i < 240 * 160; i++) {
+        ((unsigned short*) 0x06000000)[i] = 0;
+        ((unsigned short*) 0x0600A000)[i] = 0;
+    }
+
+
+    for (int i = 0; i < 256; i++) {
+        ((unsigned short *)0x5000000)[i] = 0;
+    }
+
+
+    DMANow(3, loseScreenPal, ((unsigned short *)0x5000000), 512 / 2);
+
+
+
+
+    for (int i = 0; i < 240 * 160; i++) {
+        ((unsigned short*) 0x0600A000)[i] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
+    }
+
+
+
+
+    waitForVBlank();
+    flipPage();
 
     state = LOSE;
 }
 
 void goToBossStage(void) {
     resetSprites();
-
     player.x = 32;
     player.y = 32;
     initBossStage();
@@ -505,12 +587,16 @@ void goToBossStage(void) {
 
 
 static void startState(void) {
+    drawFullscreenImage4(startBGBitmap);
 
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToCave();
     }
     if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
         goToGame();
+    }
+    if ((!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
+        goToBossStage();
     }
     if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
         goToInstructions();
@@ -566,15 +652,22 @@ static void pauseState(void) {
 }
 
 static void winState(void) {
+    drawFullscreenImage4(winScreenBitmap);
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToStart();
     }
+    waitForVBlank();
+    flipPage();
 }
 
+
 static void loseState(void) {
+    drawFullscreenImage4(loseScreenBitmap);
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToStart();
     }
+    waitForVBlank();
+    flipPage();
 }
 
 void initStateMachine(void) {

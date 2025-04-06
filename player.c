@@ -26,11 +26,14 @@ void initPlayer(void) {
     player.height = 32;
     player.x = 40;
     player.y = 140;
+    player.maxHealth = 100;
+    player.health = 100;
     player.numFrames = 3;
     player.direction = DOWN;
     player.timeUntilNextFrame = 10;
     player.xVel = 1;
     player.yVel = 1;
+    player.defeated = 0;
 
     DMANow(3, spriteNormalTiles, &CHARBLOCK[4], spriteNormalTilesLen / 2);
     DMANow(3, spriteNormalPal, SPRITE_PAL, 256);

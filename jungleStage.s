@@ -53,19 +53,22 @@ initJungleStage:
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
-	ldr	r1, .L4+28
-	ldr	r2, .L4+32
+	mov	ip, #1
+	ldr	r0, .L4+28
+	ldr	r1, .L4+32
+	ldr	r2, .L4+36
+	str	ip, [r0]
 	str	r3, [r1]
 	str	r3, [r2]
 	strh	r3, [r5, #16]	@ movhi
-	ldr	r2, .L4+36
+	ldr	r2, .L4+40
 	strh	r3, [r5, #18]	@ movhi
 	mov	lr, pc
 	bx	r2
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L4+40
+	ldr	r1, .L4+44
 	mov	lr, pc
 	bx	r4
 	pop	{r4, r5, r6, lr}
@@ -80,6 +83,7 @@ initJungleStage:
 	.word	singleLayerMapMap
 	.word	initPlayer
 	.word	initTemple
+	.word	collisionEnabled
 	.word	hOff
 	.word	vOff
 	.word	hideSprites

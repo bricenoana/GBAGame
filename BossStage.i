@@ -6,17 +6,7 @@
 
 
 
-typedef struct {
-    int x;
-    int y;
-    int width;
-    int height;
-    int health;
-    int maxHealth;
-    int defeated;
-} Boss;
 
-extern Boss boss;
 
 void initBossStage(void);
 void updateBossStage(void);
@@ -177,6 +167,9 @@ typedef struct {
     int timeUntilNextFrame;
     int isAnimating;
     int direction;
+    int health;
+    int maxHealth;
+    int defeated;
 } Player;
 
 extern Player player;
@@ -187,64 +180,179 @@ void initPlayer(void);
 void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
 # 10 "BossStage.c" 2
+# 1 "boss.h" 1
 
-Boss boss;
+
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int health;
+    int maxHealth;
+    int defeated;
+} Boss;
+
+extern Boss boss;
+
+void initBoss(void);
+void updateBoss(void);
+void drawBoss(void);
+# 11 "BossStage.c" 2
+# 1 "fireball.h" 1
+
+
+
+
+
+typedef struct {
+    int x, y;
+    int width, height;
+    int xVel, yVel;
+    int active;
+} Fireball;
+
+extern Fireball fireballs[5];
+
+void initFireballs(void);
+void updateFireballs(void);
+void drawFireballs(void);
+# 12 "BossStage.c" 2
+# 1 "slash.h" 1
+
+
+
+
+
+typedef struct {
+    int x, y;
+    int xVel, yVel;
+    int active;
+} Slash;
+
+extern Slash slash;
+
+void initSlash(void);
+void updateSlash(void);
+void drawSlash(int hOff, int vOff);
+# 13 "BossStage.c" 2
+
+
 int hOff, vOff;
 
 
+static int slashActive = 0;
+static int slashTimer = 0;
 
 void initBossStage(void) {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
-    (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (0 << 14);
+
+    (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (0 << 14) | (0 << 7);
 
     DMANow(3, singleLayerJunglePal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, singleLayerJungleTiles, &((CB*) 0x6000000)[0], 11264 / 2);
     DMANow(3, bossBGTestMap, &((SB*) 0x6000000)[27], (2048) / 2);
+
     initPlayer();
+    initBoss();
+    initFireballs();
 
-
-    player.x = 16;
-    player.y = 16;
-
-
+    player.x = 200;
+    player.y = 100;
     collisionEnabled = 0;
 
-    boss.x = 120;
-    boss.y = 80;
-    boss.width = 32;
-    boss.height = 32;
-    boss.maxHealth = 100;
-    boss.health = boss.maxHealth;
-    boss.defeated = 0;
+
+    slashActive = 0;
+    slashTimer = 0;
 }
-
-
-
 
 void updateBossStage(void) {
     updatePlayer();
+    updateBoss();
+    updateFireballs();
+    updateSlash();
+
 
     if (player.x < 0) player.x = 0;
     if (player.x > 240 - player.width) player.x = 240 - player.width;
     if (player.y < 0) player.y = 0;
     if (player.y > 160 - player.height) player.y = 160 - player.height;
+
+
+    if (collision(player.x, player.y, player.width, player.height,
+                  boss.x, boss.y, boss.width, boss.height)) {
+        player.health -= 20;
+        if (player.health <= 0) {
+            player.health = 0;
+            goToLose();
+        }
+    }
+
+    static int winDelay = 0;
+    if (boss.defeated) {
+        if (winDelay == 0) {
+            winDelay = 30;
+        } else {
+            winDelay--;
+            if (winDelay <= 0) {
+                goToWin();
+            }
+        }
+    } else {
+        winDelay = 0;
+    }
+
+
+
+    if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
+        if (!slash.active) {
+            slash.active = 1;
+
+            slash.x = player.x;
+            slash.y = player.y;
+
+            slash.xVel = -2;
+            slash.yVel = 0;
+        }
+    }
+
+    if (slash.active && collision(slash.x, slash.y, 16, 16, boss.x, boss.y, boss.width, boss.height)) {
+        boss.health -= 10;
+        slash.active = 0;
+        if (boss.health <= 0) {
+            boss.health = 0;
+            boss.defeated = 1;
+        }
+    }
 }
 
+
+
+void drawSwordSlash(int hOff, int vOff) {
+    int screenX = player.x - hOff;
+    int screenY = player.y - vOff;
+
+    shadowOAM[0].attr0 = ((screenY) & 0xFF) | (0<<14);
+    shadowOAM[0].attr1 = ((screenX) & 0x1FF) | (2<<14);
+    shadowOAM[0].attr2 = ((((20) * (32) + (0))) & 0x3FF);
+}
+
+
+
 void drawBossStage(void) {
+    (*(volatile unsigned short*) 0x04000010) = 0;
+    (*(volatile unsigned short*) 0x04000012) = 0;
 
+    drawPlayer(0, 0);
+    drawBoss();
+    drawFireballs();
+    drawSlash(0, 0);
 
-     (*(volatile unsigned short*) 0x04000010) = 0;
-     (*(volatile unsigned short*) 0x04000012) = 0;
+    for (int i = 3 + 5 + 1; i < 128; i++) {
+        shadowOAM[i].attr0 = (2<<8);
+    }
 
-
-     drawPlayer(0, 0);
-
-
-     for (int i = 1; i < 128; i++) {
-         shadowOAM[i].attr0 = (2<<8);
-     }
-
-
-     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
-     waitForVBlank();
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
+    waitForVBlank();
 }

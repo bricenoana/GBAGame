@@ -133,6 +133,9 @@ typedef struct {
     int timeUntilNextFrame;
     int isAnimating;
     int direction;
+    int health;
+    int maxHealth;
+    int defeated;
 } Player;
 
 extern Player player;
@@ -143,13 +146,20 @@ void initPlayer(void);
 void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
 # 6 "caveStage.c" 2
+# 1 "swordSprite.h" 1
+# 21 "swordSprite.h"
+extern const unsigned short swordSpriteTiles[16384];
+
+
+extern const unsigned short swordSpritePal[256];
+# 7 "caveStage.c" 2
 # 1 "backgroundCaveTiles.h" 1
 # 21 "backgroundCaveTiles.h"
 extern const unsigned short backgroundCaveTilesTiles[9600];
 
 
 extern const unsigned short backgroundCaveTilesPal[256];
-# 7 "caveStage.c" 2
+# 8 "caveStage.c" 2
 # 1 "backgroundCaveMap.h" 1
 
 
@@ -159,7 +169,7 @@ extern const unsigned short backgroundCaveTilesPal[256];
 
 
 extern const unsigned short backgroundCaveMapMap[2048];
-# 8 "caveStage.c" 2
+# 9 "caveStage.c" 2
 
 int hOff, vOff;
 
@@ -172,8 +182,8 @@ void initCaveStage(void) {
     DMANow(3, backgroundCaveMapMap, &((SB*) 0x6000000)[27], (4096) / 2);
 
     initPlayer();
-    player.x = 16;
-    player.y = 16;
+    player.x = 10;
+    player.y = 110;
     collisionEnabled = 0;
 
     hOff = 0;
@@ -187,28 +197,32 @@ void initCaveStage(void) {
 
 void updateCaveStage(void) {
     updatePlayer();
+    updateSword();
+    player.y = 110;
+
+    if (player.x >= (512 - player.width)) {
+        goToGame();
+    }
 }
 
-void drawCaveStage(void) {
 
+
+void drawCaveStage(void) {
     hOff = player.x - (240 / 2);
-    vOff = player.y - (160 / 2);
     if (hOff < 0) hOff = 0;
     if (hOff > 512 - 240) hOff = 512 - 240;
-    if (vOff < 0) vOff = 0;
-    if (vOff > 512 - 160) vOff = 512 - 160;
+
+    vOff = 0;
 
     (*(volatile unsigned short*) 0x04000010) = hOff;
     (*(volatile unsigned short*) 0x04000012) = vOff;
 
-
     drawPlayer(hOff, vOff);
-
+    drawSword(hOff, vOff);
 
     for (int i = 1; i < 128; i++) {
         shadowOAM[i].attr0 = (2<<8);
     }
-
 
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
     waitForVBlank();

@@ -22,27 +22,31 @@ initPlayer:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, lr}
-	mov	r3, #140
+	mov	r2, #100
 	mov	r4, #3
-	mov	r5, #40
-	mov	r2, #0
-	mov	r1, #10
+	mov	r1, #0
+	mov	r5, #140
+	mov	r3, #10
 	mov	lr, #1
-	mov	r7, #16
-	mov	r6, #32
+	mov	r8, #16
+	mov	r7, #32
+	mov	r6, #40
 	ldr	ip, .L4
 	mov	r0, r4
-	str	r5, [ip]
-	str	r3, [ip, #4]
-	str	r2, [ip, #40]
-	str	r1, [ip, #32]
+	str	r5, [ip, #4]
+	str	r3, [ip, #32]
+	str	r2, [ip, #48]
+	str	r2, [ip, #44]
+	str	r1, [ip, #40]
+	str	r1, [ip, #52]
 	ldr	r5, .L4+4
 	mov	r3, #16384
 	ldr	r2, .L4+8
 	ldr	r1, .L4+12
 	str	r4, [ip, #28]
-	str	r7, [ip, #8]
-	str	r6, [ip, #12]
+	str	r8, [ip, #8]
+	str	r7, [ip, #12]
+	str	r6, [ip]
 	str	lr, [ip, #16]
 	str	lr, [ip, #20]
 	mov	lr, pc
@@ -306,7 +310,7 @@ drawPlayer:
 	.word	1022
 	.size	drawPlayer, .-drawPlayer
 	.global	collisionEnabled
-	.comm	player,44,4
+	.comm	player,56,4
 	.comm	shadowOAM,1024,4
 	.data
 	.align	2

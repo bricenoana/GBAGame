@@ -125,7 +125,6 @@ extern const unsigned short spritesheetPal[256];
 
 
 
-
 typedef struct {
     int x, y;
     int width, height;
@@ -134,9 +133,14 @@ typedef struct {
     int timeUntilNextFrame;
     int isAnimating;
     int direction;
+    int health;
+    int maxHealth;
+    int defeated;
 } Player;
 
 extern Player player;
+
+extern int collisionEnabled;
 
 void initPlayer(void);
 void updatePlayer(void);
@@ -174,6 +178,7 @@ void initJungleStage(void) {
 
     initPlayer();
     initTemple();
+    collisionEnabled = 1;
 
     hOff = 0;
     vOff = 0;

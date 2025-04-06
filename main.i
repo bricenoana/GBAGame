@@ -49,7 +49,9 @@ void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int c
 typedef enum {
     START,
     INSTRUCTIONS,
+    CAVE,
     GAME,
+    BOSS,
     PAUSE,
     WIN,
     LOSE

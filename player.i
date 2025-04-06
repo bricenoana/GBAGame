@@ -114,6 +114,9 @@ typedef struct {
     int timeUntilNextFrame;
     int isAnimating;
     int direction;
+    int health;
+    int maxHealth;
+    int defeated;
 } Player;
 
 extern Player player;
@@ -178,11 +181,14 @@ void initPlayer(void) {
     player.height = 32;
     player.x = 40;
     player.y = 140;
+    player.maxHealth = 100;
+    player.health = 100;
     player.numFrames = 3;
     player.direction = DOWN;
     player.timeUntilNextFrame = 10;
     player.xVel = 1;
     player.yVel = 1;
+    player.defeated = 0;
 
     DMANow(3, spriteNormalTiles, &((CB*) 0x6000000)[4], 32768 / 2);
     DMANow(3, spriteNormalPal, ((u16 *)0x5000200), 256);

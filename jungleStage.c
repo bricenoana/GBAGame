@@ -20,6 +20,7 @@ void initJungleStage(void) {
 
     initPlayer();
     initTemple();
+    collisionEnabled = 1;
     
     hOff = 0;
     vOff = 0;

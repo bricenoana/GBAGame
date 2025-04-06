@@ -3,6 +3,7 @@
 #include "sprites.h"
 #include "spritesheet.h"
 #include "player.h"
+#include "swordSprite.h"
 #include "backgroundCaveTiles.h" //tiles
 #include "backgroundCaveMap.h" //map
 
@@ -17,8 +18,8 @@ void initCaveStage(void) {
     DMANow(3, backgroundCaveMapMap, &SCREENBLOCK[27], backgroundCaveMapLen / 2);
 
     initPlayer();
-    player.x = 16;
-    player.y = 16;
+    player.x = 10;
+    player.y = 110;
     collisionEnabled = 0;
 
     hOff = 0;
@@ -32,20 +33,28 @@ void initCaveStage(void) {
 
 void updateCaveStage(void) {
     updatePlayer();
+    updateSword();
+    player.y = 110;
+    
+    if (player.x >= (512 - player.width)) {
+        goToGame();
+    }
 }
+
+
 
 void drawCaveStage(void) {
     hOff = player.x - (SCREENWIDTH / 2);
-    vOff = player.y - (SCREENHEIGHT / 2);
     if (hOff < 0) hOff = 0;
     if (hOff > 512 - SCREENWIDTH) hOff = 512 - SCREENWIDTH;
-    if (vOff < 0) vOff = 0;
-    if (vOff > 512 - SCREENHEIGHT) vOff = 512 - SCREENHEIGHT;
+    
+    vOff = 0;
 
     REG_BG0HOFF = hOff;
     REG_BG0VOFF = vOff;
 
     drawPlayer(hOff, vOff);
+    drawSword(hOff, vOff);
 
     for (int i = 1; i < 128; i++) {
         shadowOAM[i].attr0 = ATTR0_HIDE;
@@ -54,3 +63,4 @@ void drawCaveStage(void) {
     DMANow(3, shadowOAM, OAM, 128 * 4);
     waitForVBlank();
 }
+

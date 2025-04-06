@@ -10,6 +10,8 @@
 #include "player.h"
 #include "BossStage.h"
 #include "caveStage.h"
+#include "winScreen.h"
+#include "loseScreen.h"
 
 extern unsigned short buttons;
 extern unsigned short oldButtons;
@@ -17,14 +19,27 @@ extern unsigned short oldButtons;
 static GameState state;
 
 void goToStart(void) {
-    //drawing the start screen
     REG_DISPCTL = MODE(4) | BG2_ENABLE | DISP_BACKBUFFER;
+    
+    for (int i = 0; i < 240 * 160; i++) {
+        FRONTBUFFER[i] = 0;
+        BACKBUFFER[i] = 0;
+    }
+    
+    for (int i = 0; i < 256; i++) {
+        BG_PALETTE[i] = 0;
+    }
+    
     DMANow(3, startBGPal, BG_PALETTE, startBGPalLen / 2);
+    
     drawFullscreenImage4(startBGBitmap);
+    
     waitForVBlank();
     flipPage();
+    
     state = START;
 }
+
 
 void goToCave(void) {
     initCaveStage();
@@ -32,9 +47,13 @@ void goToCave(void) {
 }
 
 void goToGame(void) {
+    for (int i = 0; i < 256; i++) {
+        BG_PALETTE[i] = 0;
+    }
     initJungleStage();
     state = GAME;
 }
+
 
 void goToInstructions(void) {
     //drawing the instruction screen
@@ -65,18 +84,76 @@ void goToPause(void) {
 }
 
 void goToWin(void) {
-    //can't reach state yet, so no screen for now
+    REG_DISPCTL = MODE(4) | BG2_ENABLE | DISP_BACKBUFFER;
+    
+    // Clear both framebuffers.
+    for (int i = 0; i < 240 * 160; i++) {
+        FRONTBUFFER[i] = 0;
+        BACKBUFFER[i] = 0;
+    }
+    
+    // Clear BG_PALETTE.
+    for (int i = 0; i < 256; i++) {
+        BG_PALETTE[i] = 0;
+    }
+    
+    // Load win screen palette.
+    DMANow(3, winScreenPal, BG_PALETTE, winScreenPalLen / 2);
+    
+    // For debugging, fill the back buffer with a solid color.
+    // Uncomment to test:
+
+    for (int i = 0; i < 240 * 160; i++) {
+        BACKBUFFER[i] = RGB(31, 31, 31); // white
+    }
+    
+    // Draw your win screen bitmap.
+    // drawFullscreenImage4(winScreenBitmap);
+    
+    waitForVBlank();
+    flipPage(); // Now the back buffer (with win screen) becomes visible.
+    
     state = WIN;
 }
 
+
+
+
 void goToLose(void) {
-    //can't reach state yet, so no screen for now
+    REG_DISPCTL = MODE(4) | BG2_ENABLE | DISP_BACKBUFFER;
+    
+    // Clear both framebuffers.
+    for (int i = 0; i < 240 * 160; i++) {
+        FRONTBUFFER[i] = 0;
+        BACKBUFFER[i] = 0;
+    }
+    
+    // Clear BG_PALETTE.
+    for (int i = 0; i < 256; i++) {
+        BG_PALETTE[i] = 0;
+    }
+    
+    // Load win screen palette.
+    DMANow(3, loseScreenPal, BG_PALETTE, loseScreenPalLen / 2);
+    
+    // For debugging, fill the back buffer with a solid color.
+    // Uncomment to test:
+
+    for (int i = 0; i < 240 * 160; i++) {
+        BACKBUFFER[i] = RGB(31, 31, 31); // white
+    }
+    
+    // Draw your win screen bitmap.
+    // drawFullscreenImage4(winScreenBitmap);
+    
+    waitForVBlank();
+    flipPage(); // Now the back buffer (with win screen) becomes visible.
+    
     state = LOSE;
 }
 
 void goToBossStage(void) {
-    resetSprites();    // Hide all lingering sprites.
-    // Optionally, reposition player off-screen:
+    resetSprites();
     player.x = 32;
     player.y = 32;
     initBossStage();
@@ -86,12 +163,16 @@ void goToBossStage(void) {
 
 
 static void startState(void) {
-    //move thru start screen
+    drawFullscreenImage4(startBGBitmap);
+
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToCave();
     }
-    if (BUTTON_PRESSED(BUTTON_A)) {
+    if (BUTTON_PRESSED(BUTTON_A)) { //for debug purposes
         goToGame();
+    }
+    if (BUTTON_PRESSED(BUTTON_B)) { //for debug purposes
+        goToBossStage();
     }
     if (BUTTON_PRESSED(BUTTON_SELECT)) {
         goToInstructions();
@@ -147,15 +228,22 @@ static void pauseState(void) {
 }
 
 static void winState(void) {
+    drawFullscreenImage4(winScreenBitmap);
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToStart();
     }
+    waitForVBlank();
+    flipPage();
 }
 
+
 static void loseState(void) {
+    drawFullscreenImage4(loseScreenBitmap);
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToStart();
     }
+    waitForVBlank();
+    flipPage();
 }
 
 void initStateMachine(void) {
