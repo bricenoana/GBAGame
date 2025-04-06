@@ -230,7 +230,7 @@ void updateBoss(void) {
 
     bossFrameDelay--;
     if (bossFrameDelay <= 0) {
-        bossFrame = (bossFrame == 0) ? 1 : 0;
+        bossFrame = (bossFrame + 1) % 3;
         bossFrameDelay = 30;
     }
 
@@ -288,14 +288,17 @@ void drawBoss(void) {
     shadowOAM[1].attr0 = ((boss.y) & 0xFF) | (0<<14);
     shadowOAM[1].attr1 = ((boss.x) & 0x1FF) | (3<<14);
 
-    int frameToDraw;
     if (boss.health == 0) {
-        frameToDraw = 2;
+        shadowOAM[1].attr2 = ((((8) * (32) + (9))) & 0x3FF) | (2 << 12);
     } else {
-        frameToDraw = bossFrame;
+        int frameToDraw = bossFrame;
+        if (frameToDraw == 2) {
+            shadowOAM[1].attr2 = ((((0) * (32) + (24))) & 0x3FF) | (2 << 12);
+        } else {
+            shadowOAM[1].attr2 = ((((0) * (32) + (8 + frameToDraw * 8))) & 0x3FF) | (2 << 12);
+        }
     }
 
-    shadowOAM[1].attr2 = ((((0) * (32) + (8 + frameToDraw * 8))) & 0x3FF) | (2 << 12);
 }
 
 void fireBossFireball() {

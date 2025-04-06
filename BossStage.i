@@ -6,8 +6,6 @@
 
 
 
-
-
 void initBossStage(void);
 void updateBossStage(void);
 void drawBossStage(void);

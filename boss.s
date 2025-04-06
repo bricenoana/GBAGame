@@ -91,32 +91,39 @@ drawBoss:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	ldr	r1, .L9
+	ldr	r1, .L10
 	ldr	r3, [r1]
 	lsl	r3, r3, #23
 	lsr	r3, r3, #23
 	mvn	r3, r3, lsl #18
 	mvn	r3, r3, lsr #18
 	ldr	r0, [r1, #16]
-	ldr	r2, .L9+4
+	ldr	r2, .L10+4
+	ldrb	r1, [r1, #4]	@ zero_extendqisi2
 	cmp	r0, #0
 	strh	r3, [r2, #10]	@ movhi
-	ldrne	r3, .L9+8
-	ldrne	r3, [r3]
+	strh	r1, [r2, #8]	@ movhi
+	bne	.L7
+	ldr	r3, .L10+8
+	strh	r3, [r2, #12]	@ movhi
+	bx	lr
+.L7:
+	ldr	r3, .L10+12
+	ldr	r3, [r3]
+	cmp	r3, #2
 	addne	r3, r3, #1
 	lslne	r3, r3, #3
 	andne	r3, r3, #1016
-	ldrb	r1, [r1, #4]	@ zero_extendqisi2
-	ldreq	r3, .L9+12
+	ldreq	r3, .L10+16
 	orrne	r3, r3, #8192
-	strh	r1, [r2, #8]	@ movhi
 	strh	r3, [r2, #12]	@ movhi
 	bx	lr
-.L10:
+.L11:
 	.align	2
-.L9:
+.L10:
 	.word	boss
 	.word	shadowOAM
+	.word	8457
 	.word	.LANCHOR0
 	.word	8216
 	.size	drawBoss, .-drawBoss
@@ -133,28 +140,28 @@ fireBossFireball:
 	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
-	ldr	r6, .L23
+	ldr	r6, .L24
 	mov	r5, #0
 	mov	r3, r6
 	sub	sp, sp, #12
-.L17:
+.L18:
 	ldr	r2, [r3, #24]
 	cmp	r2, #0
-	beq	.L22
+	beq	.L23
 	add	r5, r5, #1
 	cmp	r5, #5
 	add	r3, r3, #28
-	bne	.L17
+	bne	.L18
 	add	sp, sp, #12
 	@ sp needed
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
-.L22:
+.L23:
 	mov	r0, #1
-	ldr	r3, .L23+4
+	ldr	r3, .L24+4
 	ldr	r1, [r3, #12]
 	ldr	r2, [r3, #4]
-	ldr	ip, .L23+8
+	ldr	ip, .L24+8
 	add	r1, r1, r1, lsr #31
 	ldr	r8, [ip, #4]
 	add	r1, r2, r1, asr #1
@@ -178,9 +185,9 @@ fireBossFireball:
 	str	r3, [r6, r1, lsl #2]
 	asr	r4, r4, r0
 	lsl	r10, r5, #3
-	ble	.L18
-	ldr	r7, .L23+12
-.L14:
+	ble	.L19
+	ldr	r7, .L24+12
+.L15:
 	mov	r1, r4
 	mov	r0, fp
 	mov	lr, pc
@@ -189,8 +196,8 @@ fireBossFireball:
 	add	r4, r0, r4
 	cmp	r1, r4, asr #1
 	asr	r4, r4, #1
-	bgt	.L14
-.L13:
+	bgt	.L15
+.L14:
 	cmp	r1, #0
 	moveq	r1, #1
 	lsl	r0, r9, #2
@@ -209,13 +216,13 @@ fireBossFireball:
 	@ sp needed
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
-.L18:
+.L19:
 	mov	r1, fp
-	ldr	r7, .L23+12
-	b	.L13
-.L24:
+	ldr	r7, .L24+12
+	b	.L14
+.L25:
 	.align	2
-.L23:
+.L24:
 	.word	fireballs
 	.word	boss
 	.word	player
@@ -232,31 +239,31 @@ updateBoss:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	ldr	r4, .L44
+	ldr	r4, .L45
 	ldr	r3, [r4, #16]
 	cmp	r3, #0
-	ble	.L42
-	ldr	r5, .L44+4
+	ble	.L43
+	ldr	r5, .L45+4
 	ldr	r3, [r5]
 	sub	r3, r3, #1
 	cmp	r3, #0
-	ldr	r6, .L44+8
 	str	r3, [r5]
-	ble	.L40
-.L28:
+	ble	.L41
+	ldr	r6, .L45+8
+.L29:
 	ldr	r3, [r5, #8]
 	sub	r3, r3, #1
 	cmp	r3, #0
 	str	r3, [r5, #8]
-	ble	.L43
-.L29:
+	ble	.L44
+.L30:
 	ldr	r3, [r5, #4]
 	sub	r3, r3, #1
 	cmp	r3, #0
 	str	r3, [r5, #4]
-	ble	.L30
+	ble	.L31
 	ldmib	r6, {r0, r1}
-.L31:
+.L32:
 	ldr	r2, [r4, #4]
 	ldr	r3, [r4]
 	add	r2, r1, r2
@@ -264,15 +271,15 @@ updateBoss:
 	cmp	r2, #0
 	str	r2, [r4, #4]
 	str	r3, [r4]
-	blt	.L36
+	blt	.L37
 	ldr	ip, [r4, #12]
 	rsb	ip, ip, #160
 	cmp	r2, ip
-	ble	.L37
-.L36:
+	ble	.L38
+.L37:
 	rsb	r1, r1, #0
 	str	r1, [r6, #8]
-.L37:
+.L38:
 	cmp	r3, #0
 	movlt	r1, #0
 	movlt	r3, r1
@@ -288,9 +295,22 @@ updateBoss:
 	strlt	r3, [r6, #4]
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L30:
+.L41:
+	mov	r1, #30
+	ldr	r6, .L45+8
+	ldr	r2, [r6]
+	ldr	r3, .L45+12
+	add	r2, r2, #1
+	smull	r0, r3, r2, r3
+	sub	r3, r3, r2, asr #31
+	add	r3, r3, r3, lsl #1
+	sub	r3, r2, r3
+	str	r3, [r6]
+	str	r1, [r5]
+	b	.L29
+.L31:
 	ldr	r3, [r5, #12]
-	ldr	r2, .L44+12
+	ldr	r2, .L45+16
 	mul	r3, r2, r3
 	add	r3, r3, #12288
 	add	r3, r3, #57
@@ -298,56 +318,49 @@ updateBoss:
 	and	r2, r2, #3
 	cmp	r2, #2
 	str	r3, [r5, #12]
-	beq	.L32
-	cmp	r2, #3
 	beq	.L33
+	cmp	r2, #3
+	beq	.L34
 	cmp	r2, #1
 	movne	r0, #1
 	mvneq	r0, #0
 	mov	r1, #0
 	stmib	r6, {r0, r1}
-.L35:
+.L36:
 	mov	r3, #120
 	str	r3, [r5, #4]
-	b	.L31
-.L40:
-	ldr	r3, [r6]
-	rsbs	r3, r3, #1
-	mov	r2, #30
-	movcc	r3, #0
-	str	r2, [r5]
-	str	r3, [r6]
-	b	.L28
-.L42:
+	b	.L32
+.L43:
 	mov	r2, #0
 	mov	r3, #1
 	str	r2, [r4, #16]
 	str	r3, [r4, #24]
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L43:
+.L44:
 	bl	fireBossFireball
 	mov	r3, #90
 	str	r3, [r5, #8]
-	b	.L29
-.L33:
+	b	.L30
+.L34:
 	mov	r2, #0
 	mvn	r3, #0
 	mov	r0, r2
 	mov	r1, r3
 	stmib	r6, {r2, r3}
-	b	.L35
-.L32:
+	b	.L36
+.L33:
 	mov	r0, #0
 	mov	r1, #1
 	stmib	r6, {r0, r1}
-	b	.L35
-.L45:
+	b	.L36
+.L46:
 	.align	2
-.L44:
+.L45:
 	.word	boss
 	.word	.LANCHOR1
 	.word	.LANCHOR0
+	.word	1431655766
 	.word	1103515245
 	.size	updateBoss, .-updateBoss
 	.align	2
@@ -365,10 +378,10 @@ isqrt:
 	cmp	r0, r1, asr #1
 	push	{r4, r5, r6, lr}
 	mov	r5, r0
-	ble	.L49
-	ldr	r6, .L52
+	ble	.L50
+	ldr	r6, .L53
 	asr	r4, r1, #1
-.L48:
+.L49:
 	mov	r1, r4
 	mov	r0, r5
 	mov	lr, pc
@@ -378,18 +391,18 @@ isqrt:
 	cmp	r4, r1, asr #1
 	mov	r3, r4
 	asr	r4, r1, #1
-	bgt	.L48
+	bgt	.L49
 	mov	r0, r3
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L49:
+.L50:
 	mov	r3, r0
 	pop	{r4, r5, r6, lr}
 	mov	r0, r3
 	bx	lr
-.L53:
+.L54:
 	.align	2
-.L52:
+.L53:
 	.word	__aeabi_idiv
 	.size	isqrt, .-isqrt
 	.comm	boss,28,4

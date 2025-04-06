@@ -50,7 +50,7 @@ void updateBoss(void) {
 
     bossFrameDelay--;
     if (bossFrameDelay <= 0) {
-        bossFrame = (bossFrame == 0) ? 1 : 0;
+        bossFrame = (bossFrame + 1) % 3;
         bossFrameDelay = 30;
     }
 
@@ -108,21 +108,24 @@ void drawBoss(void) {
     shadowOAM[1].attr0 = ATTR0_Y(boss.y) | ATTR0_SQUARE;
     shadowOAM[1].attr1 = ATTR1_X(boss.x) | ATTR1_LARGE;
     
-    int frameToDraw;
     if (boss.health == 0) {
-        frameToDraw = 2;
+        shadowOAM[1].attr2 = ATTR2_TILEID(9, 8) | (2 << 12);
     } else {
-        frameToDraw = bossFrame; 
+        int frameToDraw = bossFrame;
+        if (frameToDraw == 2) {
+            shadowOAM[1].attr2 = ATTR2_TILEID(24, 0) | (2 << 12);
+        } else {
+            shadowOAM[1].attr2 = ATTR2_TILEID(8 + frameToDraw * 8, 0) | (2 << 12);
+        }
     }
-
-    shadowOAM[1].attr2 = ATTR2_TILEID(8 + frameToDraw * 8, 0) | (2 << 12);
+    
 }
 
 void fireBossFireball() {
     for (int i = 0; i < MAX_FIREBALLS; i++) {
         if (!fireballs[i].active) {
             fireballs[i].active = 1;
-            fireballs[i].x = boss.x + boss.width / 2 - 8;
+            fireballs[i].x = boss.x + boss.width / 2 - 8; // center fireball to boss?? mayb change
             fireballs[i].y = boss.y + boss.height / 2 - 8;
 
             int dx = player.x - fireballs[i].x;
@@ -139,7 +142,7 @@ void fireBossFireball() {
     }
 }
 
-int isqrt(int n) {
+int isqrt(int n) { // approx square root function?? ask if can use math
     int x = n;
     int y = (x + 1) / 2;
     while (y < x) {

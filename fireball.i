@@ -195,7 +195,7 @@ void updateFireballs(void) {
     for (int i = 0; i < 5; i++) {
         if (fireballs[i].active && collision(player.x, player.y, player.width, player.height,
                                              fireballs[i].x, fireballs[i].y, 16, 16)) {
-            player.health -= 20;
+            player.health -= 0;
             fireballs[i].active = 0;
 
             if (player.health <= 0) {
