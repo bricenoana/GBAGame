@@ -72,12 +72,12 @@ typedef struct {
 
 extern const unsigned short bossBGTestMap[1024];
 # 5 "BossStage.c" 2
-# 1 "singleLayerJungle.h" 1
-# 21 "singleLayerJungle.h"
-extern const unsigned short singleLayerJungleTiles[5632];
+# 1 "bossBGTiles.h" 1
+# 21 "bossBGTiles.h"
+extern const unsigned short bossBGTilesTiles[9600];
 
 
-extern const unsigned short singleLayerJunglePal[256];
+extern const unsigned short bossBGTilesPal[256];
 # 6 "BossStage.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
@@ -238,8 +238,8 @@ void initBossStage(void) {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (0 << 14) | (0 << 7);
 
-    DMANow(3, singleLayerJunglePal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, singleLayerJungleTiles, &((CB*) 0x6000000)[0], 11264 / 2);
+    DMANow(3, bossBGTilesPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3, bossBGTilesTiles, &((CB*) 0x6000000)[0], 19200 / 2);
     DMANow(3, bossBGTestMap, &((SB*) 0x6000000)[27], (2048) / 2);
 
     initPlayer();

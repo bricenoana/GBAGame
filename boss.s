@@ -200,7 +200,7 @@ fireBossFireball:
 .L14:
 	cmp	r1, #0
 	moveq	r1, #1
-	lsl	r0, r9, #2
+	add	r0, r9, r9, lsl #1
 	str	r1, [sp, #4]
 	mov	lr, pc
 	bx	r7
@@ -208,7 +208,7 @@ fireBossFireball:
 	add	r6, r6, r5, lsl #2
 	str	r0, [r6, #16]
 	ldr	r1, [sp, #4]
-	lsl	r0, r8, #2
+	add	r0, r8, r8, lsl #1
 	mov	lr, pc
 	bx	r7
 	str	r0, [r6, #20]

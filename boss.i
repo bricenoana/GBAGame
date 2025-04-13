@@ -314,8 +314,8 @@ void fireBossFireball() {
             int magnitude = isqrt(dx * dx + dy * dy);
             if (magnitude == 0) magnitude = 1;
 
-            fireballs[i].xVel = (dx * 4) / magnitude;
-            fireballs[i].yVel = (dy * 4) / magnitude;
+            fireballs[i].xVel = (dx * 3) / magnitude;
+            fireballs[i].yVel = (dy * 3) / magnitude;
 
             break;
         }

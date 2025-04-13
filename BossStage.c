@@ -2,7 +2,7 @@
 #include "gba.h"
 #include "mode0.h"
 #include "bossBGTest.h"           // map
-#include "singleLayerJungle.h"    // tiles
+#include "bossBGTiles.h"    // tiles
 #include "sprites.h"
 #include "spritesheet.h"
 #include "player.h"
@@ -19,8 +19,8 @@ void initBossStage(void) {
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
     REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(27) | BG_SIZE_SMALL | BG_4BPP;
 
-    DMANow(3, singleLayerJunglePal, BG_PALETTE, singleLayerJunglePalLen / 2);
-    DMANow(3, singleLayerJungleTiles, &CHARBLOCK[0], singleLayerJungleTilesLen / 2);
+    DMANow(3, bossBGTilesPal, BG_PALETTE, bossBGTilesPalLen / 2);
+    DMANow(3, bossBGTilesTiles, &CHARBLOCK[0], bossBGTilesTilesLen / 2);
     DMANow(3, bossBGTestMap, &SCREENBLOCK[27], bossBGTestLen / 2);
     
     initPlayer();

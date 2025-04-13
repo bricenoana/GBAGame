@@ -151,13 +151,11 @@ void initSword(void) {
     sword.timeUntilNextFrame = 15;
     sword.isAnimating = 0;
 
-
     DMANow(3, swordSpriteTiles, &((CB*) 0x6000000)[4], 32768 / 2);
     DMANow(3, swordSpritePal, ((u16 *)0x5000200), 512 / 2);
 }
 
 void updateSword(void) {
-
     if (sword.isAnimating) {
         sword.timeUntilNextFrame--;
         if (sword.timeUntilNextFrame == 0) {
@@ -173,7 +171,5 @@ void drawSword(int hOff, int vOff) {
 
     shadowOAM[2].attr0 = ((screenY) & 0xFF) | (2<<14);
     shadowOAM[2].attr1 = ((screenX) & 0x1FF) | (2<<14);
-
-
     shadowOAM[2].attr2 = ((((0) * (32) + (512 + sword.currentFrame * 2))) & 0x3FF);
 }

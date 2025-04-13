@@ -34,7 +34,7 @@ initBossStage:
 	ldr	r1, .L4+4
 	mov	lr, pc
 	bx	r4
-	mov	r3, #5632
+	mov	r3, #9600
 	mov	r2, #100663296
 	mov	r0, #3
 	ldr	r1, .L4+8
@@ -75,8 +75,8 @@ initBossStage:
 	.align	2
 .L4:
 	.word	DMANow
-	.word	singleLayerJunglePal
-	.word	singleLayerJungleTiles
+	.word	bossBGTilesPal
+	.word	bossBGTilesTiles
 	.word	100718592
 	.word	bossBGTestMap
 	.word	initPlayer
