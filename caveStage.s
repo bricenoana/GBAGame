@@ -22,46 +22,60 @@ initCaveStage:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	mov	r3, #4352
+	mov	r3, #4864
 	mov	r5, #67108864
 	mov	r2, #23296
-	ldr	r4, .L4
+	ldr	r1, .L4
+	ldr	r4, .L4+4
 	strh	r3, [r5]	@ movhi
 	mov	r0, #3
 	strh	r2, [r5, #8]	@ movhi
+	mov	r3, #9600
+	strh	r1, [r5, #10]	@ movhi
+	ldr	r2, .L4+8
+	ldr	r1, .L4+12
+	mov	lr, pc
+	bx	r4
+	mov	r3, #2048
+	mov	r0, #3
+	ldr	r2, .L4+16
+	ldr	r1, .L4+20
+	mov	lr, pc
+	bx	r4
 	mov	r3, #256
 	mov	r2, #83886080
-	ldr	r1, .L4+4
+	mov	r0, #3
+	ldr	r1, .L4+24
 	mov	lr, pc
 	bx	r4
 	mov	r3, #9600
 	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r1, .L4+8
+	ldr	r1, .L4+28
 	mov	lr, pc
 	bx	r4
 	mov	r0, #3
-	ldr	r2, .L4+12
-	ldr	r1, .L4+16
+	ldr	r2, .L4+32
+	ldr	r1, .L4+36
 	mov	r3, #2048
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L4+20
+	ldr	r3, .L4+40
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
 	mov	ip, #10
 	mov	r0, #110
-	ldr	r2, .L4+24
-	ldr	r1, .L4+28
+	ldr	r2, .L4+44
+	ldr	r1, .L4+48
 	str	ip, [r2]
 	str	r3, [r1]
-	ldr	ip, .L4+32
-	ldr	r1, .L4+36
+	ldr	ip, .L4+52
+	ldr	r1, .L4+56
 	str	r3, [ip]
 	str	r3, [r1]
 	strh	r3, [r5, #16]	@ movhi
-	ldr	r1, .L4+40
+	ldr	r1, .L4+60
 	strh	r3, [r5, #18]	@ movhi
 	str	r0, [r2, #4]
 	mov	lr, pc
@@ -69,7 +83,7 @@ initCaveStage:
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L4+44
+	ldr	r1, .L4+64
 	mov	lr, pc
 	bx	r4
 	pop	{r4, r5, r6, lr}
@@ -77,7 +91,12 @@ initCaveStage:
 .L5:
 	.align	2
 .L4:
+	.word	23044
 	.word	DMANow
+	.word	100679680
+	.word	foregroundCaveTilesTiles
+	.word	100716544
+	.word	foregroundCaveMapMap
 	.word	backgroundCaveTilesPal
 	.word	backgroundCaveTilesTiles
 	.word	100718592
@@ -141,38 +160,38 @@ drawCaveStage:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	ldr	r3, .L20
+	ldr	r3, .L21
 	ldr	r0, [r3]
 	subs	r0, r0, #120
 	push	{r4, r5, r6, lr}
 	bmi	.L19
 	cmp	r0, #272
-	movgt	r2, #272
-	movgt	r3, r2
-	movgt	r0, r3
-	ldrle	r4, .L20+4
-	ldrgt	r4, .L20+4
-	lslle	r3, r0, #16
-	strle	r0, [r4]
-	strgt	r2, [r4]
-	lsrle	r3, r3, #16
+	ble	.L20
+	mov	r3, #272
+	mov	ip, #136
+	mov	r2, r3
+	mov	r0, r3
+	ldr	r4, .L21+4
+	str	r3, [r4]
 .L14:
-	mov	r2, #67108864
+	mov	r3, #67108864
 	mov	r1, #0
-	ldr	r5, .L20+8
+	ldr	r5, .L21+8
 	str	r1, [r5]
-	strh	r3, [r2, #16]	@ movhi
-	strh	r1, [r2, #18]	@ movhi
-	ldr	r3, .L20+12
+	strh	ip, [r3, #16]	@ movhi
+	strh	r1, [r3, #18]	@ movhi
+	strh	r2, [r3, #20]	@ movhi
+	ldr	r2, .L21+12
+	strh	r1, [r3, #22]	@ movhi
 	mov	lr, pc
-	bx	r3
+	bx	r2
 	ldr	r1, [r5]
-	ldr	r3, .L20+16
+	ldr	r3, .L21+16
 	ldr	r0, [r4]
 	mov	lr, pc
 	bx	r3
 	mov	r1, #512
-	ldr	r3, .L20+20
+	ldr	r3, .L21+20
 	add	r2, r3, #1016
 .L16:
 	strh	r1, [r3, #8]!	@ movhi
@@ -181,25 +200,35 @@ drawCaveStage:
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L20+20
-	ldr	r4, .L20+24
+	ldr	r1, .L21+20
+	ldr	r4, .L21+24
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L20+28
+	ldr	r3, .L21+28
 	mov	lr, pc
 	bx	r3
 	pop	{r4, r5, r6, lr}
 	bx	lr
 .L19:
-	mov	r2, #0
-	ldr	r4, .L20+4
-	mov	r3, r2
-	mov	r0, r2
-	str	r2, [r4]
+	mov	r3, #0
+	ldr	r4, .L21+4
+	mov	r2, r3
+	mov	ip, r3
+	mov	r0, r3
+	str	r3, [r4]
 	b	.L14
-.L21:
-	.align	2
 .L20:
+	ldr	r4, .L21+4
+	asr	ip, r0, #1
+	lsl	ip, ip, #16
+	lsl	r2, r0, #16
+	str	r0, [r4]
+	lsr	ip, ip, #16
+	lsr	r2, r2, #16
+	b	.L14
+.L22:
+	.align	2
+.L21:
 	.word	player
 	.word	hOff
 	.word	vOff

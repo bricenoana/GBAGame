@@ -170,14 +170,37 @@ extern const unsigned short backgroundCaveTilesPal[256];
 
 extern const unsigned short backgroundCaveMapMap[2048];
 # 9 "caveStage.c" 2
+# 1 "foregroundCaveTiles.h" 1
+# 21 "foregroundCaveTiles.h"
+extern const unsigned short foregroundCaveTilesTiles[9600];
+
+
+extern const unsigned short foregroundCaveTilesPal[256];
+# 10 "caveStage.c" 2
+# 1 "foregroundCaveMap.h" 1
+
+
+
+
+
+
+
+extern const unsigned short foregroundCaveMapMap[2048];
+# 11 "caveStage.c" 2
 
 int hOff, vOff;
 
 void initCaveStage(void) {
-    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
-    (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (1 << 14);
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << 12);
 
-    DMANow(3, backgroundCaveTilesPal, ((unsigned short *)0x5000000), 512 / 2);
+    (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (1 << 14);
+    (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((26) << 8) | (1 << 14);
+
+
+    DMANow(3, foregroundCaveTilesTiles, &((CB*) 0x6000000)[1], 19200 / 2);
+    DMANow(3, foregroundCaveMapMap, &((SB*) 0x6000000)[26], (4096) / 2);
+
+    DMANow(3, backgroundCaveTilesPal, ((unsigned short *)0x5000000), 256);
     DMANow(3, backgroundCaveTilesTiles, &((CB*) 0x6000000)[0], 19200 / 2);
     DMANow(3, backgroundCaveMapMap, &((SB*) 0x6000000)[27], (4096) / 2);
 
@@ -214,8 +237,12 @@ void drawCaveStage(void) {
 
     vOff = 0;
 
-    (*(volatile unsigned short*) 0x04000010) = hOff;
+    (*(volatile unsigned short*) 0x04000010) = hOff / 2;
     (*(volatile unsigned short*) 0x04000012) = vOff;
+
+    (*(volatile unsigned short*) 0x04000014) = hOff;
+    (*(volatile unsigned short*) 0x04000016) = vOff;
+
 
     drawPlayer(hOff, vOff);
     drawSword(hOff, vOff);
