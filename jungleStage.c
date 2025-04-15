@@ -20,6 +20,7 @@ void initJungleStage(void) {
 
     initPlayer();
     initTemple();
+    initAlert();
     collisionEnabled = 1;
     
     hOff = 0;
@@ -29,11 +30,17 @@ void initJungleStage(void) {
 
     hideSprites();
     DMANow(3, shadowOAM, OAM, 128 * 4);
+
+    initNPC();
+
 }
 
 
 void updateJungleStage(void) {
     updatePlayer();
+    updateNPC(hOff, vOff);
+    updateAlert(hOff, vOff);
+
 
     if (checkTempleCollision(player.x, player.y, player.width, player.height)) {
         goToBossStage();
@@ -53,11 +60,15 @@ void drawJungleStage(void) {
     REG_BG0VOFF = vOff;
 
     drawPlayer(hOff, vOff);
-    
-    for (int i = 1; i < 128; i++) {
+    drawNPC(hOff, vOff);
+    drawAlert(hOff, vOff);
+
+    for (int i = 3; i < 128; i++) {
         shadowOAM[i].attr0 = ATTR0_HIDE;
     }
-    
     DMANow(3, shadowOAM, OAM, 128 * 4);
+    
+
     waitForVBlank();
 }
+

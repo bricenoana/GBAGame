@@ -17,11 +17,11 @@ void initCaveStage(void) {
     REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(27) | BG_SIZE_WIDE;
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE;
 
-    // DMANow(3, foregroundCaveTilesPal, BG_PALETTE, foregroundCaveTilesPalLen / 2);
+    DMANow(3, foregroundCaveTilesPal, BG_PALETTE, foregroundCaveTilesPalLen / 2);
     DMANow(3, foregroundCaveTilesTiles, &CHARBLOCK[1], foregroundCaveTilesTilesLen / 2);
     DMANow(3, foregroundCaveMapMap, &SCREENBLOCK[26], foregroundCaveMapLen / 2);
 
-    DMANow(3, backgroundCaveTilesPal, BG_PALETTE, 256);
+    DMANow(3, backgroundCaveTilesPal, BG_PALETTE, backgroundCaveTilesPalLen / 2);
     DMANow(3, backgroundCaveTilesTiles, &CHARBLOCK[0], backgroundCaveTilesTilesLen / 2);
     DMANow(3, backgroundCaveMapMap, &SCREENBLOCK[27], backgroundCaveMapLen / 2);
 

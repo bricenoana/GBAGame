@@ -178,6 +178,7 @@ void initJungleStage(void) {
 
     initPlayer();
     initTemple();
+    initAlert();
     collisionEnabled = 1;
 
     hOff = 0;
@@ -187,11 +188,17 @@ void initJungleStage(void) {
 
     hideSprites();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
+
+    initNPC();
+
 }
 
 
 void updateJungleStage(void) {
     updatePlayer();
+    updateNPC(hOff, vOff);
+    updateAlert(hOff, vOff);
+
 
     if (checkTempleCollision(player.x, player.y, player.width, player.height)) {
         goToBossStage();
@@ -211,11 +218,14 @@ void drawJungleStage(void) {
     (*(volatile unsigned short*) 0x04000012) = vOff;
 
     drawPlayer(hOff, vOff);
+    drawNPC(hOff, vOff);
+    drawAlert(hOff, vOff);
 
-    for (int i = 1; i < 128; i++) {
+    for (int i = 3; i < 128; i++) {
         shadowOAM[i].attr0 = (2<<8);
     }
-
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
+
+
     waitForVBlank();
 }

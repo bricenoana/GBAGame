@@ -52,25 +52,31 @@ initJungleStage:
 	ldr	r3, .L4+24
 	mov	lr, pc
 	bx	r3
+	ldr	r3, .L4+28
+	mov	lr, pc
+	bx	r3
 	mov	r3, #0
 	mov	ip, #1
-	ldr	r0, .L4+28
-	ldr	r1, .L4+32
-	ldr	r2, .L4+36
+	ldr	r0, .L4+32
+	ldr	r1, .L4+36
+	ldr	r2, .L4+40
 	str	ip, [r0]
 	str	r3, [r1]
 	str	r3, [r2]
 	strh	r3, [r5, #16]	@ movhi
-	ldr	r2, .L4+40
+	ldr	r2, .L4+44
 	strh	r3, [r5, #18]	@ movhi
 	mov	lr, pc
 	bx	r2
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L4+44
+	ldr	r1, .L4+48
 	mov	lr, pc
 	bx	r4
+	ldr	r3, .L4+52
+	mov	lr, pc
+	bx	r3
 	pop	{r4, r5, r6, lr}
 	bx	lr
 .L5:
@@ -83,11 +89,13 @@ initJungleStage:
 	.word	singleLayerMapMap
 	.word	initPlayer
 	.word	initTemple
+	.word	initAlert
 	.word	collisionEnabled
 	.word	hOff
 	.word	vOff
 	.word	hideSprites
 	.word	shadowOAM
+	.word	initNPC
 	.size	initJungleStage, .-initJungleStage
 	.align	2
 	.global	updateJungleStage
@@ -99,29 +107,45 @@ updateJungleStage:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, lr}
-	ldr	r3, .L13
+	push	{r4, r5, r6, lr}
+	ldr	r4, .L13
+	ldr	r5, .L13+4
+	ldr	r3, .L13+8
 	mov	lr, pc
 	bx	r3
-	ldr	r0, .L13+4
-	ldr	r4, .L13+8
+	ldr	r1, [r5]
+	ldr	r0, [r4]
+	ldr	r3, .L13+12
+	mov	lr, pc
+	bx	r3
+	ldr	r1, [r5]
+	ldr	r0, [r4]
+	ldr	r3, .L13+16
+	mov	lr, pc
+	bx	r3
+	ldr	r0, .L13+20
+	ldr	r4, .L13+24
 	ldm	r0, {r0, r1, r2, r3}
 	mov	lr, pc
 	bx	r4
 	cmp	r0, #0
 	bne	.L12
-	pop	{r4, lr}
+	pop	{r4, r5, r6, lr}
 	bx	lr
 .L12:
-	ldr	r3, .L13+12
+	ldr	r3, .L13+28
 	mov	lr, pc
 	bx	r3
-	pop	{r4, lr}
+	pop	{r4, r5, r6, lr}
 	bx	lr
 .L14:
 	.align	2
 .L13:
+	.word	hOff
+	.word	vOff
 	.word	updatePlayer
+	.word	updateNPC
+	.word	updateAlert
 	.word	player
 	.word	checkTempleCollision
 	.word	goToBossStage
@@ -138,68 +162,81 @@ drawJungleStage:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	ldr	r3, .L27
 	ldm	r3, {r0, r1}
-	ldr	ip, .L27+4
+	push	{r4, r5, r6, lr}
 	sub	r0, r0, #120
-	ldr	r2, .L27+8
+	ldr	r4, .L27+4
+	ldr	r5, .L27+8
 	sub	r1, r1, #80
 	cmp	r0, #0
-	push	{r4, lr}
-	str	r0, [ip]
-	str	r1, [r2]
+	str	r0, [r4]
+	str	r1, [r5]
 	blt	.L25
 	cmp	r0, #272
-	movgt	lr, #272
-	movgt	r3, lr
+	movgt	r2, #272
+	movgt	r3, r2
 	lslle	r3, r0, #16
 	movgt	r0, r3
-	strgt	lr, [ip]
+	strgt	r2, [r4]
 	lsrle	r3, r3, #16
 	cmp	r1, #0
 	blt	.L26
 .L19:
 	cmp	r1, #352
-	movgt	lr, #352
-	movgt	r1, lr
+	movgt	r2, #352
+	movgt	r1, r2
 	movgt	ip, r1
 	lslle	ip, r1, #16
-	strgt	lr, [r2]
+	strgt	r2, [r5]
 	lsrle	ip, ip, #16
 .L20:
 	mov	r2, #67108864
 	strh	r3, [r2, #16]	@ movhi
-	ldr	r3, .L27+12
 	strh	ip, [r2, #18]	@ movhi
+	ldr	r3, .L27+12
+	mov	lr, pc
+	bx	r3
+	ldr	r1, [r5]
+	ldr	r3, .L27+16
+	ldr	r0, [r4]
+	mov	lr, pc
+	bx	r3
+	ldr	r1, [r5]
+	ldr	r3, .L27+20
+	ldr	r0, [r4]
 	mov	lr, pc
 	bx	r3
 	mov	r1, #512
-	ldr	r3, .L27+16
-	add	r2, r3, #1016
+	ldr	r3, .L27+24
+	add	r2, r3, #1000
 .L22:
-	strh	r1, [r3, #8]!	@ movhi
+	strh	r1, [r3, #24]	@ movhi
+	add	r3, r3, #8
 	cmp	r3, r2
 	bne	.L22
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L27+16
-	ldr	r4, .L27+20
+	ldr	r1, .L27+24
+	ldr	r4, .L27+28
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L27+24
+	ldr	r3, .L27+32
 	mov	lr, pc
 	bx	r3
-	pop	{r4, lr}
+	pop	{r4, r5, r6, lr}
 	bx	lr
 .L25:
-	mov	r0, #0
+	mov	r2, #0
 	cmp	r1, #0
-	mov	r3, r0
-	str	r0, [ip]
+	mov	r3, r2
+	mov	r0, r2
+	str	r2, [r4]
 	bge	.L19
 .L26:
-	mov	ip, #0
-	mov	r1, ip
-	str	ip, [r2]
+	mov	r2, #0
+	mov	r1, r2
+	mov	ip, r2
+	str	r2, [r5]
 	b	.L20
 .L28:
 	.align	2
@@ -208,6 +245,8 @@ drawJungleStage:
 	.word	hOff
 	.word	vOff
 	.word	drawPlayer
+	.word	drawNPC
+	.word	drawAlert
 	.word	shadowOAM
 	.word	DMANow
 	.word	waitForVBlank

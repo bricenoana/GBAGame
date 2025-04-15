@@ -196,11 +196,11 @@ void initCaveStage(void) {
     (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (1 << 14);
     (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((26) << 8) | (1 << 14);
 
-
+    DMANow(3, foregroundCaveTilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, foregroundCaveTilesTiles, &((CB*) 0x6000000)[1], 19200 / 2);
     DMANow(3, foregroundCaveMapMap, &((SB*) 0x6000000)[26], (4096) / 2);
 
-    DMANow(3, backgroundCaveTilesPal, ((unsigned short *)0x5000000), 256);
+    DMANow(3, backgroundCaveTilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, backgroundCaveTilesTiles, &((CB*) 0x6000000)[0], 19200 / 2);
     DMANow(3, backgroundCaveMapMap, &((SB*) 0x6000000)[27], (4096) / 2);
 

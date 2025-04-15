@@ -30,52 +30,58 @@ initCaveStage:
 	strh	r3, [r5]	@ movhi
 	mov	r0, #3
 	strh	r2, [r5, #8]	@ movhi
-	mov	r3, #9600
+	mov	r3, #256
 	strh	r1, [r5, #10]	@ movhi
-	ldr	r2, .L4+8
-	ldr	r1, .L4+12
+	mov	r2, #83886080
+	ldr	r1, .L4+8
+	mov	lr, pc
+	bx	r4
+	mov	r3, #9600
+	mov	r0, #3
+	ldr	r2, .L4+12
+	ldr	r1, .L4+16
 	mov	lr, pc
 	bx	r4
 	mov	r3, #2048
 	mov	r0, #3
-	ldr	r2, .L4+16
-	ldr	r1, .L4+20
+	ldr	r2, .L4+20
+	ldr	r1, .L4+24
 	mov	lr, pc
 	bx	r4
 	mov	r3, #256
 	mov	r2, #83886080
 	mov	r0, #3
-	ldr	r1, .L4+24
+	ldr	r1, .L4+28
 	mov	lr, pc
 	bx	r4
 	mov	r3, #9600
 	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r1, .L4+28
+	ldr	r1, .L4+32
 	mov	lr, pc
 	bx	r4
 	mov	r0, #3
-	ldr	r2, .L4+32
-	ldr	r1, .L4+36
+	ldr	r2, .L4+36
+	ldr	r1, .L4+40
 	mov	r3, #2048
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L4+40
+	ldr	r3, .L4+44
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
 	mov	ip, #10
 	mov	r0, #110
-	ldr	r2, .L4+44
-	ldr	r1, .L4+48
+	ldr	r2, .L4+48
+	ldr	r1, .L4+52
 	str	ip, [r2]
 	str	r3, [r1]
-	ldr	ip, .L4+52
-	ldr	r1, .L4+56
+	ldr	ip, .L4+56
+	ldr	r1, .L4+60
 	str	r3, [ip]
 	str	r3, [r1]
 	strh	r3, [r5, #16]	@ movhi
-	ldr	r1, .L4+60
+	ldr	r1, .L4+64
 	strh	r3, [r5, #18]	@ movhi
 	str	r0, [r2, #4]
 	mov	lr, pc
@@ -83,7 +89,7 @@ initCaveStage:
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L4+64
+	ldr	r1, .L4+68
 	mov	lr, pc
 	bx	r4
 	pop	{r4, r5, r6, lr}
@@ -93,6 +99,7 @@ initCaveStage:
 .L4:
 	.word	23044
 	.word	DMANow
+	.word	foregroundCaveTilesPal
 	.word	100679680
 	.word	foregroundCaveTilesTiles
 	.word	100716544
