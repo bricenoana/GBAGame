@@ -60,28 +60,34 @@ initCaveStage:
 	ldr	r1, .L4+32
 	mov	lr, pc
 	bx	r4
-	mov	r0, #3
 	ldr	r2, .L4+36
 	ldr	r1, .L4+40
+	mov	r0, #3
 	mov	r3, #2048
 	mov	lr, pc
 	bx	r4
 	ldr	r3, .L4+44
 	mov	lr, pc
 	bx	r3
+	ldr	r3, .L4+48
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L4+52
+	mov	lr, pc
+	bx	r3
 	mov	r3, #0
 	mov	ip, #10
 	mov	r0, #110
-	ldr	r2, .L4+48
-	ldr	r1, .L4+52
+	ldr	r2, .L4+56
+	ldr	r1, .L4+60
 	str	ip, [r2]
 	str	r3, [r1]
-	ldr	ip, .L4+56
-	ldr	r1, .L4+60
+	ldr	ip, .L4+64
+	ldr	r1, .L4+68
 	str	r3, [ip]
 	str	r3, [r1]
 	strh	r3, [r5, #16]	@ movhi
-	ldr	r1, .L4+64
+	ldr	r1, .L4+72
 	strh	r3, [r5, #18]	@ movhi
 	str	r0, [r2, #4]
 	mov	lr, pc
@@ -89,7 +95,7 @@ initCaveStage:
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L4+68
+	ldr	r1, .L4+76
 	mov	lr, pc
 	bx	r4
 	pop	{r4, r5, r6, lr}
@@ -109,6 +115,8 @@ initCaveStage:
 	.word	100718592
 	.word	backgroundCaveMapMap
 	.word	initPlayer
+	.word	initSword
+	.word	initAlert
 	.word	player
 	.word	collisionEnabled
 	.word	hOff
@@ -133,8 +141,15 @@ updateCaveStage:
 	ldr	r3, .L10+4
 	mov	lr, pc
 	bx	r3
+	ldr	r2, .L10+8
+	ldr	r3, .L10+12
+	ldr	r1, [r2]
+	ldr	r0, [r3]
+	ldr	r3, .L10+16
+	mov	lr, pc
+	bx	r3
 	mov	r1, #110
-	ldr	r3, .L10+8
+	ldr	r3, .L10+20
 	ldr	r2, [r3, #8]
 	ldr	r0, [r3]
 	rsb	r2, r2, #512
@@ -144,7 +159,7 @@ updateCaveStage:
 	pop	{r4, lr}
 	bx	lr
 .L9:
-	ldr	r3, .L10+12
+	ldr	r3, .L10+24
 	mov	lr, pc
 	bx	r3
 	pop	{r4, lr}
@@ -154,6 +169,9 @@ updateCaveStage:
 .L10:
 	.word	updatePlayer
 	.word	updateSword
+	.word	vOff
+	.word	hOff
+	.word	updateCaveAlert
 	.word	player
 	.word	goToGame
 	.size	updateCaveStage, .-updateCaveStage
@@ -167,65 +185,79 @@ drawCaveStage:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	ldr	r3, .L21
+	ldr	r3, .L25
 	ldr	r0, [r3]
 	subs	r0, r0, #120
 	push	{r4, r5, r6, lr}
-	bmi	.L19
+	bmi	.L22
 	cmp	r0, #272
-	ble	.L20
+	ble	.L23
 	mov	r3, #272
 	mov	ip, #136
 	mov	r2, r3
 	mov	r0, r3
-	ldr	r4, .L21+4
+	ldr	r4, .L25+4
 	str	r3, [r4]
 .L14:
 	mov	r3, #67108864
 	mov	r1, #0
-	ldr	r5, .L21+8
+	ldr	r5, .L25+8
 	str	r1, [r5]
 	strh	ip, [r3, #16]	@ movhi
 	strh	r1, [r3, #18]	@ movhi
 	strh	r2, [r3, #20]	@ movhi
-	ldr	r2, .L21+12
+	ldr	r2, .L25+12
 	strh	r1, [r3, #22]	@ movhi
 	mov	lr, pc
 	bx	r2
 	ldr	r1, [r5]
-	ldr	r3, .L21+16
+	ldr	r3, .L25+16
 	ldr	r0, [r4]
 	mov	lr, pc
 	bx	r3
+	ldr	r1, [r5]
+	ldr	r3, .L25+20
+	ldr	r0, [r4]
+	mov	lr, pc
+	bx	r3
+	mvn	r3, #0
 	mov	r1, #512
-	ldr	r3, .L21+20
-	add	r2, r3, #1016
+	ldr	r0, .L25+24
 .L16:
-	strh	r1, [r3, #8]!	@ movhi
-	cmp	r3, r2
-	bne	.L16
+	lsl	r2, r3, #3
+	add	r3, r3, #1
+	cmp	r3, #126
+	strh	r1, [r0, r2]	@ movhi
+	beq	.L24
+.L18:
+	cmp	r3, #1
+	bhi	.L16
+	add	r3, r3, #1
+	cmp	r3, #126
+	bne	.L18
+.L24:
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L21+20
-	ldr	r4, .L21+24
+	ldr	r1, .L25+28
+	ldr	r4, .L25+32
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L21+28
+	ldr	r3, .L25+36
 	mov	lr, pc
 	bx	r3
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L19:
+.L22:
 	mov	r3, #0
-	ldr	r4, .L21+4
+	ldr	r4, .L25+4
 	mov	r2, r3
 	mov	ip, r3
 	mov	r0, r3
 	str	r3, [r4]
 	b	.L14
-.L20:
-	ldr	r4, .L21+4
+.L23:
+	ldr	r4, .L25+4
 	asr	ip, r0, #1
 	lsl	ip, ip, #16
 	lsl	r2, r0, #16
@@ -233,14 +265,16 @@ drawCaveStage:
 	lsr	ip, ip, #16
 	lsr	r2, r2, #16
 	b	.L14
-.L22:
+.L26:
 	.align	2
-.L21:
+.L25:
 	.word	player
 	.word	hOff
 	.word	vOff
 	.word	drawPlayer
 	.word	drawSword
+	.word	drawAlert
+	.word	shadowOAM+16
 	.word	shadowOAM
 	.word	DMANow
 	.word	waitForVBlank

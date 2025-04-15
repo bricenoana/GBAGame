@@ -12613,36 +12613,36 @@ spriteNormalTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	20480
+	.short	0
+	.short	-27392
+	.short	0
+	.short	-26288
+	.short	0
+	.short	-26219
+	.short	0
+	.short	27029
+	.short	0
+	.short	27029
+	.short	0
+	.short	27029
+	.short	0
+	.short	27029
 	.short	0
 	.short	0
+	.short	5
 	.short	0
+	.short	87
 	.short	0
+	.short	1399
 	.short	0
+	.short	1399
 	.short	0
+	.short	1399
 	.short	0
+	.short	1399
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	1399
 	.short	0
 	.short	0
 	.short	0
@@ -13125,36 +13125,36 @@ spriteNormalTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	27029
 	.short	0
+	.short	27029
 	.short	0
+	.short	27029
 	.short	0
+	.short	27029
 	.short	0
+	.short	27029
 	.short	0
+	.short	27029
 	.short	0
+	.short	27029
 	.short	0
+	.short	27029
+	.short	1399
 	.short	0
+	.short	1399
 	.short	0
+	.short	1399
 	.short	0
+	.short	1399
 	.short	0
+	.short	1399
 	.short	0
+	.short	1399
 	.short	0
+	.short	1399
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	1399
 	.short	0
 	.short	0
 	.short	0
@@ -13637,37 +13637,37 @@ spriteNormalTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	27029
 	.short	0
+	.short	27029
 	.short	0
+	.short	27029
 	.short	0
+	.short	27029
 	.short	0
+	.short	27029
+	.short	21840
+	.short	27029
+	.short	-30555
+	.short	27029
+	.short	8837
+	.short	27032
+	.short	1399
 	.short	0
+	.short	1399
 	.short	0
+	.short	1399
 	.short	0
+	.short	1399
 	.short	0
+	.short	1399
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	21879
+	.short	85
+	.short	-31369
+	.short	1448
+	.short	10359
+	.short	1410
 	.short	0
 	.short	0
 	.short	0
@@ -14148,37 +14148,37 @@ spriteNormalTiles:
 	.short	0
 	.short	0
 	.short	0
+	.short	8784
+	.short	8738
+	.short	21760
+	.short	8738
 	.short	0
+	.short	11605
 	.short	0
+	.short	11600
 	.short	0
+	.short	11600
 	.short	0
+	.short	-21936
 	.short	0
+	.short	-21851
 	.short	0
+	.short	-21936
+	.short	8738
+	.short	82
+	.short	21026
+	.short	5
+	.short	1373
 	.short	0
+	.short	93
 	.short	0
+	.short	93
 	.short	0
+	.short	90
 	.short	0
+	.short	1450
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	90
 	.short	0
 	.short	0
 	.short	0

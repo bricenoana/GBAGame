@@ -121,10 +121,9 @@ typedef struct {
 typedef struct {
     int x;
     int y;
-    int currentFrame;
-    int numFrames;
-    int timeUntilNextFrame;
-    int isAnimating;
+    int width;
+    int height;
+    int active;
 } Sword;
 
 extern Sword sword;
@@ -133,43 +132,37 @@ void initSword(void);
 void updateSword(void);
 void drawSword(int hOff, int vOff);
 # 5 "sword.c" 2
-# 1 "swordSprite.h" 1
-# 21 "swordSprite.h"
-extern const unsigned short swordSpriteTiles[16384];
+# 1 "spriteNormal.h" 1
+# 21 "spriteNormal.h"
+extern const unsigned short spriteNormalTiles[25600];
 
 
-extern const unsigned short swordSpritePal[256];
+extern const unsigned short spriteNormalPal[256];
 # 6 "sword.c" 2
 
 Sword sword;
 
-void initSword(void) {
-    sword.x = 50;
-    sword.y = 110;
-    sword.currentFrame = 0;
-    sword.numFrames = 3;
-    sword.timeUntilNextFrame = 15;
-    sword.isAnimating = 0;
 
-    DMANow(3, swordSpriteTiles, &((CB*) 0x6000000)[4], 32768 / 2);
-    DMANow(3, swordSpritePal, ((u16 *)0x5000200), 512 / 2);
+void initSword(void) {
+    sword.x = 400;
+    sword.y = 110;
+    sword.width = 32;
+    sword.height = 64;
+    sword.active = 1;
 }
 
 void updateSword(void) {
-    if (sword.isAnimating) {
-        sword.timeUntilNextFrame--;
-        if (sword.timeUntilNextFrame == 0) {
-            sword.currentFrame = (sword.currentFrame + 1) % sword.numFrames;
-            sword.timeUntilNextFrame = 15;
-        }
+    if (!sword.active) {
+        return;
     }
 }
 
 void drawSword(int hOff, int vOff) {
     int screenX = sword.x - hOff;
     int screenY = sword.y - vOff;
+    int tileIndex = 24 * 32 + 3;
 
-    shadowOAM[2].attr0 = ((screenY) & 0xFF) | (2<<14);
-    shadowOAM[2].attr1 = ((screenX) & 0x1FF) | (2<<14);
-    shadowOAM[2].attr2 = ((((0) * (32) + (512 + sword.currentFrame * 2))) & 0x3FF);
+    shadowOAM[3].attr0 = ((screenY) & 0xFF) | (2<<14);
+    shadowOAM[3].attr1 = ((screenX) & 0x1FF) | (2<<14);
+    shadowOAM[3].attr2 = tileIndex | (((0) & 0xF) <<12) | (((0) & 3) << 10);
 }

@@ -4,10 +4,9 @@
 typedef struct {
     int x;
     int y;
-    int currentFrame;
-    int numFrames;
-    int timeUntilNextFrame;
-    int isAnimating;
+    int width;
+    int height;
+    int active;
 } Sword;
 
 extern Sword sword;

@@ -2,37 +2,31 @@
 #include "mode0.h"
 #include "sprites.h"
 #include "sword.h"
-#include "swordSprite.h"
+#include "spriteNormal.h"
 
 Sword sword;
+#define SPRITESHEET_TILE_WIDTH 32
 
 void initSword(void) {
-    sword.x = 50;
+    sword.x = 400;
     sword.y = 110;
-    sword.currentFrame = 0;
-    sword.numFrames = 3;
-    sword.timeUntilNextFrame = 15;
-    sword.isAnimating = 0;
-
-    DMANow(3, swordSpriteTiles, &CHARBLOCK[4], swordSpriteTilesLen / 2);
-    DMANow(3, swordSpritePal, SPRITE_PAL, swordSpritePalLen / 2);
+    sword.width = 32;
+    sword.height = 64;
+    sword.active = 1;
 }
 
 void updateSword(void) {
-    if (sword.isAnimating) {
-        sword.timeUntilNextFrame--;
-        if (sword.timeUntilNextFrame == 0) {
-            sword.currentFrame = (sword.currentFrame + 1) % sword.numFrames;
-            sword.timeUntilNextFrame = 15;
-        }
+    if (!sword.active) {
+        return;
     }
 }
 
 void drawSword(int hOff, int vOff) {
     int screenX = sword.x - hOff;
     int screenY = sword.y - vOff;
+    int tileIndex = 24 * SPRITESHEET_TILE_WIDTH + 3;
 
-    shadowOAM[2].attr0 = ATTR0_Y(screenY) | ATTR0_TALL;
-    shadowOAM[2].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
-    shadowOAM[2].attr2 = ATTR2_TILEID(512 + sword.currentFrame * 2, 0);
+    shadowOAM[3].attr0 = ATTR0_Y(screenY) | ATTR0_TALL;
+    shadowOAM[3].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+    shadowOAM[3].attr2 = tileIndex | ATTR2_PALROW(0) | ATTR2_PRIORITY(0);
 }

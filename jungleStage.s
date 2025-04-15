@@ -145,7 +145,7 @@ updateJungleStage:
 	.word	vOff
 	.word	updatePlayer
 	.word	updateNPC
-	.word	updateAlert
+	.word	updateJungleAlert
 	.word	player
 	.word	checkTempleCollision
 	.word	goToBossStage

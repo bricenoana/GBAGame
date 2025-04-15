@@ -192,19 +192,16 @@ void initAlert() {
     alert.active = 0;
 }
 
-void updateAlert(int hOff, int vOff) {
+void updateJungleAlert(int hOff, int vOff) {
     if (collision(player.x, player.y, player.width, player.height,
                   npc.x, npc.y, npc.width, npc.height)) {
         alert.active = 1;
 
-
         int baseX = npc.x + (npc.width / 2) - (16 / 2);
         int baseY = npc.y - 16 - 4;
 
-
         alert.worldX = baseX - 8;
         alert.worldY = baseY + 5;
-
 
         alert.screenX = alert.worldX - hOff;
         alert.screenY = alert.worldY - vOff;
@@ -213,6 +210,18 @@ void updateAlert(int hOff, int vOff) {
     }
 }
 
+void updateCaveAlert(int hOff, int vOff) {
+    if (player.x >= 380 && player.x <= 420) {
+        alert.active = 1;
+        alert.worldX = 399;
+        alert.worldY = 90;
+    } else {
+        alert.active = 0;
+    }
+
+    alert.screenX = alert.worldX - hOff;
+    alert.screenY = alert.worldY - vOff;
+}
 
 
 void drawAlert(int hOff, int vOff) {

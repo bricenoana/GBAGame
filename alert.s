@@ -32,12 +32,12 @@ initAlert:
 	.word	alert
 	.size	initAlert, .-initAlert
 	.align	2
-	.global	updateAlert
+	.global	updateJungleAlert
 	.syntax unified
 	.arm
 	.fpu softvfp
-	.type	updateAlert, %function
-updateAlert:
+	.type	updateJungleAlert, %function
+updateJungleAlert:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
@@ -95,7 +95,54 @@ updateAlert:
 	.word	player
 	.word	collision
 	.word	alert
-	.size	updateAlert, .-updateAlert
+	.size	updateJungleAlert, .-updateJungleAlert
+	.align	2
+	.global	updateCaveAlert
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	updateCaveAlert, %function
+updateCaveAlert:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	ldr	r3, .L18
+	ldr	r3, [r3]
+	sub	r3, r3, #380
+	cmp	r3, #40
+	bhi	.L12
+	mov	r2, #90
+	str	lr, [sp, #-4]!
+	mov	lr, #1
+	ldr	ip, .L18+4
+	ldr	r3, .L18+8
+	sub	r0, ip, r0
+	sub	r1, r2, r1
+	str	lr, [r3, #16]
+	str	ip, [r3]
+	str	r2, [r3, #4]
+	str	r0, [r3, #8]
+	str	r1, [r3, #12]
+	ldr	lr, [sp], #4
+	bx	lr
+.L12:
+	mov	r2, #0
+	ldr	r3, .L18+8
+	str	r2, [r3, #16]
+	ldr	ip, [r3]
+	ldr	r2, [r3, #4]
+	sub	r0, ip, r0
+	sub	r1, r2, r1
+	str	r0, [r3, #8]
+	str	r1, [r3, #12]
+	bx	lr
+.L19:
+	.align	2
+.L18:
+	.word	player
+	.word	399
+	.word	alert
+	.size	updateCaveAlert, .-updateCaveAlert
 	.align	2
 	.global	drawAlert
 	.syntax unified
@@ -107,29 +154,29 @@ drawAlert:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	ldr	r2, .L14
+	ldr	r2, .L23
 	ldr	r3, [r2, #16]
 	cmp	r3, #0
-	beq	.L12
+	beq	.L21
 	ldr	r3, [r2, #8]
 	lsl	r3, r3, #23
 	ldrb	r0, [r2, #12]	@ zero_extendqisi2
-	ldr	r1, .L14+4
-	ldr	r2, .L14+8
+	ldr	r1, .L23+4
+	ldr	r2, .L23+8
 	lsr	r3, r3, #23
 	orr	r3, r3, #16384
 	strh	r3, [r2, #18]	@ movhi
 	strh	r0, [r2, #16]	@ movhi
 	strh	r1, [r2, #20]	@ movhi
 	bx	lr
-.L12:
+.L21:
 	mov	r2, #512
-	ldr	r3, .L14+8
+	ldr	r3, .L23+8
 	strh	r2, [r3, #16]	@ movhi
 	bx	lr
-.L15:
+.L24:
 	.align	2
-.L14:
+.L23:
 	.word	alert
 	.word	5024
 	.word	shadowOAM

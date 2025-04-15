@@ -197,7 +197,7 @@ void initJungleStage(void) {
 void updateJungleStage(void) {
     updatePlayer();
     updateNPC(hOff, vOff);
-    updateAlert(hOff, vOff);
+    updateJungleAlert(hOff, vOff);
 
 
     if (checkTempleCollision(player.x, player.y, player.width, player.height)) {

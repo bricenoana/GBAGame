@@ -146,20 +146,13 @@ void initPlayer(void);
 void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
 # 6 "caveStage.c" 2
-# 1 "swordSprite.h" 1
-# 21 "swordSprite.h"
-extern const unsigned short swordSpriteTiles[16384];
-
-
-extern const unsigned short swordSpritePal[256];
-# 7 "caveStage.c" 2
 # 1 "backgroundCaveTiles.h" 1
 # 21 "backgroundCaveTiles.h"
 extern const unsigned short backgroundCaveTilesTiles[9600];
 
 
 extern const unsigned short backgroundCaveTilesPal[256];
-# 8 "caveStage.c" 2
+# 7 "caveStage.c" 2
 # 1 "backgroundCaveMap.h" 1
 
 
@@ -169,14 +162,14 @@ extern const unsigned short backgroundCaveTilesPal[256];
 
 
 extern const unsigned short backgroundCaveMapMap[2048];
-# 9 "caveStage.c" 2
+# 8 "caveStage.c" 2
 # 1 "foregroundCaveTiles.h" 1
 # 21 "foregroundCaveTiles.h"
 extern const unsigned short foregroundCaveTilesTiles[9600];
 
 
 extern const unsigned short foregroundCaveTilesPal[256];
-# 10 "caveStage.c" 2
+# 9 "caveStage.c" 2
 # 1 "foregroundCaveMap.h" 1
 
 
@@ -186,7 +179,7 @@ extern const unsigned short foregroundCaveTilesPal[256];
 
 
 extern const unsigned short foregroundCaveMapMap[2048];
-# 11 "caveStage.c" 2
+# 10 "caveStage.c" 2
 
 int hOff, vOff;
 
@@ -205,6 +198,8 @@ void initCaveStage(void) {
     DMANow(3, backgroundCaveMapMap, &((SB*) 0x6000000)[27], (4096) / 2);
 
     initPlayer();
+    initSword();
+    initAlert();
     player.x = 10;
     player.y = 110;
     collisionEnabled = 0;
@@ -221,6 +216,9 @@ void initCaveStage(void) {
 void updateCaveStage(void) {
     updatePlayer();
     updateSword();
+    updateCaveAlert(hOff, vOff);
+
+
     player.y = 110;
 
     if (player.x >= (512 - player.width)) {
@@ -239,17 +237,20 @@ void drawCaveStage(void) {
 
     (*(volatile unsigned short*) 0x04000010) = hOff / 2;
     (*(volatile unsigned short*) 0x04000012) = vOff;
-
     (*(volatile unsigned short*) 0x04000014) = hOff;
     (*(volatile unsigned short*) 0x04000016) = vOff;
 
 
     drawPlayer(hOff, vOff);
     drawSword(hOff, vOff);
+    drawAlert(hOff, vOff);
 
-    for (int i = 1; i < 128; i++) {
-        shadowOAM[i].attr0 = (2<<8);
+    for (int i = 0; i < 128; i++) {
+        if (i != 0 && i != 3 && i != 2) {
+            shadowOAM[i].attr0 = (2<<8);
+        }
     }
+
 
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
     waitForVBlank();
