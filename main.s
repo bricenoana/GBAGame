@@ -27,10 +27,16 @@ main:
 	ldr	r3, .L5
 	mov	lr, pc
 	bx	r3
-	ldr	r7, .L5+4
-	ldr	r4, .L5+8
-	ldr	r6, .L5+12
-	ldr	r5, .L5+16
+	ldr	r3, .L5+4
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L5+8
+	mov	lr, pc
+	bx	r3
+	ldr	r7, .L5+12
+	ldr	r4, .L5+16
+	ldr	r6, .L5+20
+	ldr	r5, .L5+24
 .L2:
 	ldrh	r3, [r4]
 	strh	r3, [r7]	@ movhi
@@ -43,6 +49,8 @@ main:
 	.align	2
 .L5:
 	.word	initStateMachine
+	.word	setupSounds
+	.word	setupSoundInterrupts
 	.word	oldButtons
 	.word	buttons
 	.word	updateStateMachine
@@ -50,4 +58,6 @@ main:
 	.size	main, .-main
 	.comm	oldButtons,2,2
 	.comm	buttons,2,2
+	.comm	soundB,24,4
+	.comm	soundA,24,4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

@@ -17,17 +17,19 @@ typedef signed long long s64;
 typedef unsigned long long u64;
 
 
+typedef void (*ihp)(void);
+
+
 
 
 
 
 extern volatile unsigned short *videoBuffer;
-# 38 "gba.h"
+# 43 "gba.h"
 void waitForVBlank();
-
-
+# 59 "gba.h"
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-# 70 "gba.h"
+# 75 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 
@@ -39,8 +41,8 @@ typedef volatile struct {
     volatile void* dest;
     unsigned int ctrl;
 } DMAChannel;
-# 104 "gba.h"
-void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
+# 109 "gba.h"
+void DMANow(int channel, volatile void *src, volatile void *dest, unsigned int ctrl);
 # 2 "stateMachine.c" 2
 # 1 "stateMachine.h" 1
 
@@ -408,8 +410,6 @@ void drawPlayer(int hOff, int vOff);
 
 
 
-
-
 void initBossStage(void);
 void updateBossStage(void);
 void drawBossStage(void);
@@ -436,33 +436,64 @@ extern const unsigned short loseScreenBitmap[19200];
 
 extern const unsigned short loseScreenPal[256];
 # 15 "stateMachine.c" 2
+# 1 "bossSong.h" 1
+
+
+extern const unsigned int bossSong_sampleRate;
+extern const unsigned int bossSong_length;
+extern const signed char bossSong_data[];
+# 16 "stateMachine.c" 2
+# 1 "overallSong.h" 1
+
+
+extern const unsigned int overallSong_sampleRate;
+extern const unsigned int overallSong_length;
+extern const signed char overallSong_data[];
+# 17 "stateMachine.c" 2
+# 1 "winSong.h" 1
+
+
+extern const unsigned int winSong_sampleRate;
+extern const unsigned int winSong_length;
+extern const signed char winSong_data[];
+# 18 "stateMachine.c" 2
+# 1 "loseSong.h" 1
+
+
+extern const unsigned int loseSong_sampleRate;
+extern const unsigned int loseSong_length;
+extern const signed char loseSong_data[];
+# 19 "stateMachine.c" 2
 
 extern unsigned short buttons;
 extern unsigned short oldButtons;
 
 static GameState state;
+static GameState prevState;
+
 
 void goToStart(void) {
-    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | ((1 << (8 + (2 % 4)))) | (1 << 4);
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
+
 
     for (int i = 0; i < 240 * 160; i++) {
         ((unsigned short*) 0x06000000)[i] = 0;
         ((unsigned short*) 0x0600A000)[i] = 0;
     }
-
     for (int i = 0; i < 256; i++) {
         ((unsigned short *)0x5000000)[i] = 0;
     }
 
     DMANow(3, startBGPal, ((unsigned short *)0x5000000), 512 / 2);
-
     drawFullscreenImage4(startBGBitmap);
-
     waitForVBlank();
     flipPage();
 
+    playSoundA(overallSong_data, overallSong_length, 1);
+
     state = START;
 }
+
 
 
 void goToCave(void) {
@@ -481,7 +512,7 @@ void goToGame(void) {
 
 void goToInstructions(void) {
 
-    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | ((1 << (8 + (2 % 4)))) | (1 << 4);
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
     for (int i = 0; i < 240 * 160; i++) {
         ((unsigned short*) 0x06000000)[i] = 0;
         ((unsigned short*) 0x0600A000)[i] = 0;
@@ -494,8 +525,9 @@ void goToInstructions(void) {
 }
 
 void goToPause(void) {
+    prevState = state;
 
-    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | ((1 << (8 + (2 % 4)))) | (1 << 4);
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
     for (int i = 0; i < 240 * 160; i++) {
         ((unsigned short*) 0x06000000)[i] = 0;
         ((unsigned short*) 0x0600A000)[i] = 0;
@@ -504,11 +536,13 @@ void goToPause(void) {
     drawFullscreenImage4(pauseBitmap);
     waitForVBlank();
     flipPage();
+
     state = PAUSE;
 }
 
+
 void goToWin(void) {
-    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | ((1 << (8 + (2 % 4)))) | (1 << 4);
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
 
     for (int i = 0; i < 240 * 160; i++) {
         ((unsigned short*) 0x06000000)[i] = 0;
@@ -527,15 +561,13 @@ void goToWin(void) {
 
     waitForVBlank();
     flipPage();
+    playSoundA(winSong_data, winSong_length, 1);
 
     state = WIN;
 }
 
-
-
-
 void goToLose(void) {
-    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | ((1 << (8 + (2 % 4)))) | (1 << 4);
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
 
     for (int i = 0; i < 240 * 160; i++) {
         ((unsigned short*) 0x06000000)[i] = 0;
@@ -556,6 +588,7 @@ void goToLose(void) {
 
     waitForVBlank();
     flipPage();
+    playSoundA(loseSong_data, loseSong_length, 1);
 
     state = LOSE;
 }
@@ -564,7 +597,12 @@ void goToBossStage(void) {
     resetSprites();
     player.x = 32;
     player.y = 32;
+
+    stopSounds();
+
     initBossStage();
+    playSoundA(bossSong_data, bossSong_length, 1);
+
     state = BOSS;
 }
 
@@ -588,7 +626,6 @@ static void startState(void) {
 }
 
 static void instructionsState(void) {
-
     drawFullscreenImage4(INSTRUCTIONSBitmap);
     if ((!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
         goToStart();
@@ -621,6 +658,10 @@ static void gameState(void) {
 }
 
 static void bossState(void) {
+    if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
+        goToPause();
+    }
+
     updateBossStage();
     drawBossStage();
 }
@@ -631,9 +672,23 @@ static void pauseState(void) {
     waitForVBlank();
     flipPage();
     if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
-        goToGame();
+        switch (prevState) {
+            case CAVE:
+                goToCave();
+                break;
+            case GAME:
+                goToGame();
+                break;
+            case BOSS:
+                goToBossStage();
+                break;
+            default:
+                goToGame();
+                break;
+        }
     }
 }
+
 
 static void winState(void) {
     drawFullscreenImage4(winScreenBitmap);

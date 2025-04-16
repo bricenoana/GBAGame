@@ -12,33 +12,40 @@
 #include "caveStage.h"
 #include "winScreen.h"
 #include "loseScreen.h"
+#include "bossSong.h"
+#include "overallSong.h"
+#include "winSong.h"
+#include "loseSong.h"
 
 extern unsigned short buttons;
 extern unsigned short oldButtons;
 
 static GameState state;
+static GameState prevState;
+
 
 void goToStart(void) {
-    REG_DISPCTL = MODE(4) | BG2_ENABLE | DISP_BACKBUFFER;
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
     
+    // Clear the buffers.
     for (int i = 0; i < 240 * 160; i++) {
         FRONTBUFFER[i] = 0;
         BACKBUFFER[i] = 0;
     }
-    
     for (int i = 0; i < 256; i++) {
         BG_PALETTE[i] = 0;
     }
     
     DMANow(3, startBGPal, BG_PALETTE, startBGPalLen / 2);
-    
     drawFullscreenImage4(startBGBitmap);
-    
     waitForVBlank();
     flipPage();
+
+    playSoundA(overallSong_data, overallSong_length, 1);
     
     state = START;
 }
+
 
 
 void goToCave(void) {
@@ -57,7 +64,7 @@ void goToGame(void) {
 
 void goToInstructions(void) {
     //drawing the instruction screen
-    REG_DISPCTL = MODE(4) | BG2_ENABLE | DISP_BACKBUFFER;
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
     for (int i = 0; i < 240 * 160; i++) {
         FRONTBUFFER[i] = 0;
         BACKBUFFER[i] = 0;
@@ -70,8 +77,9 @@ void goToInstructions(void) {
 }
 
 void goToPause(void) {
-    //drawing the pause screen
-    REG_DISPCTL = MODE(4) | BG2_ENABLE | DISP_BACKBUFFER;
+    prevState = state;
+    
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
     for (int i = 0; i < 240 * 160; i++) {
         FRONTBUFFER[i] = 0;
         BACKBUFFER[i] = 0;
@@ -80,11 +88,13 @@ void goToPause(void) {
     drawFullscreenImage4(pauseBitmap);
     waitForVBlank();
     flipPage();
+    
     state = PAUSE;
 }
 
+
 void goToWin(void) {
-    REG_DISPCTL = MODE(4) | BG2_ENABLE | DISP_BACKBUFFER;
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
     
     for (int i = 0; i < 240 * 160; i++) {
         FRONTBUFFER[i] = 0;
@@ -103,15 +113,13 @@ void goToWin(void) {
     
     waitForVBlank();
     flipPage();
+    playSoundA(winSong_data, winSong_length, 1);
     
     state = WIN;
 }
 
-
-
-
 void goToLose(void) {
-    REG_DISPCTL = MODE(4) | BG2_ENABLE | DISP_BACKBUFFER;
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
     
     for (int i = 0; i < 240 * 160; i++) {
         FRONTBUFFER[i] = 0;
@@ -132,6 +140,7 @@ void goToLose(void) {
     
     waitForVBlank();
     flipPage();
+    playSoundA(loseSong_data, loseSong_length, 1);
     
     state = LOSE;
 }
@@ -140,7 +149,12 @@ void goToBossStage(void) {
     resetSprites();
     player.x = 32;
     player.y = 32;
+
+    stopSounds();
+
     initBossStage();
+    playSoundA(bossSong_data, bossSong_length, 1);
+
     state = BOSS;  
 }
 
@@ -152,10 +166,10 @@ static void startState(void) {
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToCave();
     }
-    if (BUTTON_PRESSED(BUTTON_A)) { //for debug purposes
+    if (BUTTON_PRESSED(BUTTON_A)) {
         goToGame();
     }
-    if (BUTTON_PRESSED(BUTTON_B)) { //for debug purposes
+    if (BUTTON_PRESSED(BUTTON_B)) {
         goToBossStage();
     }
     if (BUTTON_PRESSED(BUTTON_SELECT)) {
@@ -164,7 +178,6 @@ static void startState(void) {
 }
 
 static void instructionsState(void) {
-    //move thru instruction screen
     drawFullscreenImage4(INSTRUCTIONSBitmap);
     if (BUTTON_PRESSED(BUTTON_B)) {
         goToStart();
@@ -197,6 +210,10 @@ static void gameState(void) {
 }
 
 static void bossState(void) {
+    if (BUTTON_PRESSED(BUTTON_SELECT)) {
+        goToPause();
+    }
+
     updateBossStage();
     drawBossStage();
 }
@@ -207,9 +224,23 @@ static void pauseState(void) {
     waitForVBlank();
     flipPage();
     if (BUTTON_PRESSED(BUTTON_SELECT)) {
-        goToGame();
+        switch (prevState) {
+            case CAVE:
+                goToCave();
+                break;
+            case GAME:
+                goToGame();
+                break;
+            case BOSS:
+                goToBossStage();
+                break;
+            default:
+                goToGame();
+                break;
+        }
     }
 }
+
 
 static void winState(void) {
     drawFullscreenImage4(winScreenBitmap);
@@ -271,3 +302,4 @@ void updateStateMachine(void) {
             break;
     }
 }
+

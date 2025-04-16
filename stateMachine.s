@@ -61,6 +61,13 @@ goToStart:
 	mov	lr, pc
 	bx	r3
 	ldr	r3, .L8+36
+	mov	r2, #1
+	ldr	r1, [r3]
+	ldr	r0, .L8+40
+	ldr	r3, .L8+44
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L8+48
 	strb	r4, [r3]
 	pop	{r4, r5, r6, lr}
 	bx	lr
@@ -76,6 +83,9 @@ goToStart:
 	.word	drawFullscreenImage4
 	.word	waitForVBlank
 	.word	flipPage
+	.word	overallSong_length
+	.word	overallSong_data
+	.word	playSoundA
 	.word	.LANCHOR0
 	.size	goToStart, .-goToStart
 	.align	2
@@ -208,10 +218,13 @@ goToPause:
 	mov	r1, #67108864
 	mov	r3, #100663296
 	mov	r2, #0
-	ldr	ip, .L30
-	push	{r4, lr}
+	push	{r4, r5, r6, lr}
+	ldr	r4, .L30
 	ldr	r0, .L30+4
-	strh	ip, [r1]	@ movhi
+	ldrb	ip, [r4]	@ zero_extendqisi2
+	strb	ip, [r4, #1]
+	strh	r0, [r1]	@ movhi
+	ldr	r0, .L30+8
 .L27:
 	strh	r2, [r3]	@ movhi
 	add	r1, r3, #40960
@@ -220,30 +233,30 @@ goToPause:
 	strh	r2, [r1]	@ movhi
 	bne	.L27
 	mov	r2, #83886080
-	ldr	r1, .L30+8
+	ldr	r1, .L30+12
 	mov	r3, #256
 	mov	r0, #3
-	ldr	r4, .L30+12
+	ldr	r5, .L30+16
 	mov	lr, pc
-	bx	r4
-	ldr	r0, .L30+16
-	ldr	r3, .L30+20
-	mov	lr, pc
-	bx	r3
+	bx	r5
+	ldr	r0, .L30+20
 	ldr	r3, .L30+24
 	mov	lr, pc
 	bx	r3
 	ldr	r3, .L30+28
 	mov	lr, pc
 	bx	r3
-	mov	r2, #5
 	ldr	r3, .L30+32
-	strb	r2, [r3]
-	pop	{r4, lr}
+	mov	lr, pc
+	bx	r3
+	mov	r3, #5
+	strb	r3, [r4]
+	pop	{r4, r5, r6, lr}
 	bx	lr
 .L31:
 	.align	2
 .L30:
+	.word	.LANCHOR0
 	.word	1044
 	.word	100740096
 	.word	pausePal
@@ -252,7 +265,6 @@ goToPause:
 	.word	drawFullscreenImage4
 	.word	waitForVBlank
 	.word	flipPage
-	.word	.LANCHOR0
 	.size	goToPause, .-goToPause
 	.align	2
 	.global	goToWin
@@ -305,8 +317,15 @@ goToWin:
 	ldr	r3, .L40+32
 	mov	lr, pc
 	bx	r3
-	mov	r2, #6
 	ldr	r3, .L40+36
+	mov	r2, #1
+	ldr	r1, [r3]
+	ldr	r0, .L40+40
+	ldr	r3, .L40+44
+	mov	lr, pc
+	bx	r3
+	mov	r2, #6
+	ldr	r3, .L40+48
 	strb	r2, [r3]
 	pop	{r4, lr}
 	bx	lr
@@ -322,6 +341,9 @@ goToWin:
 	.word	100781056
 	.word	waitForVBlank
 	.word	flipPage
+	.word	winSong_length
+	.word	winSong_data
+	.word	playSoundA
 	.word	.LANCHOR0
 	.size	goToWin, .-goToWin
 	.align	2
@@ -375,8 +397,15 @@ goToLose:
 	ldr	r3, .L50+32
 	mov	lr, pc
 	bx	r3
-	mov	r2, #7
 	ldr	r3, .L50+36
+	mov	r2, #1
+	ldr	r1, [r3]
+	ldr	r0, .L50+40
+	ldr	r3, .L50+44
+	mov	lr, pc
+	bx	r3
+	mov	r2, #7
+	ldr	r3, .L50+48
 	strb	r2, [r3]
 	pop	{r4, lr}
 	bx	lr
@@ -392,6 +421,9 @@ goToLose:
 	.word	100781056
 	.word	waitForVBlank
 	.word	flipPage
+	.word	loseSong_length
+	.word	loseSong_data
+	.word	playSoundA
 	.word	.LANCHOR0
 	.size	goToLose, .-goToLose
 	.align	2
@@ -459,8 +491,18 @@ goToBossStage:
 	str	r2, [r3, #4]
 	mov	lr, pc
 	bx	r1
-	mov	r2, #4
 	ldr	r3, .L61+8
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L61+12
+	mov	r2, #1
+	ldr	r1, [r3]
+	ldr	r0, .L61+16
+	ldr	r3, .L61+20
+	mov	lr, pc
+	bx	r3
+	mov	r2, #4
+	ldr	r3, .L61+24
 	strb	r2, [r3]
 	pop	{r4, lr}
 	bx	lr
@@ -468,7 +510,11 @@ goToBossStage:
 	.align	2
 .L61:
 	.word	player
+	.word	stopSounds
 	.word	initBossStage
+	.word	bossSong_length
+	.word	bossSong_data
+	.word	playSoundA
 	.word	.LANCHOR0
 	.size	goToBossStage, .-goToBossStage
 	.align	2
@@ -482,7 +528,7 @@ updateStateMachine:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	ldr	r4, .L146
+	ldr	r4, .L158
 	ldrb	r3, [r4]	@ zero_extendqisi2
 	cmp	r3, #7
 	ldrls	pc, [pc, r3, asl #2]
@@ -497,174 +543,191 @@ updateStateMachine:
 	.word	.L67
 	.word	.L65
 .L65:
-	ldr	r0, .L146+4
-.L140:
-	ldr	r3, .L146+8
+	ldr	r0, .L158+4
+.L150:
+	ldr	r3, .L158+8
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L146+12
+	ldr	r3, .L158+12
 	ldrh	r3, [r3]
 	tst	r3, #8
 	beq	.L81
-	ldr	r3, .L146+16
+	ldr	r3, .L158+16
 	ldrh	r3, [r3]
 	tst	r3, #8
 	beq	.L85
 .L81:
-	ldr	r3, .L146+20
+	ldr	r3, .L158+20
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L146+24
+	ldr	r3, .L158+24
 	mov	lr, pc
 	bx	r3
 .L63:
 	pop	{r4, r5, r6, lr}
 	bx	lr
 .L70:
-	ldr	r5, .L146+12
+	ldr	r5, .L158+12
 	ldrh	r3, [r5]
 	tst	r3, #4
 	beq	.L88
-	ldr	r2, .L146+16
+	ldr	r2, .L158+16
 	ldrh	r2, [r2]
 	tst	r2, #4
-	beq	.L141
+	beq	.L151
 .L88:
 	tst	r3, #2
 	beq	.L89
-	ldr	r3, .L146+16
+	ldr	r3, .L158+16
 	ldrh	r3, [r3]
 	tst	r3, #2
-	beq	.L142
+	beq	.L152
 .L89:
-	ldr	r3, .L146+28
+	ldr	r3, .L158+28
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L146+32
+	ldr	r3, .L158+32
 	mov	lr, pc
 	bx	r3
 	pop	{r4, r5, r6, lr}
 	bx	lr
 .L69:
-	ldr	r3, .L146+36
+	ldr	r3, .L158+12
+	ldrh	r3, [r3]
+	tst	r3, #4
+	beq	.L94
+	ldr	r3, .L158+16
+	ldrh	r3, [r3]
+	tst	r3, #4
+	beq	.L153
+.L94:
+	ldr	r3, .L158+36
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L146+40
+	ldr	r3, .L158+40
 	mov	lr, pc
 	bx	r3
 	pop	{r4, r5, r6, lr}
 	bx	lr
 .L68:
-	ldr	r0, .L146+44
-	ldr	r3, .L146+8
+	ldr	r0, .L158+44
+	ldr	r3, .L158+8
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L146+20
+	ldr	r3, .L158+20
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L146+24
+	ldr	r3, .L158+24
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L146+12
+	ldr	r3, .L158+12
 	ldrh	r3, [r3]
 	tst	r3, #4
 	beq	.L63
-	ldr	r3, .L146+16
+	ldr	r3, .L158+16
 	ldrh	r2, [r3]
 	ands	r2, r2, #4
 	bne	.L63
-	mov	r3, #83886080
-	ldr	r1, .L146+48
-.L90:
+	ldrb	r5, [r4, #1]	@ zero_extendqisi2
+	cmp	r5, #3
+	beq	.L95
+	cmp	r5, #4
+	beq	.L91
+	cmp	r5, #2
+	movne	r3, #83886080
+	ldrne	r1, .L158+48
+	beq	.L154
+.L92:
 	strh	r2, [r3], #2	@ movhi
 	cmp	r3, r1
-	bne	.L90
-	ldr	r3, .L146+52
+	bne	.L92
+.L93:
+	ldr	r3, .L158+52
 	mov	lr, pc
 	bx	r3
 	mov	r3, #3
 	strb	r3, [r4]
 	b	.L63
 .L67:
-	ldr	r0, .L146+56
-	b	.L140
+	ldr	r0, .L158+56
+	b	.L150
 .L72:
-	ldr	r3, .L146+8
-	ldr	r0, .L146+60
+	ldr	r3, .L158+8
+	ldr	r0, .L158+60
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L146+12
+	ldr	r3, .L158+12
 	ldrh	r3, [r3]
 	tst	r3, #2
 	beq	.L80
-	ldr	r2, .L146+16
+	ldr	r2, .L158+16
 	ldrh	r2, [r2]
 	tst	r2, #2
 	beq	.L85
 .L80:
 	tst	r3, #1
 	beq	.L82
-	ldr	r2, .L146+16
+	ldr	r2, .L158+16
 	ldrh	r2, [r2]
 	ands	r2, r2, #1
 	bne	.L82
 	mov	r3, #83886080
-	ldr	r1, .L146+48
+	ldr	r1, .L158+48
 .L83:
 	strh	r2, [r3], #2	@ movhi
 	cmp	r3, r1
 	bne	.L83
-	ldr	r3, .L146+52
+	ldr	r3, .L158+52
 	mov	lr, pc
 	bx	r3
 	mov	r3, #3
 	strb	r3, [r4]
 	b	.L81
 .L71:
-	ldr	r3, .L146+12
+	ldr	r3, .L158+12
 	ldrh	r3, [r3]
 	tst	r3, #4
 	beq	.L87
-	ldr	r3, .L146+16
+	ldr	r3, .L158+16
 	ldrh	r3, [r3]
 	tst	r3, #4
-	beq	.L143
+	beq	.L155
 .L87:
-	ldr	r3, .L146+64
+	ldr	r3, .L158+64
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L146+68
+	ldr	r3, .L158+68
 	mov	lr, pc
 	bx	r3
 	pop	{r4, r5, r6, lr}
 	bx	lr
 .L73:
-	ldr	r5, .L146+12
-	ldr	r3, .L146+8
-	ldr	r0, .L146+72
+	ldr	r5, .L158+12
+	ldr	r3, .L158+8
+	ldr	r0, .L158+72
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r5]
 	tst	r3, #8
 	beq	.L74
-	ldr	r2, .L146+16
+	ldr	r2, .L158+16
 	ldrh	r2, [r2]
 	tst	r2, #8
-	beq	.L144
+	beq	.L156
 .L74:
 	tst	r3, #1
 	beq	.L75
-	ldr	r2, .L146+16
+	ldr	r2, .L158+16
 	ldrh	r2, [r2]
 	ands	r2, r2, #1
 	bne	.L75
 	mov	r3, #83886080
-	ldr	r1, .L146+48
+	ldr	r1, .L158+48
 .L76:
 	strh	r2, [r3], #2	@ movhi
 	cmp	r3, r1
 	bne	.L76
-	ldr	r3, .L146+52
+	ldr	r3, .L158+52
 	mov	lr, pc
 	bx	r3
 	mov	r2, #3
@@ -673,14 +736,14 @@ updateStateMachine:
 .L75:
 	tst	r3, #2
 	beq	.L77
-	ldr	r2, .L146+16
+	ldr	r2, .L158+16
 	ldrh	r2, [r2]
 	tst	r2, #2
-	beq	.L145
+	beq	.L157
 .L77:
 	tst	r3, #4
 	beq	.L63
-	ldr	r3, .L146+16
+	ldr	r3, .L158+16
 	ldrh	r3, [r3]
 	tst	r3, #4
 	bne	.L63
@@ -689,51 +752,62 @@ updateStateMachine:
 .L82:
 	tst	r3, #4
 	beq	.L81
-	ldr	r3, .L146+16
+	ldr	r3, .L158+16
 	ldrh	r3, [r3]
 	tst	r3, #4
 	bne	.L81
 .L85:
 	bl	goToStart
 	b	.L81
-.L142:
-	ldr	r3, .L146+76
+.L157:
+	bl	goToBossStage
+	ldrh	r3, [r5]
+	b	.L77
+.L151:
+	bl	goToPause
+	ldrh	r3, [r5]
+	b	.L88
+.L152:
+	ldr	r3, .L158+76
 	mov	lr, pc
 	bx	r3
 	mov	r3, #2
 	strb	r3, [r4]
 	b	.L89
-.L144:
-	ldr	r3, .L146+76
+.L153:
+	bl	goToPause
+	b	.L94
+.L156:
+	ldr	r3, .L158+76
 	mov	lr, pc
 	bx	r3
 	mov	r2, #2
 	ldrh	r3, [r5]
 	strb	r2, [r4]
 	b	.L74
-.L143:
+.L155:
 	bl	goToPause
 	b	.L87
-.L145:
-	bl	resetSprites
-	mov	r2, #32
-	ldr	r3, .L146+80
-	ldr	r1, .L146+84
-	str	r2, [r3]
-	str	r2, [r3, #4]
+.L154:
+	ldr	r3, .L158+76
 	mov	lr, pc
-	bx	r1
-	mov	r2, #4
-	ldrh	r3, [r5]
-	strb	r2, [r4]
-	b	.L77
-.L141:
-	bl	goToPause
-	ldrh	r3, [r5]
-	b	.L88
-.L147:
+	bx	r3
+	strb	r5, [r4]
+	b	.L63
+.L91:
+	pop	{r4, r5, r6, lr}
+	b	goToBossStage
+.L95:
+	mov	r3, #83886080
+	ldr	r1, .L158+48
+.L90:
+	strh	r2, [r3], #2	@ movhi
+	cmp	r3, r1
+	bne	.L90
+	b	.L93
+.L159:
 	.align	2
-.L146:
+.L158:
 	.word	.LANCHOR0
 	.word	loseScreenBitmap
 	.word	drawFullscreenImage4
@@ -754,8 +828,6 @@ updateStateMachine:
 	.word	drawCaveStage
 	.word	startBGBitmap
 	.word	initCaveStage
-	.word	player
-	.word	initBossStage
 	.size	updateStateMachine, .-updateStateMachine
 	.comm	shadowOAM,1024,4
 	.bss
@@ -763,5 +835,9 @@ updateStateMachine:
 	.type	state, %object
 	.size	state, 1
 state:
+	.space	1
+	.type	prevState, %object
+	.size	prevState, 1
+prevState:
 	.space	1
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

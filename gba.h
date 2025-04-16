@@ -11,6 +11,9 @@ typedef unsigned int u32;
 typedef signed long long s64;
 typedef unsigned long long u64;
 
+// Interrupt handler function pointer
+typedef void (*ihp)(void);
+
 // Display constants
 #define SCREENHEIGHT 160 // Height of the GBA display
 #define SCREENWIDTH  240 // Width of the GBA display
@@ -24,12 +27,14 @@ extern volatile unsigned short *videoBuffer;
 // Display control register
 #define REG_DISPCTL (*(volatile unsigned short *)0x4000000)
 
+
 // Bits for display control register
 #define MODE(x) ((x) & 7) // Sets GBA video mode (REG_DISPCTL)
 #define DISP_BACKBUFFER (1 << 4) // Displays backbuffer for page flipping (REG_DISPCTL)
+#define SPRITE_ENABLE (1 << 12) // Enables rendering of sprites (REG_DISPCTL)
+#define SPRITE_MODE_2D (0 << 6) // Sets 2D sprite tile mapping mode (REG_DISPCTL)
+#define SPRITE_MODE_1D (1 << 6) // Sets 1D sprite tile mapping mode (REG_DISPCTL)
 #define BG_ENABLE(x) (1 << (8 + (x % 4))) // Enables specified background (REG_DISPCTL)
-#define BG2_ENABLE (BG_ENABLE(2)) // Enables BG2 (REG_DISPCTL)
-#define SPRITE_ENABLE (1 << 12) // Enable sprites (REG_DISPCTL)
 
 // Read-only, holds which scanline is being drawn
 #define REG_VCOUNT (*(volatile unsigned short *)0x4000006)
@@ -37,21 +42,21 @@ extern volatile unsigned short *videoBuffer;
 // Waits until scanline has just become 160
 void waitForVBlank();
 
-// Checks for collision between two rectangles
-int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-
 // Color
 #define BG_PALETTE ((unsigned short *)0x5000000)
-#define RGB(R, G, B) (((R) & 31) | ((G) & 31) << 5 | ((B) & 31) << 10)
-#define BLACK   RGB(0, 0, 0)
-#define WHITE   RGB(31, 31, 31)
-#define GRAY    RGB(15, 15, 15)
-#define RED     RGB(31, 0, 0)
-#define GREEN   RGB(0, 31, 0)
-#define BLUE    RGB(0, 0, 31)
-#define CYAN    RGB(0, 31, 31)
-#define MAGENTA RGB(31, 0, 31)
-#define YELLOW  RGB(31, 31,0)
+#define RGB(r, g, b) (((r) & 31) | ((g) & 31) << 5 | ((b) & 31) << 10)
+#define BLACK   RGB(0,0,0)
+#define WHITE   RGB(31,31,31)
+#define GRAY    RGB(15,15,15)
+#define RED     RGB(31,0,0)
+#define GREEN   RGB(0,31,0)
+#define BLUE    RGB(0,0,31)
+#define CYAN    RGB(0,31,31)
+#define MAGENTA RGB(31,0,31)
+#define YELLOW  RGB(31,31,0)
+
+// Checks for collision between two rectangles
+int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
 
 // Buttons
 #define REG_BUTTONS (*(volatile unsigned short *)0x04000130) // Buttons down register
@@ -101,6 +106,56 @@ typedef volatile struct {
 #define DMA_ON  (1 << 31) // Enable DMA!!!
 
 // Immediately begins a DMA transfer using parameters
-void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
+void DMANow(int channel, volatile void *src, volatile void *dest, unsigned int ctrl);
+
+// Timer registers
+#define REG_TM0CNT *(volatile unsigned short*)0x4000102 // Timer 0 control register
+#define REG_TM1CNT *(volatile unsigned short*)0x4000106 // Timer 1 control register
+#define REG_TM2CNT *(volatile unsigned short*)0x400010A // Timer 2 control register
+#define REG_TM3CNT *(volatile unsigned short*)0x400010E // Timer 3 control register
+#define REG_TM0D   *(volatile unsigned short*)0x4000100 // Initial value for timer 0
+#define REG_TM1D   *(volatile unsigned short*)0x4000104 // Initial value for timer 1
+#define REG_TM2D   *(volatile unsigned short*)0x4000108 // Initial value for timer 2
+#define REG_TM3D   *(volatile unsigned short*)0x400010C // Initial value for timer 3
+
+// Timer bits
+#define TIMER_ON     (1<<7) // Enable this timer
+#define TIMER_OFF    (0<<7) // Disable this timer
+#define TM_IRQ       (1<<6) // Trigger an interrupt when this timer overflows
+#define TM_CASCADE   (1<<2) // Cascade preceding timer into this timer (doesn't work for TM0)
+#define TM_FREQ_1    (0) // Each GPU clock cycle
+#define TM_FREQ_64   (1) // Each 64 GPU clock cycles
+#define TM_FREQ_256  (2) // Each 256 GPU clock cycles
+#define TM_FREQ_1024 (3) // Each 1024 GPU clock clycles
+
+// Interrupt registers
+#define REG_IME       *(unsigned short*)0x4000208 // Interrupt (master) control register
+#define REG_IE        *(unsigned short*)0x4000200 // Interrupt enable register
+#define REG_IF        *(volatile unsigned short*)0x4000202 // Interrupt flag register
+#define REG_INTERRUPT *((ihp*)0x03007FFC) // Interrupt handler
+
+// Interrupt requests
+#define IRQ_VBLANK   (1 << 0) // Enables VBlank interrupts, requires bit 3 in REG_DISPCNT
+#define IRQ_HBLANK   (1 << 1) // Enables HBlank interrupts, requires bit 4 in REG_DISPCNT
+#define IRQ_VCOUNT   (2 << 2) // Enables scanline/VCount interrupts, requires bit 5 in REG_DISPCNT
+#define IRQ_TIMER(x) (1 << ((x % 4) + 3)) // Enables timer x interrupts, requires bit 6 in REG_TMxCNT
+#define IRQ_DMA(x)   (1 << ((x % 4)) + 8) // Enables DMA x interrupts, requires that DMA channel's register
+#define IRQ_BUTTON   (1 << 12) // Enables button interrupts, requires bit E (and button specifications) in REG_KEYCNT
+
+// Registers used for specific interrupts
+#define REG_DISPSTAT *(unsigned short*)0x4000004 // Display interrupt register
+#define REG_KEYCNT   *(unsigned short*)0x4000132 // Button interrupt register
+
+// Display interrupt requests
+#define DISPSTAT_VBLANK_IRQ   (1 << 3) // Enables VBlank interrupts in REG_DISPSTAT
+#define DISPSTAT_HBLANK_IRQ   (1 << 4) // Enables HBlank interrupts in REG_DISPSTAT
+#define DISPSTAT_VCOUNT_IRQ   (1 << 5) // Enables scanline/VCount interrupts in REG_DISPSTAT
+#define DISPSTAT_SETVCOUNT(x) ((x % 255) << 8) // Set scanline to trigger interrupt in REG_DISPSTAT, requires bit 5 in REG_DISPSTAT
+
+// Button interrupt requests
+// Note: to set which buttons trigger the int., use button masks
+#define KEYCNT_IRQ (1 << 14) // Enables button interrupts
+#define KEYCNT_OR  (0 << 15) // Trigger interrupt if ANY of specified buttons are pressed
+#define KEYCNT_AND (1 << 15) // Trigger interrupt only if ALL of specified buttons are pressed
 
 #endif
