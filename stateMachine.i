@@ -612,7 +612,7 @@ static void startState(void) {
     drawFullscreenImage4(startBGBitmap);
 
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        goToCave();
+        goToInstructions();
     }
     if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
         goToGame();
@@ -621,18 +621,14 @@ static void startState(void) {
         goToBossStage();
     }
     if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
-        goToInstructions();
+        goToCave();
     }
 }
 
 static void instructionsState(void) {
     drawFullscreenImage4(INSTRUCTIONSBitmap);
-    if ((!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
-        goToStart();
-    } else if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
-        goToGame();
-    } else if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
-        goToStart();
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        goToCave();
     }
     waitForVBlank();
     flipPage();

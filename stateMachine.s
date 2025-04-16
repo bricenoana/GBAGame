@@ -528,7 +528,7 @@ updateStateMachine:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	ldr	r4, .L158
+	ldr	r4, .L143
 	ldrb	r3, [r4]	@ zero_extendqisi2
 	cmp	r3, #7
 	ldrls	pc, [pc, r3, asl #2]
@@ -543,191 +543,56 @@ updateStateMachine:
 	.word	.L67
 	.word	.L65
 .L65:
-	ldr	r0, .L158+4
-.L150:
-	ldr	r3, .L158+8
+	ldr	r0, .L143+4
+.L134:
+	ldr	r3, .L143+8
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L158+12
+	ldr	r3, .L143+12
 	ldrh	r3, [r3]
 	tst	r3, #8
 	beq	.L81
-	ldr	r3, .L158+16
+	ldr	r3, .L143+16
 	ldrh	r3, [r3]
 	tst	r3, #8
-	beq	.L85
+	beq	.L135
 .L81:
-	ldr	r3, .L158+20
+	ldr	r3, .L143+20
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L158+24
+	ldr	r3, .L143+24
 	mov	lr, pc
 	bx	r3
 .L63:
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L70:
-	ldr	r5, .L158+12
-	ldrh	r3, [r5]
-	tst	r3, #4
-	beq	.L88
-	ldr	r2, .L158+16
-	ldrh	r2, [r2]
-	tst	r2, #4
-	beq	.L151
-.L88:
-	tst	r3, #2
-	beq	.L89
-	ldr	r3, .L158+16
-	ldrh	r3, [r3]
-	tst	r3, #2
-	beq	.L152
-.L89:
-	ldr	r3, .L158+28
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L158+32
-	mov	lr, pc
-	bx	r3
-	pop	{r4, r5, r6, lr}
-	bx	lr
-.L69:
-	ldr	r3, .L158+12
-	ldrh	r3, [r3]
-	tst	r3, #4
-	beq	.L94
-	ldr	r3, .L158+16
-	ldrh	r3, [r3]
-	tst	r3, #4
-	beq	.L153
-.L94:
-	ldr	r3, .L158+36
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L158+40
-	mov	lr, pc
-	bx	r3
-	pop	{r4, r5, r6, lr}
-	bx	lr
-.L68:
-	ldr	r0, .L158+44
-	ldr	r3, .L158+8
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L158+20
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L158+24
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L158+12
-	ldrh	r3, [r3]
-	tst	r3, #4
-	beq	.L63
-	ldr	r3, .L158+16
-	ldrh	r2, [r3]
-	ands	r2, r2, #4
-	bne	.L63
-	ldrb	r5, [r4, #1]	@ zero_extendqisi2
-	cmp	r5, #3
-	beq	.L95
-	cmp	r5, #4
-	beq	.L91
-	cmp	r5, #2
-	movne	r3, #83886080
-	ldrne	r1, .L158+48
-	beq	.L154
-.L92:
-	strh	r2, [r3], #2	@ movhi
-	cmp	r3, r1
-	bne	.L92
-.L93:
-	ldr	r3, .L158+52
-	mov	lr, pc
-	bx	r3
-	mov	r3, #3
-	strb	r3, [r4]
-	b	.L63
-.L67:
-	ldr	r0, .L158+56
-	b	.L150
-.L72:
-	ldr	r3, .L158+8
-	ldr	r0, .L158+60
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L158+12
-	ldrh	r3, [r3]
-	tst	r3, #2
-	beq	.L80
-	ldr	r2, .L158+16
-	ldrh	r2, [r2]
-	tst	r2, #2
-	beq	.L85
-.L80:
-	tst	r3, #1
-	beq	.L82
-	ldr	r2, .L158+16
-	ldrh	r2, [r2]
-	ands	r2, r2, #1
-	bne	.L82
-	mov	r3, #83886080
-	ldr	r1, .L158+48
-.L83:
-	strh	r2, [r3], #2	@ movhi
-	cmp	r3, r1
-	bne	.L83
-	ldr	r3, .L158+52
-	mov	lr, pc
-	bx	r3
-	mov	r3, #3
-	strb	r3, [r4]
-	b	.L81
-.L71:
-	ldr	r3, .L158+12
-	ldrh	r3, [r3]
-	tst	r3, #4
-	beq	.L87
-	ldr	r3, .L158+16
-	ldrh	r3, [r3]
-	tst	r3, #4
-	beq	.L155
-.L87:
-	ldr	r3, .L158+64
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L158+68
-	mov	lr, pc
-	bx	r3
-	pop	{r4, r5, r6, lr}
-	bx	lr
 .L73:
-	ldr	r5, .L158+12
-	ldr	r3, .L158+8
-	ldr	r0, .L158+72
+	ldr	r5, .L143+12
+	ldr	r3, .L143+8
+	ldr	r0, .L143+28
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r5]
 	tst	r3, #8
 	beq	.L74
-	ldr	r2, .L158+16
+	ldr	r2, .L143+16
 	ldrh	r2, [r2]
 	tst	r2, #8
-	beq	.L156
+	beq	.L136
 .L74:
 	tst	r3, #1
 	beq	.L75
-	ldr	r2, .L158+16
+	ldr	r2, .L143+16
 	ldrh	r2, [r2]
 	ands	r2, r2, #1
 	bne	.L75
 	mov	r3, #83886080
-	ldr	r1, .L158+48
+	ldr	r1, .L143+32
 .L76:
 	strh	r2, [r3], #2	@ movhi
 	cmp	r3, r1
 	bne	.L76
-	ldr	r3, .L158+52
+	ldr	r3, .L143+36
 	mov	lr, pc
 	bx	r3
 	mov	r2, #3
@@ -736,78 +601,193 @@ updateStateMachine:
 .L75:
 	tst	r3, #2
 	beq	.L77
-	ldr	r2, .L158+16
+	ldr	r2, .L143+16
 	ldrh	r2, [r2]
 	tst	r2, #2
-	beq	.L157
+	beq	.L137
 .L77:
 	tst	r3, #4
 	beq	.L63
-	ldr	r3, .L158+16
+	ldr	r3, .L143+16
 	ldrh	r3, [r3]
 	tst	r3, #4
 	bne	.L63
-	pop	{r4, r5, r6, lr}
-	b	goToInstructions
-.L82:
-	tst	r3, #4
-	beq	.L81
-	ldr	r3, .L158+16
-	ldrh	r3, [r3]
-	tst	r3, #4
-	bne	.L81
-.L85:
-	bl	goToStart
-	b	.L81
-.L157:
-	bl	goToBossStage
-	ldrh	r3, [r5]
-	b	.L77
-.L151:
-	bl	goToPause
-	ldrh	r3, [r5]
-	b	.L88
-.L152:
-	ldr	r3, .L158+76
+	ldr	r3, .L143+40
 	mov	lr, pc
 	bx	r3
 	mov	r3, #2
 	strb	r3, [r4]
-	b	.L89
-.L153:
-	bl	goToPause
-	b	.L94
-.L156:
-	ldr	r3, .L158+76
+	b	.L63
+.L72:
+	ldr	r3, .L143+8
+	ldr	r0, .L143+44
 	mov	lr, pc
 	bx	r3
-	mov	r2, #2
+	ldr	r3, .L143+12
+	ldrh	r3, [r3]
+	tst	r3, #8
+	beq	.L81
+	ldr	r3, .L143+16
+	ldrh	r3, [r3]
+	tst	r3, #8
+	bne	.L81
+	ldr	r3, .L143+40
+	mov	lr, pc
+	bx	r3
+	mov	r3, #2
+	strb	r3, [r4]
+	b	.L81
+.L71:
+	ldr	r3, .L143+12
+	ldrh	r3, [r3]
+	tst	r3, #4
+	beq	.L83
+	ldr	r3, .L143+16
+	ldrh	r3, [r3]
+	tst	r3, #4
+	beq	.L138
+.L83:
+	ldr	r3, .L143+48
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L143+52
+	mov	lr, pc
+	bx	r3
+	pop	{r4, r5, r6, lr}
+	bx	lr
+.L70:
+	ldr	r5, .L143+12
 	ldrh	r3, [r5]
-	strb	r2, [r4]
-	b	.L74
-.L155:
+	tst	r3, #4
+	beq	.L84
+	ldr	r2, .L143+16
+	ldrh	r2, [r2]
+	tst	r2, #4
+	beq	.L139
+.L84:
+	tst	r3, #2
+	beq	.L85
+	ldr	r3, .L143+16
+	ldrh	r3, [r3]
+	tst	r3, #2
+	beq	.L140
+.L85:
+	ldr	r3, .L143+56
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L143+60
+	mov	lr, pc
+	bx	r3
+	pop	{r4, r5, r6, lr}
+	bx	lr
+.L68:
+	ldr	r0, .L143+64
+	ldr	r3, .L143+8
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L143+20
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L143+24
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L143+12
+	ldrh	r3, [r3]
+	tst	r3, #4
+	beq	.L63
+	ldr	r3, .L143+16
+	ldrh	r2, [r3]
+	ands	r2, r2, #4
+	bne	.L63
+	ldrb	r5, [r4, #1]	@ zero_extendqisi2
+	cmp	r5, #3
+	beq	.L92
+	cmp	r5, #4
+	beq	.L87
+	cmp	r5, #2
+	movne	r3, #83886080
+	ldrne	r1, .L143+32
+	beq	.L141
+.L88:
+	strh	r2, [r3], #2	@ movhi
+	cmp	r3, r1
+	bne	.L88
+.L89:
+	ldr	r3, .L143+36
+	mov	lr, pc
+	bx	r3
+	mov	r3, #3
+	strb	r3, [r4]
+	b	.L63
+.L69:
+	ldr	r3, .L143+12
+	ldrh	r3, [r3]
+	tst	r3, #4
+	beq	.L90
+	ldr	r3, .L143+16
+	ldrh	r3, [r3]
+	tst	r3, #4
+	beq	.L142
+.L90:
+	ldr	r3, .L143+68
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L143+72
+	mov	lr, pc
+	bx	r3
+	pop	{r4, r5, r6, lr}
+	bx	lr
+.L67:
+	ldr	r0, .L143+76
+	b	.L134
+.L142:
 	bl	goToPause
-	b	.L87
-.L154:
-	ldr	r3, .L158+76
+	b	.L90
+.L139:
+	bl	goToPause
+	ldrh	r3, [r5]
+	b	.L84
+.L138:
+	bl	goToPause
+	b	.L83
+.L136:
+	bl	goToInstructions
+	ldrh	r3, [r5]
+	b	.L74
+.L137:
+	bl	goToBossStage
+	ldrh	r3, [r5]
+	b	.L77
+.L140:
+	ldr	r3, .L143+40
+	mov	lr, pc
+	bx	r3
+	mov	r3, #2
+	strb	r3, [r4]
+	b	.L85
+.L135:
+	bl	goToStart
+	b	.L81
+.L141:
+	ldr	r3, .L143+40
 	mov	lr, pc
 	bx	r3
 	strb	r5, [r4]
 	b	.L63
-.L91:
+.L87:
 	pop	{r4, r5, r6, lr}
 	b	goToBossStage
-.L95:
+.L92:
 	mov	r3, #83886080
-	ldr	r1, .L158+48
-.L90:
+	ldr	r1, .L143+32
+.L86:
 	strh	r2, [r3], #2	@ movhi
 	cmp	r3, r1
-	bne	.L90
-	b	.L93
-.L159:
+	bne	.L86
+	b	.L89
+.L144:
 	.align	2
-.L158:
+.L143:
 	.word	.LANCHOR0
 	.word	loseScreenBitmap
 	.word	drawFullscreenImage4
@@ -815,19 +795,19 @@ updateStateMachine:
 	.word	buttons
 	.word	waitForVBlank
 	.word	flipPage
-	.word	updateJungleStage
-	.word	drawJungleStage
-	.word	updateBossStage
-	.word	drawBossStage
-	.word	pauseBitmap
+	.word	startBGBitmap
 	.word	83886592
 	.word	initJungleStage
-	.word	winScreenBitmap
+	.word	initCaveStage
 	.word	INSTRUCTIONSBitmap
 	.word	updateCaveStage
 	.word	drawCaveStage
-	.word	startBGBitmap
-	.word	initCaveStage
+	.word	updateJungleStage
+	.word	drawJungleStage
+	.word	pauseBitmap
+	.word	updateBossStage
+	.word	drawBossStage
+	.word	winScreenBitmap
 	.size	updateStateMachine, .-updateStateMachine
 	.comm	shadowOAM,1024,4
 	.bss

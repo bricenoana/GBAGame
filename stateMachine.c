@@ -164,7 +164,7 @@ static void startState(void) {
     drawFullscreenImage4(startBGBitmap);
 
     if (BUTTON_PRESSED(BUTTON_START)) {
-        goToCave();
+        goToInstructions();
     }
     if (BUTTON_PRESSED(BUTTON_A)) {
         goToGame();
@@ -173,18 +173,14 @@ static void startState(void) {
         goToBossStage();
     }
     if (BUTTON_PRESSED(BUTTON_SELECT)) {
-        goToInstructions();
+        goToCave();
     }
 }
 
 static void instructionsState(void) {
     drawFullscreenImage4(INSTRUCTIONSBitmap);
-    if (BUTTON_PRESSED(BUTTON_B)) {
-        goToStart();
-    } else if (BUTTON_PRESSED(BUTTON_A)) {
-        goToGame();
-    } else if (BUTTON_PRESSED(BUTTON_SELECT)) {
-        goToStart();
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        goToCave();
     }
     waitForVBlank();
     flipPage();
