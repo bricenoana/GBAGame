@@ -4,6 +4,7 @@
 #include "spriteNormal.h"
 #include "mode0.h"
 #include "player.h"
+#include "BossStage.h"
 
 Fireball fireballs[MAX_FIREBALLS];
 
@@ -12,10 +13,7 @@ void initFireballs(void) {
     for (i = 0; i < MAX_FIREBALLS; i++){
         fireballs[i].active = 0;
     }
-    DMANow(3, spriteNormalTiles, &CHARBLOCK[4], spriteNormalTilesLen / 2);
-    DMANow(3, spriteNormalPal, SPRITE_PAL, 256);
-    hideSprites();
-    DMANow(3, shadowOAM, OAM, 512);
+
 }
 
 void updateFireballs(void) {
@@ -32,15 +30,22 @@ void updateFireballs(void) {
     }
 
     for (int i = 0; i < MAX_FIREBALLS; i++) {
-        if (fireballs[i].active && collision(player.x, player.y, player.width, player.height, fireballs[i].x, fireballs[i].y, 16, 16)) {
-            player.health -= 20;
-            fireballs[i].active = 0;
-    
-            if (player.health <= 0) {
-                player.health = 0;
-                goToLose();
+        if (fireballs[i].active &&
+            collision(player.x, player.y, player.width, player.height,
+                      fireballs[i].x, fireballs[i].y, 16, 16))
+        {
+            fireballs[i].active = 0;              // fireball disappears either way
+        
+            if (!playerBlockActive) {             // ▸ only hurt if NOT blocking
+                player.health -= 20;
+        
+                if (player.health <= 0) {
+                    player.health = 0;
+                    goToLose();
+                }
             }
         }
+        
     }
 }
 

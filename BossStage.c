@@ -15,7 +15,7 @@ int hOff, vOff;
 static int playerSlashActive = 0;
 static int playerSlashTimer = 0;
 
-extern int playerBlockActive; 
+int playerBlockActive; 
 
 
 void initBossStage(void) {

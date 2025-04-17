@@ -17,17 +17,19 @@ typedef signed long long s64;
 typedef unsigned long long u64;
 
 
+typedef void (*ihp)(void);
+
+
 
 
 
 
 extern volatile unsigned short *videoBuffer;
-# 38 "gba.h"
+# 43 "gba.h"
 void waitForVBlank();
-
-
+# 59 "gba.h"
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-# 70 "gba.h"
+# 75 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 
@@ -39,8 +41,8 @@ typedef volatile struct {
     volatile void* dest;
     unsigned int ctrl;
 } DMAChannel;
-# 104 "gba.h"
-void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
+# 109 "gba.h"
+void DMANow(int channel, volatile void *src, volatile void *dest, unsigned int ctrl);
 # 2 "fireball.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
@@ -123,7 +125,7 @@ void drawFireballs(void);
 # 4 "fireball.c" 2
 # 1 "spriteNormal.h" 1
 # 21 "spriteNormal.h"
-extern const unsigned short spriteNormalTiles[16384];
+extern const unsigned short spriteNormalTiles[25600];
 
 
 extern const unsigned short spriteNormalPal[256];
@@ -165,6 +167,16 @@ void initPlayer(void);
 void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
 # 7 "fireball.c" 2
+# 1 "BossStage.h" 1
+
+
+
+extern int playerBlockActive;
+
+void initBossStage(void);
+void updateBossStage(void);
+void drawBossStage(void);
+# 8 "fireball.c" 2
 
 Fireball fireballs[5];
 
@@ -173,10 +185,7 @@ void initFireballs(void) {
     for (i = 0; i < 5; i++){
         fireballs[i].active = 0;
     }
-    DMANow(3, spriteNormalTiles, &((CB*) 0x6000000)[4], 32768 / 2);
-    DMANow(3, spriteNormalPal, ((u16 *)0x5000200), 256);
-    hideSprites();
-    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 512);
+
 }
 
 void updateFireballs(void) {
@@ -193,15 +202,22 @@ void updateFireballs(void) {
     }
 
     for (int i = 0; i < 5; i++) {
-        if (fireballs[i].active && collision(player.x, player.y, player.width, player.height, fireballs[i].x, fireballs[i].y, 16, 16)) {
-            player.health -= 20;
+        if (fireballs[i].active &&
+            collision(player.x, player.y, player.width, player.height,
+                      fireballs[i].x, fireballs[i].y, 16, 16))
+        {
             fireballs[i].active = 0;
 
-            if (player.health <= 0) {
-                player.health = 0;
-                goToLose();
+            if (!playerBlockActive) {
+                player.health -= 20;
+
+                if (player.health <= 0) {
+                    player.health = 0;
+                    goToLose();
+                }
             }
         }
+
     }
 }
 

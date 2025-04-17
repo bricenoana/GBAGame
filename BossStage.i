@@ -236,7 +236,7 @@ int hOff, vOff;
 static int playerSlashActive = 0;
 static int playerSlashTimer = 0;
 
-static int playerBlockActive = 0;
+int playerBlockActive;
 
 
 void initBossStage(void) {
@@ -313,7 +313,6 @@ void updateBossStage(void) {
         }
     }
 
-
     if ((~(buttons) & ((1<<1)))) {
         playerBlockActive = 1;
     } else {
@@ -323,11 +322,9 @@ void updateBossStage(void) {
         updatePlayer();
     }
 
-
     if (!playerBlockActive && (!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
         playerSlashActive = 1;
         playerSlashTimer = 20;
-
     }
 
 

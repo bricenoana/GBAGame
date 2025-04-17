@@ -118,8 +118,8 @@ updateBossStage:
 	strlt	r3, [r4]
 	rsb	r3, r2, #240
 	cmp	r3, r0
-	movlt	r0, r3
 	strlt	r3, [r4]
+	movlt	r0, r3
 	cmp	r1, #0
 	movlt	r3, #0
 	movlt	r1, r3
@@ -128,8 +128,8 @@ updateBossStage:
 	ldr	r5, .L46+16
 	rsb	ip, r3, #160
 	cmp	ip, r1
-	movlt	r1, ip
 	strlt	ip, [r4, #4]
+	movlt	r1, ip
 	add	ip, r5, #8
 	ldm	ip, {ip, lr}
 	str	lr, [sp, #12]
@@ -195,7 +195,8 @@ updateBossStage:
 	cmp	r3, #0
 	moveq	r3, #1
 	movne	r3, #0
-	str	r3, [r6, #12]
+	ldr	r4, .L46+40
+	str	r3, [r4]
 	bne	.L44
 .L24:
 	ldr	r3, [r7, #16]
@@ -207,10 +208,10 @@ updateBossStage:
 	pop	{r4, r5, r6, r7, r8, r9, r10, lr}
 	bx	lr
 .L44:
-	ldr	r3, .L46+40
+	ldr	r3, .L46+44
 	mov	lr, pc
 	bx	r3
-	ldr	r3, [r6, #12]
+	ldr	r3, [r4]
 	cmp	r3, #0
 	bne	.L24
 	ldrh	r3, [r9]
@@ -259,13 +260,13 @@ updateBossStage:
 	cmp	r3, #0
 	str	r3, [r6, #8]
 	bgt	.L17
-	ldr	r3, .L46+44
+	ldr	r3, .L46+48
 	mov	lr, pc
 	bx	r3
 	b	.L17
 .L42:
 	mov	r2, #0
-	ldr	r3, .L46+48
+	ldr	r3, .L46+52
 	str	r2, [r4, #44]
 	mov	lr, pc
 	bx	r3
@@ -283,6 +284,7 @@ updateBossStage:
 	.word	oldButtons
 	.word	buttons
 	.word	slash
+	.word	playerBlockActive
 	.word	updatePlayer
 	.word	goToWin
 	.word	goToLose
@@ -366,14 +368,14 @@ drawBossStage:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	mov	r2, #0
 	mov	r3, #67108864
+	mov	r2, #0
 	ldr	r1, .L62
-	ldr	r0, [r1, #12]
-	cmp	r0, r2
 	push	{r4, lr}
 	strh	r2, [r3, #16]	@ movhi
 	strh	r2, [r3, #18]	@ movhi
+	ldr	r3, [r1]
+	cmp	r3, r2
 	beq	.L56
 	mov	ip, #6
 	ldr	r2, .L62+4
@@ -421,7 +423,8 @@ drawBossStage:
 	pop	{r4, lr}
 	bx	lr
 .L56:
-	ldr	r1, [r1]
+	ldr	r3, .L62+36
+	ldr	r1, [r3]
 	cmp	r1, #0
 	beq	.L58
 	ldr	r2, .L62+4
@@ -439,14 +442,14 @@ drawBossStage:
 	b	.L57
 .L58:
 	mov	r0, r1
-	ldr	r3, .L62+36
+	ldr	r3, .L62+40
 	mov	lr, pc
 	bx	r3
 	b	.L57
 .L63:
 	.align	2
 .L62:
-	.word	.LANCHOR0
+	.word	playerBlockActive
 	.word	player
 	.word	-32768
 	.word	shadowOAM
@@ -455,8 +458,10 @@ drawBossStage:
 	.word	drawSlash
 	.word	DMANow
 	.word	waitForVBlank
+	.word	.LANCHOR0
 	.word	drawPlayer
 	.size	drawBossStage, .-drawBossStage
+	.comm	playerBlockActive,4,4
 	.comm	vOff,4,4
 	.comm	hOff,4,4
 	.comm	shadowOAM,1024,4
@@ -474,9 +479,5 @@ playerSlashTimer:
 	.type	winDelay.4148, %object
 	.size	winDelay.4148, 4
 winDelay.4148:
-	.space	4
-	.type	playerBlockActive, %object
-	.size	playerBlockActive, 4
-playerBlockActive:
 	.space	4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

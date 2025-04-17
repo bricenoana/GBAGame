@@ -21,49 +21,19 @@ initFireballs:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, lr}
-	mov	lr, #0
-	ldr	ip, .L4
-	ldr	r4, .L4+4
-	mov	r3, #16384
-	mov	r0, #3
-	ldr	r2, .L4+8
-	ldr	r1, .L4+12
-	str	lr, [ip, #24]
-	str	lr, [ip, #52]
-	str	lr, [ip, #80]
-	str	lr, [ip, #108]
-	str	lr, [ip, #136]
-	mov	lr, pc
-	bx	r4
-	mov	r0, #3
-	ldr	r2, .L4+16
-	ldr	r1, .L4+20
-	mov	r3, #256
-	mov	lr, pc
-	bx	r4
-	ldr	r3, .L4+24
-	mov	lr, pc
-	bx	r3
-	mov	r3, #512
-	mov	r2, #117440512
-	mov	r0, #3
-	ldr	r1, .L4+28
-	mov	lr, pc
-	bx	r4
-	pop	{r4, lr}
+	@ link register save eliminated.
+	mov	r2, #0
+	ldr	r3, .L3
+	str	r2, [r3, #24]
+	str	r2, [r3, #52]
+	str	r2, [r3, #80]
+	str	r2, [r3, #108]
+	str	r2, [r3, #136]
 	bx	lr
-.L5:
-	.align	2
 .L4:
+	.align	2
+.L3:
 	.word	fireballs
-	.word	DMANow
-	.word	100728832
-	.word	spriteNormalTiles
-	.word	83886592
-	.word	spriteNormalPal
-	.word	hideSprites
-	.word	shadowOAM
 	.size	initFireballs, .-initFireballs
 	.align	2
 	.global	updateFireballs
@@ -75,16 +45,16 @@ updateFireballs:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	push	{r4, r5, r6, r7, r8, lr}
+	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	ldr	r4, .L25
 	mov	lr, #0
 	mov	r3, r4
-	sub	sp, sp, #16
+	sub	sp, sp, #20
 	add	r5, r4, #140
-.L10:
+.L9:
 	ldr	r2, [r3, #24]
 	cmp	r2, #0
-	beq	.L8
+	beq	.L7
 	ldr	r1, [r3]
 	ldr	r2, [r3, #4]
 	ldr	ip, [r3, #16]
@@ -95,54 +65,59 @@ updateFireballs:
 	cmpls	r1, #240
 	stm	r3, {r1, r2}
 	strhi	lr, [r3, #24]
-.L8:
+.L7:
 	add	r3, r3, #28
 	cmp	r3, r5
-	bne	.L10
+	bne	.L9
+	mov	r7, #16
+	mov	r10, #0
 	ldr	r6, .L25+4
-	ldr	r7, .L25+8
-	ldr	r8, .L25+12
+	ldr	r8, .L25+8
+	ldr	r9, .L25+12
+	ldr	fp, .L25+16
 .L14:
 	ldr	r3, [r4, #24]
 	cmp	r3, #0
 	bne	.L24
-.L12:
+.L11:
 	add	r4, r4, #28
 	cmp	r4, r5
 	bne	.L14
-	add	sp, sp, #16
+	add	sp, sp, #20
 	@ sp needed
-	pop	{r4, r5, r6, r7, r8, lr}
+	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
 .L24:
-	mov	r3, #16
-	ldr	r1, [r4, #4]
-	ldr	r2, [r4]
-	stmib	sp, {r1, r3}
-	str	r3, [sp, #12]
-	str	r2, [sp]
+	ldr	r2, [r4, #4]
+	ldr	r3, [r4]
+	stmib	sp, {r2, r7}
+	str	r3, [sp]
+	str	r7, [sp, #12]
 	ldm	r6, {r0, r1, r2, r3}
 	mov	lr, pc
-	bx	r7
+	bx	r8
 	cmp	r0, #0
-	beq	.L12
-	mov	r2, #0
+	beq	.L11
+	ldr	r2, [r9]
+	cmp	r2, #0
+	str	r10, [r4, #24]
+	bne	.L11
 	ldr	r3, [r6, #44]
 	sub	r3, r3, #20
-	cmp	r3, r2
-	str	r3, [r6, #44]
-	str	r2, [r4, #24]
-	bgt	.L12
+	cmp	r3, #0
+	strgt	r3, [r6, #44]
+	bgt	.L11
 	str	r2, [r6, #44]
 	mov	lr, pc
-	bx	r8
-	b	.L12
+	bx	fp
+	b	.L11
 .L26:
 	.align	2
 .L25:
 	.word	fireballs
 	.word	player
 	.word	collision
+	.word	playerBlockActive
 	.word	goToLose
 	.size	updateFireballs, .-updateFireballs
 	.align	2
