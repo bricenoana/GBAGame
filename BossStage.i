@@ -261,7 +261,6 @@ void initBossStage(void) {
 }
 
 void updateBossStage(void) {
-    updatePlayer();
     updateBoss();
     updateFireballs();
     updateSlash();
@@ -319,6 +318,16 @@ void updateBossStage(void) {
         playerBlockActive = 1;
     } else {
         playerBlockActive = 0;
+    }
+    if (!playerBlockActive) {
+        updatePlayer();
+    }
+
+
+    if (!playerBlockActive && (!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
+        playerSlashActive = 1;
+        playerSlashTimer = 20;
+
     }
 
 

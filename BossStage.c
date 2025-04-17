@@ -15,7 +15,7 @@ int hOff, vOff;
 static int playerSlashActive = 0;
 static int playerSlashTimer = 0;
 
-static int playerBlockActive = 0;
+extern int playerBlockActive; 
 
 
 void initBossStage(void) {
@@ -40,7 +40,6 @@ void initBossStage(void) {
 }
 
 void updateBossStage(void) {
-    updatePlayer();
     updateBoss();
     updateFireballs();
     updateSlash();
@@ -93,11 +92,18 @@ void updateBossStage(void) {
         }
     }
 
-    /* ----------  BLOCK (hold B)  ---------- */
     if (BUTTON_HELD(BUTTON_B)) {
         playerBlockActive = 1;      // stay in block mode
     } else {
         playerBlockActive = 0;      // button released → unblock
+    }
+    if (!playerBlockActive) {
+        updatePlayer();           // read arrows & move
+    }
+    
+    if (!playerBlockActive && BUTTON_PRESSED(BUTTON_A)) {
+        playerSlashActive = 1;
+        playerSlashTimer  = 20;
     }
 
 
@@ -124,9 +130,9 @@ void drawBlockFrame(int hOff, int vOff) {
     int screenX = player.x - hOff;
     int screenY = player.y - vOff;
 
-    shadowOAM[0].attr0 = ATTR0_Y(screenY) | ATTR0_TALL;   // 32×32 same as player
-    shadowOAM[0].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;   // MEDIUM = 32×32
-    shadowOAM[0].attr2 = ATTR2_TILEID(6,0);                 // tile (6,0) in spritesheet
+    shadowOAM[0].attr0 = ATTR0_Y(screenY) | ATTR0_TALL;
+    shadowOAM[0].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+    shadowOAM[0].attr2 = ATTR2_TILEID(6,0);
 }
 
 
