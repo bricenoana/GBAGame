@@ -16629,11 +16629,11 @@ opening4Bitmap:
 	.short	2570
 	.short	2570
 	.short	2570
+	.short	3080
+	.short	3084
+	.short	2060
+	.short	2570
 	.short	2572
-	.short	2058
-	.short	3082
-	.short	3084
-	.short	3084
 	.short	3084
 	.short	3084
 	.short	2568
@@ -16749,11 +16749,11 @@ opening4Bitmap:
 	.short	10
 	.short	2052
 	.short	2052
-	.short	2057
-	.short	2056
-	.short	2056
 	.short	3080
 	.short	3084
+	.short	3084
+	.short	8
+	.short	2572
 	.short	3084
 	.short	3084
 	.short	2572
@@ -16869,11 +16869,11 @@ opening4Bitmap:
 	.short	2570
 	.short	2058
 	.short	2058
-	.short	2313
-	.short	2056
-	.short	2570
-	.short	2568
-	.short	3082
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	12
+	.short	2058
 	.short	2056
 	.short	3084
 	.short	1036
@@ -16989,10 +16989,10 @@ opening4Bitmap:
 	.short	2570
 	.short	2560
 	.short	2052
-	.short	2313
-	.short	2057
-	.short	1032
-	.short	2568
+	.short	3082
+	.short	12
+	.short	3084
+	.short	2564
 	.short	2570
 	.short	2052
 	.short	1028
@@ -17067,11 +17067,11 @@ opening4Bitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	10
-	.short	0
-	.short	2560
-	.short	10
-	.short	2560
+	.short	2314
+	.short	2056
+	.short	2056
+	.short	2056
+	.short	2572
 	.short	10
 	.short	0
 	.short	0
@@ -17109,10 +17109,10 @@ opening4Bitmap:
 	.short	2560
 	.short	2570
 	.short	2570
-	.short	2313
-	.short	2313
+	.short	2058
 	.short	2568
-	.short	2568
+	.short	2570
+	.short	2570
 	.short	2568
 	.short	2570
 	.short	2560
@@ -17187,52 +17187,52 @@ opening4Bitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	2560
-	.short	0
-	.short	1028
-	.short	0
-	.short	0
-	.short	10
-	.short	0
-	.short	0
-	.short	0
-	.short	2560
-	.short	0
-	.short	0
-	.short	2048
-	.short	2056
-	.short	2058
-	.short	3084
-	.short	3084
-	.short	8
-	.short	0
-	.short	0
-	.short	0
-	.short	2570
-	.short	2570
-	.short	0
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	10
-	.short	1034
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	0
-	.short	0
-	.short	2560
-	.short	10
-	.short	2560
-	.short	2313
-	.short	2313
+	.short	2304
 	.short	2057
+	.short	2568
+	.short	2058
 	.short	2570
+	.short	0
+	.short	1028
+	.short	0
+	.short	0
+	.short	10
+	.short	0
+	.short	0
+	.short	0
+	.short	2560
+	.short	0
+	.short	0
+	.short	2048
+	.short	2056
+	.short	2058
+	.short	3084
+	.short	3084
+	.short	8
+	.short	0
+	.short	0
+	.short	0
+	.short	2570
+	.short	2570
+	.short	0
+	.short	2570
+	.short	2570
+	.short	2570
+	.short	10
+	.short	1034
+	.short	2570
+	.short	2570
+	.short	2570
+	.short	2570
+	.short	0
+	.short	0
+	.short	2560
+	.short	10
+	.short	2560
+	.short	2570
+	.short	2570
+	.short	2570
+	.short	2560
 	.short	2564
 	.short	8
 	.short	2560
@@ -17307,11 +17307,11 @@ opening4Bitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	2304
+	.short	2313
+	.short	2056
+	.short	2052
+	.short	10
 	.short	0
 	.short	1024
 	.short	0
@@ -17349,10 +17349,10 @@ opening4Bitmap:
 	.short	0
 	.short	0
 	.short	2570
-	.short	2313
-	.short	2313
-	.short	2313
-	.short	4
+	.short	2560
+	.short	0
+	.short	2058
+	.short	2568
 	.short	2570
 	.short	1034
 	.short	2568
@@ -17427,11 +17427,11 @@ opening4Bitmap:
 	.short	2560
 	.short	2560
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	2304
+	.short	2313
+	.short	2057
+	.short	2058
+	.short	10
 	.short	0
 	.short	1024
 	.short	0
@@ -17469,10 +17469,10 @@ opening4Bitmap:
 	.short	3084
 	.short	12
 	.short	2570
-	.short	2313
-	.short	2313
-	.short	2313
-	.short	9
+	.short	2560
+	.short	0
+	.short	2570
+	.short	2568
 	.short	0
 	.short	2560
 	.short	2564
@@ -17547,11 +17547,11 @@ opening4Bitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	0
+	.short	2304
+	.short	2313
+	.short	2313
+	.short	2568
+	.short	10
 	.short	10
 	.short	1024
 	.short	0
@@ -17589,10 +17589,10 @@ opening4Bitmap:
 	.short	3084
 	.short	12
 	.short	2560
-	.short	2313
-	.short	2313
-	.short	2313
-	.short	2313
+	.short	0
+	.short	0
+	.short	2560
+	.short	2570
 	.short	0
 	.short	0
 	.short	0
@@ -17667,10 +17667,10 @@ opening4Bitmap:
 	.short	2560
 	.short	0
 	.short	0
-	.short	0
-	.short	2058
-	.short	2568
-	.short	0
+	.short	2304
+	.short	2313
+	.short	2313
+	.short	1033
 	.short	2058
 	.short	2570
 	.short	0
@@ -17709,10 +17709,10 @@ opening4Bitmap:
 	.short	2060
 	.short	12
 	.short	0
-	.short	2313
-	.short	2313
-	.short	2313
-	.short	9
+	.short	0
+	.short	0
+	.short	0
+	.short	0
 	.short	2570
 	.short	0
 	.short	0
@@ -17787,10 +17787,10 @@ opening4Bitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	2048
-	.short	2568
-	.short	2570
-	.short	2570
+	.short	2304
+	.short	2313
+	.short	2313
+	.short	2313
 	.short	2570
 	.short	2560
 	.short	0
@@ -17829,10 +17829,10 @@ opening4Bitmap:
 	.short	3084
 	.short	3084
 	.short	2572
-	.short	2313
-	.short	2313
-	.short	2313
-	.short	2056
+	.short	0
+	.short	0
+	.short	0
+	.short	0
 	.short	2570
 	.short	2570
 	.short	10
@@ -17907,53 +17907,53 @@ opening4Bitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	2570
-	.short	2570
-	.short	2058
-	.short	2570
-	.short	2570
-	.short	0
-	.short	0
-	.short	2570
-	.short	0
-	.short	2568
-	.short	8
-	.short	2570
-	.short	10
-	.short	2560
-	.short	2570
-	.short	2560
-	.short	2570
-	.short	2058
-	.short	8
-	.short	10
-	.short	3080
-	.short	3080
-	.short	2056
-	.short	10
-	.short	2560
-	.short	0
-	.short	0
-	.short	0
-	.short	4
-	.short	4
-	.short	0
-	.short	0
-	.short	2570
-	.short	2570
-	.short	2560
-	.short	2056
-	.short	2058
-	.short	12
-	.short	2570
-	.short	3080
-	.short	2056
-	.short	2060
+	.short	2314
+	.short	2313
 	.short	2313
 	.short	2313
 	.short	2569
+	.short	0
+	.short	0
+	.short	2570
+	.short	0
+	.short	2568
+	.short	8
+	.short	2570
+	.short	10
+	.short	2560
+	.short	2570
+	.short	2560
+	.short	2570
 	.short	2058
-	.short	1032
+	.short	8
+	.short	10
+	.short	3080
+	.short	3080
+	.short	2056
+	.short	10
+	.short	2560
+	.short	0
+	.short	0
+	.short	0
+	.short	4
+	.short	4
+	.short	0
+	.short	0
+	.short	2570
+	.short	2570
+	.short	2560
+	.short	2056
+	.short	2058
+	.short	12
+	.short	2570
+	.short	3080
+	.short	2056
+	.short	2060
+	.short	1024
+	.short	0
+	.short	0
+	.short	2560
+	.short	2570
 	.short	2568
 	.short	10
 	.short	0
@@ -18027,10 +18027,10 @@ opening4Bitmap:
 	.short	0
 	.short	0
 	.short	2560
-	.short	2570
-	.short	2570
-	.short	0
-	.short	2560
+	.short	2314
+	.short	2313
+	.short	2313
+	.short	2313
 	.short	2048
 	.short	2570
 	.short	10
@@ -18069,10 +18069,10 @@ opening4Bitmap:
 	.short	2058
 	.short	2056
 	.short	2056
-	.short	2313
-	.short	2313
+	.short	1028
+	.short	0
+	.short	0
 	.short	2560
-	.short	2058
 	.short	2564
 	.short	2570
 	.short	2570
@@ -18147,11 +18147,11 @@ opening4Bitmap:
 	.short	0
 	.short	0
 	.short	2560
-	.short	10
-	.short	10
-	.short	10
-	.short	2570
-	.short	2058
+	.short	2314
+	.short	2313
+	.short	2313
+	.short	2057
+	.short	2056
 	.short	0
 	.short	10
 	.short	0
@@ -18189,11 +18189,11 @@ opening4Bitmap:
 	.short	2570
 	.short	2058
 	.short	2568
-	.short	2313
-	.short	9
+	.short	4
+	.short	0
 	.short	2560
-	.short	2560
-	.short	8
+	.short	2570
+	.short	2570
 	.short	4
 	.short	10
 	.short	2048
@@ -18267,11 +18267,11 @@ opening4Bitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	10
-	.short	0
-	.short	2560
+	.short	2314
+	.short	2313
+	.short	2313
 	.short	2570
-	.short	2058
+	.short	2056
 	.short	0
 	.short	0
 	.short	0
@@ -18309,11 +18309,11 @@ opening4Bitmap:
 	.short	10
 	.short	0
 	.short	0
-	.short	2313
-	.short	10
+	.short	4
 	.short	0
-	.short	0
-	.short	10
+	.short	2570
+	.short	2570
+	.short	2570
 	.short	10
 	.short	0
 	.short	2056
@@ -18387,11 +18387,11 @@ opening4Bitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	2560
+	.short	2304
+	.short	2313
+	.short	2569
 	.short	2570
-	.short	10
+	.short	8
 	.short	2560
 	.short	0
 	.short	0
@@ -18429,11 +18429,11 @@ opening4Bitmap:
 	.short	0
 	.short	2570
 	.short	2570
-	.short	9
+	.short	4
 	.short	0
+	.short	2570
 	.short	0
-	.short	2560
-	.short	0
+	.short	10
 	.short	0
 	.short	3072
 	.short	2056
@@ -18507,8 +18507,8 @@ opening4Bitmap:
 	.short	0
 	.short	0
 	.short	10
-	.short	0
-	.short	0
+	.short	2304
+	.short	2313
 	.short	2568
 	.short	10
 	.short	2570
@@ -18627,8 +18627,8 @@ opening4Bitmap:
 	.short	0
 	.short	2560
 	.short	10
-	.short	10
-	.short	2560
+	.short	2314
+	.short	2569
 	.short	10
 	.short	0
 	.short	0
@@ -18747,7 +18747,7 @@ opening4Bitmap:
 	.short	0
 	.short	0
 	.short	2570
-	.short	10
+	.short	2314
 	.short	0
 	.short	0
 	.short	0
