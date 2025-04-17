@@ -15,6 +15,9 @@ int hOff, vOff;
 static int playerSlashActive = 0;
 static int playerSlashTimer = 0;
 
+static int playerBlockActive = 0;
+
+
 void initBossStage(void) {
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
     REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(27) | BG_SIZE_SMALL | BG_4BPP;
@@ -90,6 +93,14 @@ void updateBossStage(void) {
         }
     }
 
+    /* ----------  BLOCK (hold B)  ---------- */
+    if (BUTTON_HELD(BUTTON_B)) {
+        playerBlockActive = 1;      // stay in block mode
+    } else {
+        playerBlockActive = 0;      // button released → unblock
+    }
+
+
     if (slash.active && collision(slash.x, slash.y, 16, 16, boss.x, boss.y, boss.width, boss.height)) {
         boss.health -= 10;
         slash.active = 0;
@@ -109,15 +120,28 @@ void drawSwordSlash(int hOff, int vOff) {
     shadowOAM[0].attr2 = ATTR2_TILEID(0,20);
 }
 
+void drawBlockFrame(int hOff, int vOff) {
+    int screenX = player.x - hOff;
+    int screenY = player.y - vOff;
+
+    shadowOAM[0].attr0 = ATTR0_Y(screenY) | ATTR0_TALL;   // 32×32 same as player
+    shadowOAM[0].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;   // MEDIUM = 32×32
+    shadowOAM[0].attr2 = ATTR2_TILEID(6,0);                 // tile (6,0) in spritesheet
+}
+
+
 void drawBossStage(void) {
     REG_BG0HOFF = 0;
     REG_BG0VOFF = 0;
  
-    if (playerSlashActive) {
+    if (playerBlockActive) {
+        drawBlockFrame(0, 0);
+    } else if (playerSlashActive) {
         drawSwordSlash(0, 0);
     } else {
         drawPlayer(0, 0);
     }
+
     
     drawBoss();
     drawFireballs();
