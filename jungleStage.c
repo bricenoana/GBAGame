@@ -6,8 +6,6 @@
 #include "singleLayerJungle.h" //tiles
 #include "singleLayerMap.h" //map
 
-OBJ_ATTR shadowOAM[128];
-
 int hOff, vOff;
 
 void initJungleStage(void) {
