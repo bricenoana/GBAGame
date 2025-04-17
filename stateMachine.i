@@ -51,6 +51,10 @@ void DMANow(int channel, volatile void *src, volatile void *dest, unsigned int c
 typedef enum {
     START,
     INSTRUCTIONS,
+    OP1,
+    OP2,
+    OP3,
+    OP4,
     CAVE,
     GAME,
     BOSS,
@@ -64,6 +68,10 @@ void updateStateMachine(void);
 
 void goToStart(void);
 void goToInstructions(void);
+void goToOP1();
+void goToOP2();
+void goToOP3();
+void goToOP4();
 void goToGame(void);
 void goToPause(void);
 void goToWin(void);
@@ -410,6 +418,8 @@ void drawPlayer(int hOff, int vOff);
 
 
 
+extern int playerBlockActive;
+
 void initBossStage(void);
 void updateBossStage(void);
 void drawBossStage(void);
@@ -464,6 +474,34 @@ extern const unsigned int loseSong_sampleRate;
 extern const unsigned int loseSong_length;
 extern const signed char loseSong_data[];
 # 19 "stateMachine.c" 2
+# 1 "opening1.h" 1
+# 21 "opening1.h"
+extern const unsigned short opening1Bitmap[19200];
+
+
+extern const unsigned short opening1Pal[256];
+# 20 "stateMachine.c" 2
+# 1 "opening2.h" 1
+# 21 "opening2.h"
+extern const unsigned short opening2Bitmap[19200];
+
+
+extern const unsigned short opening2Pal[256];
+# 21 "stateMachine.c" 2
+# 1 "opening3.h" 1
+# 21 "opening3.h"
+extern const unsigned short opening3Bitmap[19200];
+
+
+extern const unsigned short opening3Pal[256];
+# 22 "stateMachine.c" 2
+# 1 "opening4.h" 1
+# 21 "opening4.h"
+extern const unsigned short opening4Bitmap[19200];
+
+
+extern const unsigned short opening4Pal[256];
+# 23 "stateMachine.c" 2
 
 extern unsigned short buttons;
 extern unsigned short oldButtons;
@@ -522,6 +560,79 @@ void goToInstructions(void) {
     waitForVBlank();
     flipPage();
     state = INSTRUCTIONS;
+}
+
+void goToOP1(void) {
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
+
+    for (int i = 0; i < 240*160; i++) {
+        ((unsigned short*) 0x06000000)[i] = 0;
+        ((unsigned short*) 0x0600A000)[i] = 0;
+    }
+
+    DMANow(3, opening1Pal, ((unsigned short *)0x5000000), 512/2);
+
+    drawFullscreenImage4(opening1Bitmap);
+
+    waitForVBlank();
+    flipPage();
+
+    state = OP1;
+}
+
+
+void goToOP2() {
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
+
+    for (int i = 0; i < 240*160; i++) {
+        ((unsigned short*) 0x06000000)[i] = 0;
+        ((unsigned short*) 0x0600A000)[i] = 0;
+    }
+
+    DMANow(3, opening2Pal, ((unsigned short *)0x5000000), 512/2);
+
+    drawFullscreenImage4(opening2Bitmap);
+
+    waitForVBlank();
+    flipPage();
+
+    state = OP2;
+}
+
+void goToOP3() {
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
+
+    for (int i = 0; i < 240*160; i++) {
+        ((unsigned short*) 0x06000000)[i] = 0;
+        ((unsigned short*) 0x0600A000)[i] = 0;
+    }
+
+    DMANow(3, opening3Pal, ((unsigned short *)0x5000000), 512/2);
+
+    drawFullscreenImage4(opening3Bitmap);
+
+    waitForVBlank();
+    flipPage();
+
+    state = OP3;
+}
+
+void goToOP4() {
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
+
+    for (int i = 0; i < 240*160; i++) {
+        ((unsigned short*) 0x06000000)[i] = 0;
+        ((unsigned short*) 0x0600A000)[i] = 0;
+    }
+
+    DMANow(3, opening4Pal, ((unsigned short *)0x5000000), 512/2);
+
+    drawFullscreenImage4(opening4Bitmap);
+
+    waitForVBlank();
+    flipPage();
+
+    state = OP4;
 }
 
 void goToPause(void) {
@@ -607,7 +718,6 @@ void goToBossStage(void) {
 }
 
 
-
 static void startState(void) {
     drawFullscreenImage4(startBGBitmap);
 
@@ -627,6 +737,45 @@ static void startState(void) {
 
 static void instructionsState(void) {
     drawFullscreenImage4(INSTRUCTIONSBitmap);
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        goToOP1();
+    }
+    if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
+        goToCave();
+    }
+    waitForVBlank();
+    flipPage();
+}
+
+static void OP1State() {
+    drawFullscreenImage4(opening1Bitmap);
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        goToOP2();
+    }
+    waitForVBlank();
+    flipPage();
+}
+
+static void OP2State() {
+    drawFullscreenImage4(opening2Bitmap);
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        goToOP3();
+    }
+    waitForVBlank();
+    flipPage();
+}
+
+static void OP3State() {
+    drawFullscreenImage4(opening3Bitmap);
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        goToOP4();
+    }
+    waitForVBlank();
+    flipPage();
+}
+
+static void OP4State() {
+    drawFullscreenImage4(opening4Bitmap);
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToCave();
     }
@@ -723,6 +872,18 @@ void updateStateMachine(void) {
             break;
         case INSTRUCTIONS:
             instructionsState();
+            break;
+        case OP1:
+            OP1State();
+            break;
+        case OP2:
+            OP2State();
+            break;
+        case OP3:
+            OP3State();
+            break;
+        case OP4:
+            OP4State();
             break;
         case CAVE:
             caveState();

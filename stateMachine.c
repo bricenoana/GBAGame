@@ -16,6 +16,10 @@
 #include "overallSong.h"
 #include "winSong.h"
 #include "loseSong.h"
+#include "opening1.h"
+#include "opening2.h"
+#include "opening3.h"
+#include "opening4.h"
 
 extern unsigned short buttons;
 extern unsigned short oldButtons;
@@ -74,6 +78,79 @@ void goToInstructions(void) {
     waitForVBlank();
     flipPage();
     state = INSTRUCTIONS;
+}
+
+void goToOP1(void) {
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
+    
+    for (int i = 0; i < 240*160; i++) {
+        FRONTBUFFER[i] = 0;
+        BACKBUFFER[i]  = 0;
+    }
+    
+    DMANow(3, opening1Pal, BG_PALETTE, opening1PalLen/2);
+    
+    drawFullscreenImage4(opening1Bitmap);
+    
+    waitForVBlank();
+    flipPage();
+    
+    state = OP1;
+}
+
+
+void goToOP2() {
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
+    
+    for (int i = 0; i < 240*160; i++) {
+        FRONTBUFFER[i] = 0;
+        BACKBUFFER[i]  = 0;
+    }
+    
+    DMANow(3, opening2Pal, BG_PALETTE, opening2PalLen/2);
+    
+    drawFullscreenImage4(opening2Bitmap);
+    
+    waitForVBlank();
+    flipPage();
+    
+    state = OP2;
+}
+
+void goToOP3() {
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
+    
+    for (int i = 0; i < 240*160; i++) {
+        FRONTBUFFER[i] = 0;
+        BACKBUFFER[i]  = 0;
+    }
+    
+    DMANow(3, opening3Pal, BG_PALETTE, opening3PalLen/2);
+    
+    drawFullscreenImage4(opening3Bitmap);
+    
+    waitForVBlank();
+    flipPage();
+    
+    state = OP3;
+}
+
+void goToOP4() {
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
+    
+    for (int i = 0; i < 240*160; i++) {
+        FRONTBUFFER[i] = 0;
+        BACKBUFFER[i]  = 0;
+    }
+    
+    DMANow(3, opening4Pal, BG_PALETTE, opening4PalLen/2);
+    
+    drawFullscreenImage4(opening4Bitmap);
+    
+    waitForVBlank();
+    flipPage();
+    
+    state = OP4;
 }
 
 void goToPause(void) {
@@ -159,7 +236,6 @@ void goToBossStage(void) {
 }
 
 
-
 static void startState(void) {
     drawFullscreenImage4(startBGBitmap);
 
@@ -179,6 +255,45 @@ static void startState(void) {
 
 static void instructionsState(void) {
     drawFullscreenImage4(INSTRUCTIONSBitmap);
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        goToOP1();
+    }
+    if (BUTTON_PRESSED(BUTTON_SELECT)) {
+        goToCave();
+    }
+    waitForVBlank();
+    flipPage();
+}
+
+static void OP1State() {
+    drawFullscreenImage4(opening1Bitmap);
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        goToOP2();
+    }
+    waitForVBlank();
+    flipPage();
+}
+
+static void OP2State() {
+    drawFullscreenImage4(opening2Bitmap);
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        goToOP3();
+    }
+    waitForVBlank();
+    flipPage();
+}
+
+static void OP3State() {
+    drawFullscreenImage4(opening3Bitmap);
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        goToOP4();
+    }
+    waitForVBlank();
+    flipPage();
+}
+
+static void OP4State() {
+    drawFullscreenImage4(opening4Bitmap);
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToCave();
     }
@@ -275,6 +390,18 @@ void updateStateMachine(void) {
             break;
         case INSTRUCTIONS:
             instructionsState();
+            break;
+        case OP1:
+            OP1State();
+            break;
+        case OP2:
+            OP2State();
+            break;
+        case OP3:
+            OP3State();
+            break;
+        case OP4:
+            OP4State();
             break;
         case CAVE:
             caveState();
