@@ -17,17 +17,19 @@ typedef signed long long s64;
 typedef unsigned long long u64;
 
 
+typedef void (*ihp)(void);
+
+
 
 
 
 
 extern volatile unsigned short *videoBuffer;
-# 38 "gba.h"
+# 43 "gba.h"
 void waitForVBlank();
-
-
+# 59 "gba.h"
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-# 70 "gba.h"
+# 75 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 
@@ -39,8 +41,8 @@ typedef volatile struct {
     volatile void* dest;
     unsigned int ctrl;
 } DMAChannel;
-# 104 "gba.h"
-void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
+# 109 "gba.h"
+void DMANow(int channel, volatile void *src, volatile void *dest, unsigned int ctrl);
 # 2 "alert.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
@@ -117,6 +119,7 @@ typedef struct {
     int health;
     int maxHealth;
     int defeated;
+    int flashtimer;
 } Player;
 
 extern Player player;
@@ -136,6 +139,7 @@ typedef struct {
     int width, height;
     int screenX, screenY;
     int active;
+    int pickedUp;
 } NPC;
 
 extern NPC npc;
@@ -144,13 +148,32 @@ void initNPC();
 void updateNPC(int hOff, int vOff);
 void drawNPC(int hOff, int vOff);
 # 5 "alert.c" 2
+# 1 "sword.h" 1
+
+
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int active;
+    int pickedUp;
+} Sword;
+
+extern Sword sword;
+
+void initSword(void);
+void updateSword(void);
+void drawSword(int hOff, int vOff);
+# 6 "alert.c" 2
 # 1 "spriteNormal.h" 1
 # 21 "spriteNormal.h"
 extern const unsigned short spriteNormalTiles[25600];
 
 
 extern const unsigned short spriteNormalPal[256];
-# 6 "alert.c" 2
+# 7 "alert.c" 2
 # 1 "mode0.h" 1
 # 32 "mode0.h"
 typedef struct {
@@ -162,7 +185,7 @@ typedef struct {
 typedef struct {
  u16 tilemap[1024];
 } SB;
-# 7 "alert.c" 2
+# 8 "alert.c" 2
 # 1 "alert.h" 1
 
 
@@ -172,7 +195,7 @@ void initAlert();
 void updateAlert(int hOff, int vOff);
 
 void drawAlert(int hOff, int vOff);
-# 8 "alert.c" 2
+# 9 "alert.c" 2
 
 
 
@@ -192,35 +215,44 @@ void initAlert() {
     alert.active = 0;
 }
 
-void updateJungleAlert(int hOff, int vOff) {
+void updateJungleAlert(int hOff,int vOff) {
     if (collision(player.x, player.y, player.width, player.height,
-                  npc.x, npc.y, npc.width, npc.height)) {
+                  npc.x, npc.y, npc.width, npc.height))
+    {
         alert.active = 1;
-
-        int baseX = npc.x + (npc.width / 2) - (16 / 2);
-        int baseY = npc.y - 16 - 4;
-
-        alert.worldX = baseX - 8;
-        alert.worldY = baseY + 5;
-
+        int cx = npc.x + (npc.width / 2) - (16/2);
+        int cy = npc.y - 16 - 4;
+        alert.worldX = cx - 8; alert.worldY = cy + 5;
         alert.screenX = alert.worldX - hOff;
         alert.screenY = alert.worldY - vOff;
+
+        if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
+            npc.pickedUp = 1;
+            alert.active = 0;
+        }
     } else {
         alert.active = 0;
     }
 }
 
-void updateCaveAlert(int hOff, int vOff) {
-    if (player.x >= 380 && player.x <= 420) {
+void updateCaveAlert(int hOff,int vOff) {
+    if (collision(player.x, player.y, player.width, player.height,
+                  sword.x, sword.y, sword.width, sword.height))
+    {
         alert.active = 1;
-        alert.worldX = 399;
-        alert.worldY = 90;
+        alert.worldX = sword.x;
+        alert.worldY = sword.y - 14;
+        alert.screenX = alert.worldX - hOff;
+        alert.screenY = alert.worldY - vOff;
+
+        if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
+            sword.pickedUp = 1;
+            sword.active = 0;
+            alert.active = 0;
+        }
     } else {
         alert.active = 0;
     }
-
-    alert.screenX = alert.worldX - hOff;
-    alert.screenY = alert.worldY - vOff;
 }
 
 

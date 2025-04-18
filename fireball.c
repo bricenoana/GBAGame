@@ -13,7 +13,6 @@ void initFireballs(void) {
     for (i = 0; i < MAX_FIREBALLS; i++){
         fireballs[i].active = 0;
     }
-
 }
 
 void updateFireballs(void) {
@@ -34,9 +33,9 @@ void updateFireballs(void) {
             collision(player.x, player.y, player.width, player.height,
                       fireballs[i].x, fireballs[i].y, 16, 16))
         {
-            fireballs[i].active = 0;              // fireball disappears either way
+            fireballs[i].active = 0;
         
-            if (!playerBlockActive) {             // ▸ only hurt if NOT blocking
+            if (!playerBlockActive) {
                 player.health -= 20;
         
                 if (player.health <= 0) {

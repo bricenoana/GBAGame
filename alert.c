@@ -2,6 +2,7 @@
 #include "sprites.h"
 #include "player.h"
 #include "npc.h"
+#include "sword.h"
 #include "spriteNormal.h"
 #include "mode0.h"
 #include "alert.h"
@@ -24,35 +25,44 @@ void initAlert() {
     alert.active = 0;
 }
 
-void updateJungleAlert(int hOff, int vOff) {
+void updateJungleAlert(int hOff,int vOff) {
     if (collision(player.x, player.y, player.width, player.height,
-                  npc.x, npc.y, npc.width, npc.height)) {
+                  npc.x, npc.y, npc.width, npc.height))
+    {
         alert.active = 1;
-        
-        int baseX = npc.x + (npc.width / 2) - (ALERT_WIDTH / 2);
-        int baseY = npc.y - ALERT_HEIGHT - 4;
-        
-        alert.worldX = baseX - 8;
-        alert.worldY = baseY + 5;
-        
+        int cx = npc.x + (npc.width / 2) - (ALERT_WIDTH/2);
+        int cy = npc.y - ALERT_HEIGHT - 4;
+        alert.worldX = cx - 8; alert.worldY = cy + 5;
         alert.screenX = alert.worldX - hOff;
         alert.screenY = alert.worldY - vOff;
+
+        if (BUTTON_PRESSED(BUTTON_A)) {
+            npc.pickedUp  = 1;
+            alert.active  = 0;
+        }
     } else {
         alert.active = 0;
     }
 }
 
-void updateCaveAlert(int hOff, int vOff) {
-    if (player.x >= 380 && player.x <= 420) {
+void updateCaveAlert(int hOff,int vOff) {
+    if (collision(player.x, player.y, player.width, player.height,
+                  sword.x,  sword.y,  sword.width, sword.height))
+    {
         alert.active = 1;
-        alert.worldX = 399;
-        alert.worldY = 90;
+        alert.worldX = sword.x;
+        alert.worldY = sword.y - 14;
+        alert.screenX = alert.worldX - hOff;
+        alert.screenY = alert.worldY - vOff;
+
+        if (BUTTON_PRESSED(BUTTON_A)) {
+            sword.pickedUp = 1;
+            sword.active   = 0;
+            alert.active   = 0;
+        }
     } else {
         alert.active = 0;
     }
-
-    alert.screenX = alert.worldX - hOff;
-    alert.screenY = alert.worldY - vOff;
 }
 
 

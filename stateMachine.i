@@ -404,6 +404,7 @@ typedef struct {
     int health;
     int maxHealth;
     int defeated;
+    int flashtimer;
 } Player;
 
 extern Player player;
@@ -513,7 +514,6 @@ static GameState prevState;
 void goToStart(void) {
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
 
-
     for (int i = 0; i < 240 * 160; i++) {
         ((unsigned short*) 0x06000000)[i] = 0;
         ((unsigned short*) 0x0600A000)[i] = 0;
@@ -549,7 +549,6 @@ void goToGame(void) {
 
 
 void goToInstructions(void) {
-
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
     for (int i = 0; i < 240 * 160; i++) {
         ((unsigned short*) 0x06000000)[i] = 0;

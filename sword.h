@@ -7,6 +7,7 @@ typedef struct {
     int width;
     int height;
     int active;
+    int pickedUp;
 } Sword;
 
 extern Sword sword;

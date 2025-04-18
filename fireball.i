@@ -157,6 +157,7 @@ typedef struct {
     int health;
     int maxHealth;
     int defeated;
+    int flashtimer;
 } Player;
 
 extern Player player;
@@ -185,7 +186,6 @@ void initFireballs(void) {
     for (i = 0; i < 5; i++){
         fireballs[i].active = 0;
     }
-
 }
 
 void updateFireballs(void) {

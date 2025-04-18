@@ -31,7 +31,6 @@ static GameState prevState;
 void goToStart(void) {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
     
-    // Clear the buffers.
     for (int i = 0; i < 240 * 160; i++) {
         FRONTBUFFER[i] = 0;
         BACKBUFFER[i] = 0;
@@ -67,7 +66,6 @@ void goToGame(void) {
 
 
 void goToInstructions(void) {
-    //drawing the instruction screen
     REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
     for (int i = 0; i < 240 * 160; i++) {
         FRONTBUFFER[i] = 0;

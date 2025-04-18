@@ -3,6 +3,8 @@
 #include "sprites.h"
 #include "spritesheet.h"
 #include "player.h"
+#include "npc.h"
+#include "sword.h"
 #include "singleLayerJungle.h" //tiles
 #include "singleLayerMap.h" //map
 
@@ -39,11 +41,18 @@ void updateJungleStage(void) {
     updateNPC(hOff, vOff);
     updateJungleAlert(hOff, vOff);
 
-
-    if (checkTempleCollision(player.x, player.y, player.width, player.height)) {
+    if (checkTempleCollision(player.x, player.y, player.width, player.height) &&
+        npc.pickedUp && sword.pickedUp)
+    {
         goToBossStage();
     }
+
+    int screenX = player.x - hOff;
+    if (screenX <= 0) {
+        goToCave();
+    }
 }
+
 
 
 void drawJungleStage(void) {

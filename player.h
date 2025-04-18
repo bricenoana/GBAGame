@@ -12,6 +12,7 @@ typedef struct {
     int health;
     int maxHealth;
     int defeated;
+    int flashtimer;
 } Player;
 
 extern Player player;

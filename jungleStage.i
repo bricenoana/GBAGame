@@ -138,6 +138,7 @@ typedef struct {
     int health;
     int maxHealth;
     int defeated;
+    int flashtimer;
 } Player;
 
 extern Player player;
@@ -148,13 +149,50 @@ void initPlayer(void);
 void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
 # 6 "jungleStage.c" 2
+# 1 "npc.h" 1
+
+
+
+typedef struct {
+    int x, y;
+    int width, height;
+    int screenX, screenY;
+    int active;
+    int pickedUp;
+} NPC;
+
+extern NPC npc;
+
+void initNPC();
+void updateNPC(int hOff, int vOff);
+void drawNPC(int hOff, int vOff);
+# 7 "jungleStage.c" 2
+# 1 "sword.h" 1
+
+
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int active;
+    int pickedUp;
+} Sword;
+
+extern Sword sword;
+
+void initSword(void);
+void updateSword(void);
+void drawSword(int hOff, int vOff);
+# 8 "jungleStage.c" 2
 # 1 "singleLayerJungle.h" 1
 # 21 "singleLayerJungle.h"
 extern const unsigned short singleLayerJungleTiles[5632];
 
 
 extern const unsigned short singleLayerJunglePal[256];
-# 7 "jungleStage.c" 2
+# 9 "jungleStage.c" 2
 # 1 "singleLayerMap.h" 1
 
 
@@ -164,7 +202,7 @@ extern const unsigned short singleLayerJunglePal[256];
 
 
 extern const unsigned short singleLayerMapMap[2048];
-# 8 "jungleStage.c" 2
+# 10 "jungleStage.c" 2
 
 int hOff, vOff;
 
@@ -199,11 +237,18 @@ void updateJungleStage(void) {
     updateNPC(hOff, vOff);
     updateJungleAlert(hOff, vOff);
 
-
-    if (checkTempleCollision(player.x, player.y, player.width, player.height)) {
+    if (checkTempleCollision(player.x, player.y, player.width, player.height) &&
+        npc.pickedUp && sword.pickedUp)
+    {
         goToBossStage();
     }
+
+    int screenX = player.x - hOff;
+    if (screenX <= 0) {
+        goToCave();
+    }
 }
+
 
 
 void drawJungleStage(void) {

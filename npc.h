@@ -6,6 +6,7 @@ typedef struct {
     int width, height;
     int screenX, screenY;
     int active;
+    int pickedUp;
 } NPC;
 
 extern NPC npc;
