@@ -5,7 +5,7 @@
 #include "mode0.h"
 #include "player.h"
 #include "BossStage.h"
-#include ""
+#include "analogSound.h"
 
 Fireball fireballs[MAX_FIREBALLS];
 
@@ -35,6 +35,10 @@ void updateFireballs(void) {
                       fireballs[i].x, fireballs[i].y, 16, 16))
         {
             fireballs[i].active = 0;
+            if (!BUTTON_HELD(BUTTON_B)) {
+                playAnalogSound(0);
+            }
+            
         
             if (!playerBlockActive) {
                 player.health -= 20;

@@ -118,6 +118,7 @@ unsigned short oldButtons;
 int main(void) {
     setupSounds();
     setupSoundInterrupts();
+    initSound();
 
     initStateMachine();
 

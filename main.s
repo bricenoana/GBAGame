@@ -33,10 +33,13 @@ main:
 	ldr	r3, .L5+8
 	mov	lr, pc
 	bx	r3
-	ldr	r7, .L5+12
-	ldr	r4, .L5+16
-	ldr	r6, .L5+20
-	ldr	r5, .L5+24
+	ldr	r3, .L5+12
+	mov	lr, pc
+	bx	r3
+	ldr	r7, .L5+16
+	ldr	r4, .L5+20
+	ldr	r6, .L5+24
+	ldr	r5, .L5+28
 .L2:
 	ldrh	r3, [r4]
 	strh	r3, [r7]	@ movhi
@@ -50,6 +53,7 @@ main:
 .L5:
 	.word	setupSounds
 	.word	setupSoundInterrupts
+	.word	initSound
 	.word	initStateMachine
 	.word	oldButtons
 	.word	buttons

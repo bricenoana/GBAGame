@@ -228,6 +228,7 @@ void updateJungleAlert(int hOff,int vOff) {
 
         if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
             npc.pickedUp = 1;
+            playAnalogSound(4);
             alert.active = 0;
         }
     } else {
@@ -247,6 +248,7 @@ void updateCaveAlert(int hOff,int vOff) {
 
         if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
             sword.pickedUp = 1;
+            playAnalogSound(4);
             sword.active = 0;
             alert.active = 0;
         }

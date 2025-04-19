@@ -6,6 +6,8 @@
 
 
 
+extern int playerBlockActive;
+
 void initBossStage(void);
 void updateBossStage(void);
 void drawBossStage(void);
@@ -163,6 +165,7 @@ typedef struct {
     int health;
     int maxHealth;
     int defeated;
+    int flashtimer;
 } Player;
 
 extern Player player;
@@ -330,6 +333,7 @@ void updateBossStage(void) {
 
     if (slash.active && collision(slash.x, slash.y, 16, 16, boss.x, boss.y, boss.width, boss.height)) {
         boss.health -= 10;
+        playAnalogSound(4);
         slash.active = 0;
         if (boss.health <= 0) {
             boss.health = 0;

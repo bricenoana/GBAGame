@@ -237,15 +237,20 @@ updateBossStage:
 	bx	r8
 	cmp	r0, #0
 	beq	.L6
-	mov	r2, #0
 	ldr	r3, [r5, #16]
+	ldr	r2, .L46+48
 	sub	r3, r3, #10
-	cmp	r3, r2
+	mov	r0, #4
 	str	r3, [r5, #16]
-	str	r2, [r7, #16]
-	movle	r3, #1
-	strle	r2, [r5, #16]
-	strle	r3, [r5, #24]
+	mov	lr, pc
+	bx	r2
+	mov	r3, #0
+	ldr	r2, [r5, #16]
+	cmp	r2, r3
+	str	r3, [r7, #16]
+	movle	r2, #1
+	strle	r3, [r5, #16]
+	strle	r2, [r5, #24]
 	b	.L6
 .L20:
 	ldr	r2, [r6, #4]
@@ -260,13 +265,13 @@ updateBossStage:
 	cmp	r3, #0
 	str	r3, [r6, #8]
 	bgt	.L17
-	ldr	r3, .L46+48
+	ldr	r3, .L46+52
 	mov	lr, pc
 	bx	r3
 	b	.L17
 .L42:
 	mov	r2, #0
-	ldr	r3, .L46+52
+	ldr	r3, .L46+56
 	str	r2, [r4, #44]
 	mov	lr, pc
 	bx	r3
@@ -286,6 +291,7 @@ updateBossStage:
 	.word	slash
 	.word	playerBlockActive
 	.word	updatePlayer
+	.word	playAnalogSound
 	.word	goToWin
 	.word	goToLose
 	.size	updateBossStage, .-updateBossStage
@@ -476,8 +482,8 @@ playerSlashActive:
 	.size	playerSlashTimer, 4
 playerSlashTimer:
 	.space	4
-	.type	winDelay.4148, %object
-	.size	winDelay.4148, 4
-winDelay.4148:
+	.type	winDelay.4150, %object
+	.size	winDelay.4150, 4
+winDelay.4150:
 	.space	4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

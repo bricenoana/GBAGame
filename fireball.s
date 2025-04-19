@@ -46,7 +46,7 @@ updateFireballs:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
-	ldr	r4, .L25
+	ldr	r4, .L30
 	mov	lr, #0
 	mov	r3, r4
 	sub	sp, sp, #20
@@ -69,38 +69,44 @@ updateFireballs:
 	add	r3, r3, #28
 	cmp	r3, r5
 	bne	.L9
-	mov	r7, #16
-	mov	r10, #0
-	ldr	r6, .L25+4
-	ldr	r8, .L25+8
-	ldr	r9, .L25+12
-	ldr	fp, .L25+16
-.L14:
+	ldr	r6, .L30+4
+	ldr	r7, .L30+8
+	ldr	r9, .L30+12
+	ldr	r8, .L30+16
+	ldr	fp, .L30+20
+	ldr	r10, .L30+24
+.L15:
 	ldr	r3, [r4, #24]
 	cmp	r3, #0
-	bne	.L24
+	bne	.L28
 .L11:
 	add	r4, r4, #28
 	cmp	r4, r5
-	bne	.L14
+	bne	.L15
 	add	sp, sp, #20
 	@ sp needed
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
-.L24:
-	ldr	r2, [r4, #4]
-	ldr	r3, [r4]
-	stmib	sp, {r2, r7}
-	str	r3, [sp]
-	str	r7, [sp, #12]
+.L28:
+	mov	r3, #16
+	ldr	r1, [r4, #4]
+	ldr	r2, [r4]
+	stmib	sp, {r1, r3}
+	str	r3, [sp, #12]
+	str	r2, [sp]
 	ldm	r6, {r0, r1, r2, r3}
 	mov	lr, pc
-	bx	r8
+	bx	r7
 	cmp	r0, #0
 	beq	.L11
-	ldr	r2, [r9]
+	mov	r0, #0
+	ldrh	r3, [r9]
+	tst	r3, #2
+	str	r0, [r4, #24]
+	bne	.L29
+.L13:
+	ldr	r2, [r8]
 	cmp	r2, #0
-	str	r10, [r4, #24]
 	bne	.L11
 	ldr	r3, [r6, #44]
 	sub	r3, r3, #20
@@ -111,14 +117,20 @@ updateFireballs:
 	mov	lr, pc
 	bx	fp
 	b	.L11
-.L26:
+.L29:
+	mov	lr, pc
+	bx	r10
+	b	.L13
+.L31:
 	.align	2
-.L25:
+.L30:
 	.word	fireballs
 	.word	player
 	.word	collision
+	.word	buttons
 	.word	playerBlockActive
 	.word	goToLose
+	.word	playAnalogSound
 	.size	updateFireballs, .-updateFireballs
 	.align	2
 	.global	drawFireballs
@@ -132,12 +144,12 @@ drawFireballs:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, lr}
 	mov	r5, #512
-	ldr	r3, .L33
-	ldr	r2, .L33+4
-	ldr	r4, .L33+8
-	ldr	lr, .L33+12
+	ldr	r3, .L38
+	ldr	r2, .L38+4
+	ldr	r4, .L38+8
+	ldr	lr, .L38+12
 	add	r0, r3, #140
-.L30:
+.L35:
 	ldr	r1, [r3, #24]
 	cmp	r1, #0
 	ldrne	r1, [r3]
@@ -151,17 +163,18 @@ drawFireballs:
 	strheq	r5, [r2, #16]	@ movhi
 	cmp	r3, r0
 	add	r2, r2, #8
-	bne	.L30
+	bne	.L35
 	pop	{r4, r5, lr}
 	bx	lr
-.L34:
+.L39:
 	.align	2
-.L33:
+.L38:
 	.word	fireballs
 	.word	shadowOAM
 	.word	511
 	.word	8750
 	.size	drawFireballs, .-drawFireballs
 	.comm	fireballs,140,4
+	.comm	NOTES,2,2
 	.comm	shadowOAM,1024,4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"
