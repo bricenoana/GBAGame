@@ -24,7 +24,7 @@ initCaveStage:
 	push	{r4, r5, r6, lr}
 	mov	r3, #4864
 	mov	r5, #67108864
-	mov	r2, #23296
+	mov	r2, #23040
 	ldr	r1, .L4
 	ldr	r4, .L4+4
 	strh	r3, [r5]	@ movhi
@@ -37,26 +37,26 @@ initCaveStage:
 	mov	lr, pc
 	bx	r4
 	mov	r3, #9600
+	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r2, .L4+12
-	ldr	r1, .L4+16
+	ldr	r1, .L4+12
 	mov	lr, pc
 	bx	r4
 	mov	r3, #2048
 	mov	r0, #3
-	ldr	r2, .L4+20
-	ldr	r1, .L4+24
+	ldr	r2, .L4+16
+	ldr	r1, .L4+20
 	mov	lr, pc
 	bx	r4
 	mov	r3, #256
 	mov	r2, #83886080
 	mov	r0, #3
-	ldr	r1, .L4+28
+	ldr	r1, .L4+24
 	mov	lr, pc
 	bx	r4
 	mov	r3, #9600
-	mov	r2, #100663296
 	mov	r0, #3
+	ldr	r2, .L4+28
 	ldr	r1, .L4+32
 	mov	lr, pc
 	bx	r4
@@ -103,16 +103,16 @@ initCaveStage:
 .L5:
 	.align	2
 .L4:
-	.word	23044
+	.word	23300
 	.word	DMANow
 	.word	foregroundCaveTilesPal
-	.word	100679680
 	.word	foregroundCaveTilesTiles
-	.word	100716544
+	.word	100718592
 	.word	foregroundCaveMapMap
 	.word	backgroundCaveTilesPal
+	.word	100679680
 	.word	backgroundCaveTilesTiles
-	.word	100718592
+	.word	100716544
 	.word	backgroundCaveMapMap
 	.word	initPlayer
 	.word	initSword
@@ -193,8 +193,8 @@ drawCaveStage:
 	cmp	r0, #272
 	ble	.L23
 	mov	r3, #272
-	mov	ip, #136
-	mov	r2, r3
+	mov	r2, #136
+	mov	ip, r3
 	mov	r0, r3
 	ldr	r4, .L25+4
 	str	r3, [r4]
@@ -258,12 +258,12 @@ drawCaveStage:
 	b	.L14
 .L23:
 	ldr	r4, .L25+4
-	asr	ip, r0, #1
-	lsl	ip, ip, #16
-	lsl	r2, r0, #16
+	asr	r2, r0, #1
+	lsl	r2, r2, #16
+	lsl	ip, r0, #16
 	str	r0, [r4]
-	lsr	ip, ip, #16
 	lsr	r2, r2, #16
+	lsr	ip, ip, #16
 	b	.L14
 .L26:
 	.align	2

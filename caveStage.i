@@ -17,17 +17,19 @@ typedef signed long long s64;
 typedef unsigned long long u64;
 
 
+typedef void (*ihp)(void);
+
+
 
 
 
 
 extern volatile unsigned short *videoBuffer;
-# 38 "gba.h"
+# 43 "gba.h"
 void waitForVBlank();
-
-
+# 59 "gba.h"
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-# 70 "gba.h"
+# 75 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 
@@ -39,8 +41,8 @@ typedef volatile struct {
     volatile void* dest;
     unsigned int ctrl;
 } DMAChannel;
-# 104 "gba.h"
-void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
+# 109 "gba.h"
+void DMANow(int channel, volatile void *src, volatile void *dest, unsigned int ctrl);
 # 2 "caveStage.c" 2
 # 1 "mode0.h" 1
 # 32 "mode0.h"
@@ -136,6 +138,7 @@ typedef struct {
     int health;
     int maxHealth;
     int defeated;
+    int flashtimer;
 } Player;
 
 extern Player player;
@@ -186,16 +189,16 @@ int hOff, vOff;
 void initCaveStage(void) {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << (8 + (1 % 4))) | (1 << 12);
 
-    (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (1 << 14);
-    (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((26) << 8) | (1 << 14);
+    (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((26) << 8) | (1 << 14);
+    (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((27) << 8) | (1 << 14);
 
     DMANow(3, foregroundCaveTilesPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, foregroundCaveTilesTiles, &((CB*) 0x6000000)[1], 19200 / 2);
-    DMANow(3, foregroundCaveMapMap, &((SB*) 0x6000000)[26], (4096) / 2);
+    DMANow(3, foregroundCaveTilesTiles, &((CB*) 0x6000000)[0], 19200 / 2);
+    DMANow(3, foregroundCaveMapMap, &((SB*) 0x6000000)[27], (4096) / 2);
 
     DMANow(3, backgroundCaveTilesPal, ((unsigned short *)0x5000000), 512 / 2);
-    DMANow(3, backgroundCaveTilesTiles, &((CB*) 0x6000000)[0], 19200 / 2);
-    DMANow(3, backgroundCaveMapMap, &((SB*) 0x6000000)[27], (4096) / 2);
+    DMANow(3, backgroundCaveTilesTiles, &((CB*) 0x6000000)[1], 19200 / 2);
+    DMANow(3, backgroundCaveMapMap, &((SB*) 0x6000000)[26], (4096) / 2);
 
     initPlayer();
     initSword();
@@ -235,9 +238,9 @@ void drawCaveStage(void) {
 
     vOff = 0;
 
-    (*(volatile unsigned short*) 0x04000010) = hOff / 2;
+    (*(volatile unsigned short*) 0x04000010) = hOff;
     (*(volatile unsigned short*) 0x04000012) = vOff;
-    (*(volatile unsigned short*) 0x04000014) = hOff;
+    (*(volatile unsigned short*) 0x04000014) = hOff / 2;
     (*(volatile unsigned short*) 0x04000016) = vOff;
 
 
@@ -250,7 +253,6 @@ void drawCaveStage(void) {
             shadowOAM[i].attr0 = (2<<8);
         }
     }
-
 
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
     waitForVBlank();

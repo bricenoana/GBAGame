@@ -13,16 +13,16 @@ int hOff, vOff;
 void initCaveStage(void) {
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
 
-    REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(27) | BG_SIZE_WIDE;
-    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE;
+    REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE;
+    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(27) | BG_SIZE_WIDE;
 
     DMANow(3, foregroundCaveTilesPal, BG_PALETTE, foregroundCaveTilesPalLen / 2);
-    DMANow(3, foregroundCaveTilesTiles, &CHARBLOCK[1], foregroundCaveTilesTilesLen / 2);
-    DMANow(3, foregroundCaveMapMap, &SCREENBLOCK[26], foregroundCaveMapLen / 2);
+    DMANow(3, foregroundCaveTilesTiles, &CHARBLOCK[0], foregroundCaveTilesTilesLen / 2);
+    DMANow(3, foregroundCaveMapMap, &SCREENBLOCK[27], foregroundCaveMapLen / 2);
 
     DMANow(3, backgroundCaveTilesPal, BG_PALETTE, backgroundCaveTilesPalLen / 2);
-    DMANow(3, backgroundCaveTilesTiles, &CHARBLOCK[0], backgroundCaveTilesTilesLen / 2);
-    DMANow(3, backgroundCaveMapMap, &SCREENBLOCK[27], backgroundCaveMapLen / 2);
+    DMANow(3, backgroundCaveTilesTiles, &CHARBLOCK[1], backgroundCaveTilesTilesLen / 2);
+    DMANow(3, backgroundCaveMapMap, &SCREENBLOCK[26], backgroundCaveMapLen / 2);
 
     initPlayer();
     initSword();
@@ -62,9 +62,9 @@ void drawCaveStage(void) {
     
     vOff = 0;
 
-    REG_BG0HOFF = hOff / 2;
+    REG_BG0HOFF = hOff;
     REG_BG0VOFF = vOff;
-    REG_BG1HOFF = hOff;
+    REG_BG1HOFF = hOff / 2;
     REG_BG1VOFF = vOff;
 
 
@@ -78,7 +78,6 @@ void drawCaveStage(void) {
         }
     }
     
-
     DMANow(3, shadowOAM, OAM, 128 * 4);
     waitForVBlank();
 }
