@@ -111,6 +111,8 @@ extern const unsigned int overallSong_sampleRate;
 extern const unsigned int overallSong_length;
 extern const signed char overallSong_data[];
 # 5 "main.c" 2
+# 1 "text.h" 1
+# 6 "main.c" 2
 
 unsigned short buttons;
 unsigned short oldButtons;
@@ -121,6 +123,8 @@ int main(void) {
     initSound();
 
     initStateMachine();
+
+
 
     while (1) {
         oldButtons = buttons;
