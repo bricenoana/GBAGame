@@ -244,9 +244,6 @@ void updateJungleStage(void) {
     }
 
     int screenX = player.x - hOff;
-    if (screenX <= 0) {
-        goToCave();
-    }
 }
 
 

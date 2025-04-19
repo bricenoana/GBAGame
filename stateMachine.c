@@ -31,20 +31,17 @@ static GameState prevState;
 void goToStart(void) {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
     
-    for (int i = 0; i < 240 * 160; i++) {
+    for (int i = 0; i < 240*160; i++) {
         FRONTBUFFER[i] = 0;
-        BACKBUFFER[i] = 0;
-    }
-    for (int i = 0; i < 256; i++) {
-        BG_PALETTE[i] = 0;
+        BACKBUFFER[i]  = 0;
     }
     
     DMANow(3, startBGPal, BG_PALETTE, startBGPalLen / 2);
+    
     drawFullscreenImage4(startBGBitmap);
+    
     waitForVBlank();
     flipPage();
-
-    playSoundA(overallSong_data, overallSong_length, 1);
     
     state = START;
 }

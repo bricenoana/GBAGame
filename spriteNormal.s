@@ -15135,11 +15135,11 @@ spriteNormalTiles:
 	.short	-30584
 	.short	-18296
 	.short	-30584
-	.short	-18296
+	.short	-17528
 	.short	-30584
-	.short	-18296
+	.short	-29816
 	.short	-30584
-	.short	-18296
+	.short	-29816
 	.short	-30584
 	.short	136
 	.short	-30584
@@ -15150,11 +15150,11 @@ spriteNormalTiles:
 	.short	-30584
 	.short	-30581
 	.short	-30584
-	.short	-30581
+	.short	-30533
 	.short	-30584
-	.short	-30581
+	.short	-30536
 	.short	-30584
-	.short	-30581
+	.short	-30536
 	.short	-30584
 	.short	0
 	.short	0
@@ -15637,32 +15637,32 @@ spriteNormalTiles:
 	.short	0
 	.short	0
 	.short	-30584
-	.short	-18296
+	.short	-17480
 	.short	-30584
-	.short	-18296
+	.short	-30536
+	.short	-30584
+	.short	-30536
+	.short	-30584
+	.short	-30536
+	.short	-30584
+	.short	-30533
 	.short	-30584
 	.short	-30584
-	.short	-30584
-	.short	-30584
-	.short	-30584
-	.short	-18296
-	.short	-30584
-	.short	-18296
 	.short	-30592
 	.short	-30584
 	.short	-30720
 	.short	-30584
-	.short	-30581
+	.short	-29765
 	.short	-30584
-	.short	-30581
+	.short	-29816
+	.short	-30584
+	.short	-29816
+	.short	-30584
+	.short	-29816
+	.short	-30584
+	.short	-17528
 	.short	-30584
 	.short	-30584
-	.short	-30584
-	.short	-30584
-	.short	-30584
-	.short	-30581
-	.short	-30584
-	.short	-30581
 	.short	-30584
 	.short	-30584
 	.short	2184

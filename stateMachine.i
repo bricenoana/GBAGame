@@ -514,20 +514,17 @@ static GameState prevState;
 void goToStart(void) {
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
 
-    for (int i = 0; i < 240 * 160; i++) {
+    for (int i = 0; i < 240*160; i++) {
         ((unsigned short*) 0x06000000)[i] = 0;
         ((unsigned short*) 0x0600A000)[i] = 0;
     }
-    for (int i = 0; i < 256; i++) {
-        ((unsigned short *)0x5000000)[i] = 0;
-    }
 
     DMANow(3, startBGPal, ((unsigned short *)0x5000000), 512 / 2);
+
     drawFullscreenImage4(startBGBitmap);
+
     waitForVBlank();
     flipPage();
-
-    playSoundA(overallSong_data, overallSong_length, 1);
 
     state = START;
 }
