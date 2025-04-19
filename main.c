@@ -6,16 +6,16 @@
 unsigned short buttons;
 unsigned short oldButtons;
 
-int main() {
-    initStateMachine();
+int main(void) {
     setupSounds();
     setupSoundInterrupts();
-    
-    // playSoundA(overallSong_data, overallSong_length, 1);
+    initSound();
+
+    initStateMachine();
 
     while (1) {
         oldButtons = buttons;
-        buttons = REG_BUTTONS;
+        buttons     = REG_BUTTONS;
         updateStateMachine();
     }
 }

@@ -48,9 +48,9 @@ main:
 .L6:
 	.align	2
 .L5:
-	.word	initStateMachine
 	.word	setupSounds
 	.word	setupSoundInterrupts
+	.word	initStateMachine
 	.word	oldButtons
 	.word	buttons
 	.word	updateStateMachine

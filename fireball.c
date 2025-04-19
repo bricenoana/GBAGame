@@ -5,6 +5,7 @@
 #include "mode0.h"
 #include "player.h"
 #include "BossStage.h"
+#include ""
 
 Fireball fireballs[MAX_FIREBALLS];
 

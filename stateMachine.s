@@ -48,12 +48,19 @@ goToStart:
 	mov	lr, pc
 	bx	r3
 	ldr	r3, .L6+24
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L6+28
-	mov	lr, pc
-	bx	r3
+	mov	r2, #1
+	ldr	r1, [r3]
+	ldr	r0, .L6+28
 	ldr	r3, .L6+32
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L6+36
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L6+40
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L6+44
 	strb	r4, [r3]
 	pop	{r4, r5, r6, lr}
 	bx	lr
@@ -66,6 +73,9 @@ goToStart:
 	.word	DMANow
 	.word	startBGBitmap
 	.word	drawFullscreenImage4
+	.word	overallSong_length
+	.word	overallSong_data
+	.word	playSoundA
 	.word	waitForVBlank
 	.word	flipPage
 	.word	.LANCHOR0
@@ -1087,6 +1097,8 @@ updateStateMachine:
 	.word	drawBossStage
 	.word	winScreenBitmap
 	.size	updateStateMachine, .-updateStateMachine
+	.comm	soundB,24,4
+	.comm	soundA,24,4
 	.comm	shadowOAM,1024,4
 	.bss
 	.set	.LANCHOR0,. + 0

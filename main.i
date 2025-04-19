@@ -51,6 +51,10 @@ void DMANow(int channel, volatile void *src, volatile void *dest, unsigned int c
 typedef enum {
     START,
     INSTRUCTIONS,
+    OP1,
+    OP2,
+    OP3,
+    OP4,
     CAVE,
     GAME,
     BOSS,
@@ -64,6 +68,10 @@ void updateStateMachine(void);
 
 void goToStart(void);
 void goToInstructions(void);
+void goToOP1();
+void goToOP2();
+void goToOP3();
+void goToOP4();
 void goToGame(void);
 void goToPause(void);
 void goToWin(void);
@@ -107,12 +115,11 @@ extern const signed char overallSong_data[];
 unsigned short buttons;
 unsigned short oldButtons;
 
-int main() {
-    initStateMachine();
+int main(void) {
     setupSounds();
     setupSoundInterrupts();
 
-
+    initStateMachine();
 
     while (1) {
         oldButtons = buttons;

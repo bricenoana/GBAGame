@@ -503,6 +503,33 @@ extern const unsigned short opening4Bitmap[19200];
 
 extern const unsigned short opening4Pal[256];
 # 23 "stateMachine.c" 2
+# 1 "digitalSound.h" 1
+
+
+
+void setupSounds();
+void setupSoundInterrupts();
+void interruptHandler();
+
+void playSoundA(const signed char* sound, int length, int loops);
+void playSoundB(const signed char* sound, int length, int loops);
+
+void pauseSounds();
+void unpauseSounds();
+void stopSounds();
+# 52 "digitalSound.h"
+typedef struct{
+    const signed char* data;
+    int dataLength;
+    int isPlaying;
+    int looping;
+    int durationInVBlanks;
+    int vBlankCount;
+} SOUND;
+
+SOUND soundA;
+SOUND soundB;
+# 24 "stateMachine.c" 2
 
 extern unsigned short buttons;
 extern unsigned short oldButtons;
@@ -522,6 +549,7 @@ void goToStart(void) {
     DMANow(3, startBGPal, ((unsigned short *)0x5000000), 512 / 2);
 
     drawFullscreenImage4(startBGBitmap);
+    playSoundA(overallSong_data, overallSong_length, 1);
 
     waitForVBlank();
     flipPage();

@@ -20,6 +20,7 @@
 #include "opening2.h"
 #include "opening3.h"
 #include "opening4.h"
+#include "digitalSound.h"
 
 extern unsigned short buttons;
 extern unsigned short oldButtons;
@@ -39,6 +40,7 @@ void goToStart(void) {
     DMANow(3, startBGPal, BG_PALETTE, startBGPalLen / 2);
     
     drawFullscreenImage4(startBGBitmap);
+    playSoundA(overallSong_data, overallSong_length, 1);
     
     waitForVBlank();
     flipPage();
