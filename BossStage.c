@@ -93,12 +93,12 @@ void updateBossStage(void) {
     }
 
     if (BUTTON_HELD(BUTTON_B)) {
-        playerBlockActive = 1;      // stay in block mode
+        playerBlockActive = 1;
     } else {
-        playerBlockActive = 0;      // button released → unblock
+        playerBlockActive = 0;
     }
     if (!playerBlockActive) {
-        updatePlayer();           // read arrows & move
+        updatePlayer();
     }
     
     if (!playerBlockActive && BUTTON_PRESSED(BUTTON_A)) {

@@ -14,8 +14,6 @@ int main(void) {
 
     initStateMachine();
 
-    // showDialogue("HELLO ADVENTURER");
-
     while (1) {
         oldButtons = buttons;
         buttons     = REG_BUTTONS;

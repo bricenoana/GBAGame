@@ -7,14 +7,18 @@
 #include "backgroundCaveMap.h" //map
 #include "foregroundCaveTiles.h"
 #include "foregroundCaveMap.h"
+#include "text.h"
+#include "textTiles.h"
 
 int hOff, vOff;
 
 void initCaveStage(void) {
-    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
+    REG_DISPCTL = MODE(0) | BG_ENABLE(0) | BG_ENABLE(1) | BG_ENABLE(2) | SPRITE_ENABLE;
 
-    REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE;
-    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(27) | BG_SIZE_WIDE;
+    REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE  | BG_PRIO(2);
+    REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(27) | BG_SIZE_WIDE  | BG_PRIO(1);
+    REG_BG2CNT = BG_CHARBLOCK(2) | BG_SCREENBLOCK(31) | BG_SIZE_SMALL | BG_4BPP | BG_PRIO(0);
+
 
     DMANow(3, foregroundCaveTilesPal, BG_PALETTE, foregroundCaveTilesPalLen / 2);
     DMANow(3, foregroundCaveTilesTiles, &CHARBLOCK[0], foregroundCaveTilesTilesLen / 2);
@@ -23,6 +27,9 @@ void initCaveStage(void) {
     DMANow(3, backgroundCaveTilesPal, BG_PALETTE, backgroundCaveTilesPalLen / 2);
     DMANow(3, backgroundCaveTilesTiles, &CHARBLOCK[1], backgroundCaveTilesTilesLen / 2);
     DMANow(3, backgroundCaveMapMap, &SCREENBLOCK[26], backgroundCaveMapLen / 2);
+
+    DMANow(3, textTilesTiles,   &CHARBLOCK[2], textTilesTilesLen/2);
+    DMANow(3, textTilesPal, BG_PALETTE[16],     textTilesPalLen/2);
 
     initPlayer();
     initSword();

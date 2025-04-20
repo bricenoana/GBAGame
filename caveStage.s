@@ -22,72 +22,87 @@ initCaveStage:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	mov	r3, #4864
+	mov	r3, #5888
 	mov	r5, #67108864
 	mov	r2, #23040
 	ldr	r1, .L4
-	ldr	r4, .L4+4
+	ldr	r0, .L4+4
+	ldr	r4, .L4+8
 	strh	r3, [r5]	@ movhi
-	mov	r0, #3
 	strh	r2, [r5, #8]	@ movhi
 	mov	r3, #256
 	strh	r1, [r5, #10]	@ movhi
 	mov	r2, #83886080
-	ldr	r1, .L4+8
+	strh	r0, [r5, #12]	@ movhi
+	ldr	r1, .L4+12
+	mov	r0, #3
 	mov	lr, pc
 	bx	r4
 	mov	r3, #9600
 	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r1, .L4+12
+	ldr	r1, .L4+16
 	mov	lr, pc
 	bx	r4
 	mov	r3, #2048
 	mov	r0, #3
-	ldr	r2, .L4+16
-	ldr	r1, .L4+20
+	ldr	r2, .L4+20
+	ldr	r1, .L4+24
 	mov	lr, pc
 	bx	r4
 	mov	r3, #256
 	mov	r2, #83886080
 	mov	r0, #3
-	ldr	r1, .L4+24
+	ldr	r1, .L4+28
 	mov	lr, pc
 	bx	r4
 	mov	r3, #9600
 	mov	r0, #3
-	ldr	r2, .L4+28
-	ldr	r1, .L4+32
+	ldr	r2, .L4+32
+	ldr	r1, .L4+36
 	mov	lr, pc
 	bx	r4
-	ldr	r2, .L4+36
-	ldr	r1, .L4+40
-	mov	r0, #3
 	mov	r3, #2048
+	mov	r0, #3
+	ldr	r2, .L4+40
+	ldr	r1, .L4+44
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L4+44
+	mov	r3, #3584
+	mov	r0, #3
+	ldr	r2, .L4+48
+	ldr	r1, .L4+52
+	mov	lr, pc
+	bx	r4
+	mov	r2, #83886080
+	ldr	r1, .L4+56
+	ldrh	r2, [r2, #32]
+	mov	r0, #3
+	mov	r3, #256
+	mov	lr, pc
+	bx	r4
+	ldr	r3, .L4+60
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L4+48
+	ldr	r3, .L4+64
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L4+52
+	ldr	r3, .L4+68
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
 	mov	ip, #10
 	mov	r0, #110
-	ldr	r2, .L4+56
-	ldr	r1, .L4+60
+	ldr	r2, .L4+72
+	ldr	r1, .L4+76
 	str	ip, [r2]
 	str	r3, [r1]
-	ldr	ip, .L4+64
-	ldr	r1, .L4+68
+	ldr	ip, .L4+80
+	ldr	r1, .L4+84
 	str	r3, [ip]
 	str	r3, [r1]
 	strh	r3, [r5, #16]	@ movhi
-	ldr	r1, .L4+72
+	ldr	r1, .L4+88
 	strh	r3, [r5, #18]	@ movhi
 	str	r0, [r2, #4]
 	mov	lr, pc
@@ -95,7 +110,7 @@ initCaveStage:
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L4+76
+	ldr	r1, .L4+92
 	mov	lr, pc
 	bx	r4
 	pop	{r4, r5, r6, lr}
@@ -104,6 +119,7 @@ initCaveStage:
 	.align	2
 .L4:
 	.word	23300
+	.word	7944
 	.word	DMANow
 	.word	foregroundCaveTilesPal
 	.word	foregroundCaveTilesTiles
@@ -114,6 +130,9 @@ initCaveStage:
 	.word	backgroundCaveTilesTiles
 	.word	100716544
 	.word	backgroundCaveMapMap
+	.word	100696064
+	.word	textTilesTiles
+	.word	textTilesPal
 	.word	initPlayer
 	.word	initSword
 	.word	initAlert

@@ -41,8 +41,7 @@ void updateJungleStage(void) {
     updateNPC(hOff, vOff);
     updateJungleAlert(hOff, vOff);
 
-    if (checkTempleCollision(player.x, player.y, player.width, player.height) &&
-        npc.pickedUp && sword.pickedUp)
+    if (checkTempleCollision(player.x, player.y, player.width, player.height))
     {
         goToBossStage();
     }

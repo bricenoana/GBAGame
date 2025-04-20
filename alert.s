@@ -31,6 +31,11 @@ initAlert:
 .L3:
 	.word	alert
 	.size	initAlert, .-initAlert
+	.section	.rodata.str1.4,"aMS",%progbits,1
+	.align	2
+.LC0:
+	.ascii	"HELLO ADVENTURER\000"
+	.text
 	.align	2
 	.global	updateJungleAlert
 	.syntax unified
@@ -42,7 +47,7 @@ updateJungleAlert:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, lr}
-	ldr	r4, .L13
+	ldr	r4, .L12
 	mov	r5, r1
 	add	r1, r4, #8
 	ldm	r1, {r1, ip}
@@ -54,67 +59,84 @@ updateJungleAlert:
 	str	r2, [sp, #4]
 	str	r3, [sp]
 	mov	r6, r0
-	ldr	r0, .L13+4
-	ldr	r7, .L13+8
+	ldr	r0, .L12+4
+	ldr	r7, .L12+8
 	ldm	r0, {r0, r1, r2, r3}
 	mov	lr, pc
 	bx	r7
 	subs	r3, r0, #0
 	beq	.L6
-	mov	r1, #1
+	mov	r7, #1
 	ldr	r2, [r4, #8]
 	ldr	r3, [r4]
 	add	r2, r2, r2, lsr #31
-	add	r3, r3, r2, asr r1
-	ldr	r2, .L13+12
+	add	r3, r3, r2, asr r7
+	ldr	r2, .L12+12
 	ldrh	r2, [r2]
 	tst	r2, #1
 	ldr	r2, [r4, #4]
-	ldr	r7, .L13+16
+	ldr	r1, .L12+16
 	sub	r3, r3, #16
 	sub	r2, r2, #15
 	sub	r6, r3, r6
 	sub	r5, r2, r5
-	str	r6, [r7, #8]
-	str	r3, [r7]
-	str	r5, [r7, #12]
-	str	r2, [r7, #4]
-	str	r1, [r7, #16]
+	str	r6, [r1, #8]
+	str	r3, [r1]
+	str	r5, [r1, #12]
+	str	r2, [r1, #4]
+	str	r7, [r1, #16]
 	beq	.L5
-	ldr	r3, .L13+20
+	ldr	r3, .L12+20
 	ldrh	r3, [r3]
-	ands	r5, r3, r1
-	beq	.L12
+	ands	r3, r3, r7
+	bne	.L5
+	ldr	r5, .L12+24
+	ldr	r2, [r5]
+	cmp	r2, #0
+	str	r7, [r4, #28]
+	str	r3, [r1, #16]
+	bne	.L10
+	mov	r1, r2
+	ldr	r0, .L12+28
+	ldr	r3, .L12+32
+	mov	lr, pc
+	bx	r3
+	str	r7, [r5]
 .L5:
 	add	sp, sp, #20
 	@ sp needed
 	pop	{r4, r5, r6, r7, lr}
 	bx	lr
 .L6:
-	ldr	r2, .L13+16
+	ldr	r5, .L12+24
+	ldr	r1, [r5]
+	ldr	r2, .L12+16
+	cmp	r1, #0
 	str	r3, [r2, #16]
+	beq	.L5
+.L10:
+	ldr	r3, .L12+36
+	mov	lr, pc
+	bx	r3
+	mov	r3, #0
+	str	r3, [r5]
 	add	sp, sp, #20
 	@ sp needed
 	pop	{r4, r5, r6, r7, lr}
 	bx	lr
-.L12:
-	mov	r0, #4
-	ldr	r3, .L13+24
-	str	r1, [r4, #28]
-	mov	lr, pc
-	bx	r3
-	str	r5, [r7, #16]
-	b	.L5
-.L14:
-	.align	2
 .L13:
+	.align	2
+.L12:
 	.word	npc
 	.word	player
 	.word	collision
 	.word	oldButtons
 	.word	alert
 	.word	buttons
-	.word	playAnalogSound
+	.word	.LANCHOR0
+	.word	.LC0
+	.word	drawText
+	.word	eraseText
 	.size	updateJungleAlert, .-updateJungleAlert
 	.align	2
 	.global	updateCaveAlert
@@ -127,7 +149,7 @@ updateCaveAlert:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, lr}
-	ldr	r4, .L23
+	ldr	r4, .L21
 	mov	r6, r1
 	add	r1, r4, #8
 	ldm	r1, {r1, ip}
@@ -139,61 +161,77 @@ updateCaveAlert:
 	str	r2, [sp, #4]
 	str	r3, [sp]
 	mov	r5, r0
-	ldr	r0, .L23+4
-	ldr	r7, .L23+8
+	ldr	r0, .L21+4
+	ldr	r7, .L21+8
 	ldm	r0, {r0, r1, r2, r3}
 	mov	lr, pc
 	bx	r7
 	subs	r3, r0, #0
-	beq	.L16
-	mov	r1, #1
-	ldr	r2, .L23+12
-	ldrh	r2, [r2]
-	ldr	r3, [r4, #4]
-	tst	r2, #1
-	ldr	r2, [r4]
-	ldr	r7, .L23+16
-	sub	r3, r3, #14
-	sub	r6, r3, r6
-	sub	r5, r2, r5
-	stm	r7, {r2, r3, r5, r6}
-	str	r1, [r7, #16]
 	beq	.L15
-	ldr	r3, .L23+20
-	ldrh	r3, [r3]
-	ands	r5, r3, r1
-	beq	.L22
-.L15:
+	mov	r7, #1
+	ldr	r3, .L21+12
+	ldrh	r1, [r3]
+	ldr	r2, [r4, #4]
+	tst	r1, #1
+	ldr	r1, [r4]
+	ldr	r3, .L21+16
+	sub	r2, r2, #14
+	sub	r6, r2, r6
+	sub	r5, r1, r5
+	stm	r3, {r1, r2, r5, r6}
+	str	r7, [r3, #16]
+	beq	.L14
+	ldr	r2, .L21+20
+	ldrh	r2, [r2]
+	ands	r1, r2, r7
+	bne	.L14
+	ldr	r5, .L21+24
+	ldr	r2, [r5]
+	cmp	r2, #0
+	str	r7, [r4, #20]
+	str	r1, [r3, #16]
+	bne	.L19
+	mov	r1, r2
+	ldr	r0, .L21+28
+	ldr	r3, .L21+32
+	mov	lr, pc
+	bx	r3
+	str	r7, [r5]
+.L14:
 	add	sp, sp, #20
 	@ sp needed
 	pop	{r4, r5, r6, r7, lr}
 	bx	lr
-.L16:
-	ldr	r2, .L23+16
+.L15:
+	ldr	r5, .L21+24
+	ldr	r1, [r5]
+	ldr	r2, .L21+16
+	cmp	r1, #0
 	str	r3, [r2, #16]
+	beq	.L14
+.L19:
+	ldr	r3, .L21+36
+	mov	lr, pc
+	bx	r3
+	mov	r3, #0
+	str	r3, [r5]
 	add	sp, sp, #20
 	@ sp needed
 	pop	{r4, r5, r6, r7, lr}
 	bx	lr
 .L22:
-	mov	r0, #4
-	ldr	r3, .L23+24
-	str	r1, [r4, #20]
-	mov	lr, pc
-	bx	r3
-	str	r5, [r4, #16]
-	str	r5, [r7, #16]
-	b	.L15
-.L24:
 	.align	2
-.L23:
+.L21:
 	.word	sword
 	.word	player
 	.word	collision
 	.word	oldButtons
 	.word	alert
 	.word	buttons
-	.word	playAnalogSound
+	.word	.LANCHOR0
+	.word	.LC0
+	.word	drawText
+	.word	eraseText
 	.size	updateCaveAlert, .-updateCaveAlert
 	.align	2
 	.global	drawAlert
@@ -206,33 +244,40 @@ drawAlert:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	ldr	r2, .L28
+	ldr	r2, .L26
 	ldr	r3, [r2, #16]
 	cmp	r3, #0
-	beq	.L26
+	beq	.L24
 	ldr	r3, [r2, #8]
 	lsl	r3, r3, #23
 	ldrb	r0, [r2, #12]	@ zero_extendqisi2
-	ldr	r1, .L28+4
-	ldr	r2, .L28+8
+	ldr	r1, .L26+4
+	ldr	r2, .L26+8
 	lsr	r3, r3, #23
 	orr	r3, r3, #16384
 	strh	r3, [r2, #18]	@ movhi
 	strh	r0, [r2, #16]	@ movhi
 	strh	r1, [r2, #20]	@ movhi
 	bx	lr
-.L26:
+.L24:
 	mov	r2, #512
-	ldr	r3, .L28+8
+	ldr	r3, .L26+8
 	strh	r2, [r3, #16]	@ movhi
 	bx	lr
-.L29:
+.L27:
 	.align	2
-.L28:
+.L26:
 	.word	alert
 	.word	5024
 	.word	shadowOAM
 	.size	drawAlert, .-drawAlert
 	.comm	alert,20,4
 	.comm	shadowOAM,1024,4
+	.bss
+	.align	2
+	.set	.LANCHOR0,. + 0
+	.type	showingDialogue, %object
+	.size	showingDialogue, 4
+showingDialogue:
+	.space	4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

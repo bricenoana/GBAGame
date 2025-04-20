@@ -25,11 +25,11 @@ typedef void (*ihp)(void);
 
 
 extern volatile unsigned short *videoBuffer;
-# 43 "gba.h"
+# 44 "gba.h"
 void waitForVBlank();
-# 59 "gba.h"
+# 60 "gba.h"
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-# 75 "gba.h"
+# 76 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 
@@ -41,7 +41,7 @@ typedef volatile struct {
     volatile void* dest;
     unsigned int ctrl;
 } DMAChannel;
-# 109 "gba.h"
+# 110 "gba.h"
 void DMANow(int channel, volatile void *src, volatile void *dest, unsigned int ctrl);
 # 2 "alert.c" 2
 # 1 "sprites.h" 1
@@ -119,7 +119,9 @@ typedef struct {
     int health;
     int maxHealth;
     int defeated;
-    int flashtimer;
+    int flashTimer;
+    u16 baseColor;
+
 } Player;
 
 extern Player player;
@@ -210,6 +212,7 @@ typedef struct {
 } Alert;
 
 Alert alert;
+static int showingDialogue = 0;
 
 void initAlert() {
     alert.active = 0;
@@ -228,11 +231,22 @@ void updateJungleAlert(int hOff,int vOff) {
 
         if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
             npc.pickedUp = 1;
-            playAnalogSound(4);
             alert.active = 0;
-        }
+            if (!showingDialogue) {
+              drawText("HELLO ADVENTURER", 0, 0);
+              showingDialogue = 1;
+            } else {
+              eraseText();
+
+              showingDialogue = 0;
+            }
+          }
     } else {
         alert.active = 0;
+        if (showingDialogue) {
+            eraseText();
+            showingDialogue = 0;
+          }
     }
 }
 
@@ -248,12 +262,21 @@ void updateCaveAlert(int hOff,int vOff) {
 
         if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
             sword.pickedUp = 1;
-            playAnalogSound(4);
-            sword.active = 0;
             alert.active = 0;
-        }
+            if (!showingDialogue) {
+              drawText("HELLO ADVENTURER", 0, 0);
+              showingDialogue = 1;
+            } else {
+              eraseText();
+              showingDialogue = 0;
+            }
+          }
     } else {
         alert.active = 0;
+        if (showingDialogue) {
+            eraseText();
+            showingDialogue = 0;
+          }
     }
 }
 

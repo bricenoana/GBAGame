@@ -20,6 +20,7 @@ typedef struct {
 } Alert;
 
 Alert alert;
+static int showingDialogue = 0;
 
 void initAlert() {
     alert.active = 0;
@@ -37,12 +38,23 @@ void updateJungleAlert(int hOff,int vOff) {
         alert.screenY = alert.worldY - vOff;
 
         if (BUTTON_PRESSED(BUTTON_A)) {
-            npc.pickedUp  = 1;
-            playAnalogSound(4);
-            alert.active  = 0;
-        }
+            npc.pickedUp = 1;
+            alert.active = 0;
+            if (!showingDialogue) {
+              drawText("HELLO ADVENTURER", 0, 0);
+              showingDialogue = 1;
+            } else {
+              eraseText();
+              
+              showingDialogue = 0;
+            }
+          }
     } else {
         alert.active = 0;
+        if (showingDialogue) {
+            eraseText();
+            showingDialogue = 0;
+          }
     }
 }
 
@@ -58,12 +70,21 @@ void updateCaveAlert(int hOff,int vOff) {
 
         if (BUTTON_PRESSED(BUTTON_A)) {
             sword.pickedUp = 1;
-            playAnalogSound(4);
-            sword.active   = 0;
-            alert.active   = 0;
-        }
+            alert.active = 0;
+            if (!showingDialogue) {
+              drawText("HELLO ADVENTURER", 0, 0);
+              showingDialogue = 1;
+            } else {
+              eraseText();
+              showingDialogue = 0;
+            }
+          }
     } else {
         alert.active = 0;
+        if (showingDialogue) {
+            eraseText();
+            showingDialogue = 0;
+          }
     }
 }
 

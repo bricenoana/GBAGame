@@ -108,47 +108,39 @@ updateJungleStage:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	ldr	r4, .L19
-	ldr	r5, .L19+4
-	ldr	r3, .L19+8
+	ldr	r4, .L13
+	ldr	r5, .L13+4
+	ldr	r3, .L13+8
 	mov	lr, pc
 	bx	r3
 	ldr	r0, [r4]
 	ldr	r1, [r5]
-	ldr	r3, .L19+12
+	ldr	r3, .L13+12
 	mov	lr, pc
 	bx	r3
 	ldr	r1, [r5]
 	ldr	r0, [r4]
-	ldr	r3, .L19+16
+	ldr	r3, .L13+16
 	mov	lr, pc
 	bx	r3
-	ldr	r0, .L19+20
-	ldr	r4, .L19+24
+	ldr	r0, .L13+20
+	ldr	r4, .L13+24
 	ldm	r0, {r0, r1, r2, r3}
 	mov	lr, pc
 	bx	r4
 	cmp	r0, #0
-	beq	.L6
-	ldr	r3, .L19+28
-	ldr	r3, [r3, #28]
-	cmp	r3, #0
-	beq	.L6
-	ldr	r3, .L19+32
-	ldr	r3, [r3, #20]
-	cmp	r3, #0
-	bne	.L18
-.L6:
+	bne	.L12
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L18:
-	ldr	r3, .L19+36
+.L12:
+	ldr	r3, .L13+28
 	mov	lr, pc
 	bx	r3
-	b	.L6
-.L20:
+	pop	{r4, r5, r6, lr}
+	bx	lr
+.L14:
 	.align	2
-.L19:
+.L13:
 	.word	hOff
 	.word	vOff
 	.word	updatePlayer
@@ -156,8 +148,6 @@ updateJungleStage:
 	.word	updateJungleAlert
 	.word	player
 	.word	checkTempleCollision
-	.word	npc
-	.word	sword
 	.word	goToBossStage
 	.size	updateJungleStage, .-updateJungleStage
 	.align	2
@@ -170,17 +160,17 @@ drawJungleStage:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	ldr	r3, .L33
+	ldr	r3, .L27
 	ldm	r3, {r0, r1}
 	push	{r4, r5, r6, lr}
 	sub	r0, r0, #120
-	ldr	r4, .L33+4
-	ldr	r5, .L33+8
+	ldr	r4, .L27+4
+	ldr	r5, .L27+8
 	sub	r1, r1, #80
 	cmp	r0, #0
 	str	r0, [r4]
 	str	r1, [r5]
-	blt	.L31
+	blt	.L25
 	cmp	r0, #272
 	movgt	r2, #272
 	movgt	r3, r2
@@ -189,8 +179,8 @@ drawJungleStage:
 	strgt	r2, [r4]
 	lsrle	r3, r3, #16
 	cmp	r1, #0
-	blt	.L32
-.L25:
+	blt	.L26
+.L19:
 	cmp	r1, #352
 	movgt	r2, #352
 	movgt	r1, r2
@@ -198,59 +188,59 @@ drawJungleStage:
 	lslle	ip, r1, #16
 	strgt	r2, [r5]
 	lsrle	ip, ip, #16
-.L26:
+.L20:
 	mov	r2, #67108864
 	strh	r3, [r2, #16]	@ movhi
 	strh	ip, [r2, #18]	@ movhi
-	ldr	r3, .L33+12
+	ldr	r3, .L27+12
 	mov	lr, pc
 	bx	r3
 	ldr	r1, [r5]
 	ldr	r0, [r4]
-	ldr	r3, .L33+16
+	ldr	r3, .L27+16
 	mov	lr, pc
 	bx	r3
 	ldr	r1, [r5]
-	ldr	r3, .L33+20
+	ldr	r3, .L27+20
 	ldr	r0, [r4]
 	mov	lr, pc
 	bx	r3
 	mov	r1, #512
-	ldr	r3, .L33+24
+	ldr	r3, .L27+24
 	add	r2, r3, #1000
-.L28:
+.L22:
 	strh	r1, [r3, #24]	@ movhi
 	add	r3, r3, #8
 	cmp	r3, r2
-	bne	.L28
+	bne	.L22
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L33+24
-	ldr	r4, .L33+28
+	ldr	r1, .L27+24
+	ldr	r4, .L27+28
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L33+32
+	ldr	r3, .L27+32
 	mov	lr, pc
 	bx	r3
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L31:
+.L25:
 	mov	r2, #0
 	cmp	r1, #0
 	mov	r3, r2
 	mov	r0, r2
 	str	r2, [r4]
-	bge	.L25
-.L32:
+	bge	.L19
+.L26:
 	mov	r2, #0
 	mov	r1, r2
 	mov	ip, r2
 	str	r2, [r5]
-	b	.L26
-.L34:
+	b	.L20
+.L28:
 	.align	2
-.L33:
+.L27:
 	.word	player
 	.word	hOff
 	.word	vOff

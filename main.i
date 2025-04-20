@@ -25,11 +25,11 @@ typedef void (*ihp)(void);
 
 
 extern volatile unsigned short *videoBuffer;
-# 43 "gba.h"
+# 44 "gba.h"
 void waitForVBlank();
-# 59 "gba.h"
+# 60 "gba.h"
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-# 75 "gba.h"
+# 76 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 
@@ -41,7 +41,7 @@ typedef volatile struct {
     volatile void* dest;
     unsigned int ctrl;
 } DMAChannel;
-# 109 "gba.h"
+# 110 "gba.h"
 void DMANow(int channel, volatile void *src, volatile void *dest, unsigned int ctrl);
 # 2 "main.c" 2
 # 1 "stateMachine.h" 1
@@ -112,6 +112,13 @@ extern const unsigned int overallSong_length;
 extern const signed char overallSong_data[];
 # 5 "main.c" 2
 # 1 "text.h" 1
+
+
+
+
+
+void drawText(char string[], int offset, int person);
+void eraseText();
 # 6 "main.c" 2
 
 unsigned short buttons;
@@ -123,8 +130,6 @@ int main(void) {
     initSound();
 
     initStateMachine();
-
-
 
     while (1) {
         oldButtons = buttons;

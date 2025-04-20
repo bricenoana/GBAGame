@@ -35,6 +35,7 @@ extern volatile unsigned short *videoBuffer;
 #define SPRITE_MODE_2D (0 << 6) // Sets 2D sprite tile mapping mode (REG_DISPCTL)
 #define SPRITE_MODE_1D (1 << 6) // Sets 1D sprite tile mapping mode (REG_DISPCTL)
 #define BG_ENABLE(x) (1 << (8 + (x % 4))) // Enables specified background (REG_DISPCTL)
+#define BG_PRIO(n)   ((n) << 8)
 
 // Read-only, holds which scanline is being drawn
 #define REG_VCOUNT (*(volatile unsigned short *)0x4000006)
