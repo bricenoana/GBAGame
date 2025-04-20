@@ -404,7 +404,9 @@ typedef struct {
     int health;
     int maxHealth;
     int defeated;
-    int flashtimer;
+    int flashTimer;
+    u16 baseColor;
+
 } Player;
 
 extern Player player;
@@ -536,6 +538,7 @@ extern unsigned short oldButtons;
 
 static GameState state;
 static GameState prevState;
+
 
 
 void goToStart(void) {
@@ -704,26 +707,42 @@ void goToWin(void) {
 void goToLose(void) {
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
 
-    for (int i = 0; i < 240 * 160; i++) {
-        ((unsigned short*) 0x06000000)[i] = 0;
+
+    for (int i = 0; i < (240*160)/2; i++)
         ((unsigned short*) 0x0600A000)[i] = 0;
-    }
-
-    for (int i = 0; i < 256; i++) {
-        ((unsigned short *)0x5000000)[i] = 0;
-    }
-
-    DMANow(3, loseScreenPal, ((unsigned short *)0x5000000), 512 / 2);
 
 
-    for (int i = 0; i < 240 * 160; i++) {
-        ((unsigned short*) 0x0600A000)[i] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
-    }
+    DMANow(3, loseScreenPal, ((unsigned short *)0x5000000), 512/2);
 
 
-    waitForVBlank();
-    flipPage();
+    DMANow(3,
+           loseScreenBitmap,
+           ((unsigned short*) 0x0600A000),
+           (240*160)/2);
+
+
     playSoundA(loseSong_data, loseSong_length, 1);
+
+
+    u16 col2 = ((unsigned short *)0x5000000)[2];
+    u16 col5 = ((unsigned short *)0x5000000)[5];
+    u16 col14 = ((unsigned short *)0x5000000)[14];
+
+
+    while (!(!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
+        for (int i = 0; i < 30; i++)
+            waitForVBlank();
+
+        ((unsigned short *)0x5000000)[2] = col14;
+        ((unsigned short *)0x5000000)[5] = col2;
+        ((unsigned short *)0x5000000)[14] = col5;
+        for (int i = 0; i < 30; i++)
+        waitForVBlank();
+
+        ((unsigned short *)0x5000000)[2] = col2;
+        ((unsigned short *)0x5000000)[5] = col5;
+        ((unsigned short *)0x5000000)[14] = col14;
+    }
 
     state = LOSE;
 }

@@ -28,6 +28,7 @@ extern unsigned short oldButtons;
 static GameState state;
 static GameState prevState;
 
+#define PALETTE_HOLD_FRAMES 30
 
 void goToStart(void) {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
@@ -195,27 +196,37 @@ void goToWin(void) {
 void goToLose(void) {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
     
-    for (int i = 0; i < 240 * 160; i++) {
-        FRONTBUFFER[i] = 0;
+    for (int i = 0; i < (240*160)/2; i++)
         BACKBUFFER[i] = 0;
-    }
-    
-    for (int i = 0; i < 256; i++) {
-        BG_PALETTE[i] = 0;
-    }
-    
-    DMANow(3, loseScreenPal, BG_PALETTE, loseScreenPalLen / 2);
-    
 
-    for (int i = 0; i < 240 * 160; i++) {
-        BACKBUFFER[i] = RGB(31, 31, 31); 
-    }
+    DMANow(3, loseScreenPal, BG_PALETTE, loseScreenPalLen/2);
 
-    
-    waitForVBlank();
-    flipPage();
+    DMANow(3,
+           loseScreenBitmap,
+           BACKBUFFER,
+           (240*160)/2);
+
     playSoundA(loseSong_data, loseSong_length, 1);
-    
+
+    u16 col2 = BG_PALETTE[2];
+    u16 col5 = BG_PALETTE[5];
+    u16 col14 = BG_PALETTE[14];
+
+    while (!BUTTON_PRESSED(BUTTON_B)) {
+        for (int i = 0; i < PALETTE_HOLD_FRAMES; i++)
+            waitForVBlank();
+
+        BG_PALETTE[2] = col14;
+        BG_PALETTE[5] = col2;
+        BG_PALETTE[14] = col5;
+        for (int i = 0; i < PALETTE_HOLD_FRAMES; i++)
+        waitForVBlank();
+
+        BG_PALETTE[2] = col2;
+        BG_PALETTE[5] = col5;
+        BG_PALETTE[14] = col14;
+    }
+
     state = LOSE;
 }
 
