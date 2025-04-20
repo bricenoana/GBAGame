@@ -682,24 +682,36 @@ void goToPause(void) {
 void goToWin(void) {
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
 
-    for (int i = 0; i < 240 * 160; i++) {
-        ((unsigned short*) 0x06000000)[i] = 0;
+    for (int i = 0; i < (240*160)/2; i++)
         ((unsigned short*) 0x0600A000)[i] = 0;
-    }
 
-    for (int i = 0; i < 256; i++) {
-        ((unsigned short *)0x5000000)[i] = 0;
-    }
+    DMANow(3, winScreenPal, ((unsigned short *)0x5000000), 512/2);
 
-    DMANow(3, winScreenPal, ((unsigned short *)0x5000000), 512 / 2);
+    DMANow(3,
+           winScreenBitmap,
+           ((unsigned short*) 0x0600A000),
+           (240*160)/2);
 
-    for (int i = 0; i < 240 * 160; i++) {
-        ((unsigned short*) 0x0600A000)[i] = (((31) & 31) | ((31) & 31) << 5 | ((31) & 31) << 10);
-    }
-
-    waitForVBlank();
-    flipPage();
     playSoundA(winSong_data, winSong_length, 1);
+
+    u16 col10 = ((unsigned short *)0x5000000)[10];
+    u16 col3 = ((unsigned short *)0x5000000)[3];
+    u16 col14 = ((unsigned short *)0x5000000)[14];
+
+    while (!(!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
+        for (int i = 0; i < 30; i++)
+            waitForVBlank();
+
+        ((unsigned short *)0x5000000)[10] = col3;
+        ((unsigned short *)0x5000000)[3] = col14;
+        ((unsigned short *)0x5000000)[14] = col10;
+        for (int i = 0; i < 30; i++)
+        waitForVBlank();
+
+        ((unsigned short *)0x5000000)[10] = col10;
+        ((unsigned short *)0x5000000)[3] = col3;
+        ((unsigned short *)0x5000000)[14] = col14;
+    }
 
     state = WIN;
 }
@@ -707,27 +719,21 @@ void goToWin(void) {
 void goToLose(void) {
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
 
-
     for (int i = 0; i < (240*160)/2; i++)
         ((unsigned short*) 0x0600A000)[i] = 0;
 
-
     DMANow(3, loseScreenPal, ((unsigned short *)0x5000000), 512/2);
-
 
     DMANow(3,
            loseScreenBitmap,
            ((unsigned short*) 0x0600A000),
            (240*160)/2);
 
-
     playSoundA(loseSong_data, loseSong_length, 1);
-
 
     u16 col2 = ((unsigned short *)0x5000000)[2];
     u16 col5 = ((unsigned short *)0x5000000)[5];
     u16 col14 = ((unsigned short *)0x5000000)[14];
-
 
     while (!(!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
         for (int i = 0; i < 30; i++)
@@ -849,6 +855,9 @@ static void bossState(void) {
     if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
         goToPause();
     }
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        goToWin();
+    }
 
     updateBossStage();
     drawBossStage();
@@ -892,10 +901,12 @@ static void loseState(void) {
     drawFullscreenImage4(loseScreenBitmap);
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToStart();
+        return;
     }
     waitForVBlank();
     flipPage();
 }
+
 
 void initStateMachine(void) {
     goToStart();

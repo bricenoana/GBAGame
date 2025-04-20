@@ -20,18 +20,18 @@ winScreenPal:
 	.short	4192
 	.short	3317
 	.short	26425
-	.short	8555
+	.short	24076
 	.short	5595
 	.short	5256
 	.short	10707
 	.short	6750
 	.short	7639
 	.short	4270
-	.short	14795
+	.short	14794
 	.short	5284
 	.short	13775
 	.short	32767
-	.short	12062
+	.short	19295
 	.short	7399
 	.short	0
 	.short	0
@@ -276,776 +276,776 @@ winScreenPal:
 	.type	winScreenBitmap, %object
 	.size	winScreenBitmap, 38400
 winScreenBitmap:
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1802
-	.short	2567
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1802
-	.short	3079
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
 	.short	3084
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	2570
 	.short	3084
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1802
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1804
 	.short	3079
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
-	.short	1542
-	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1804
+	.short	3079
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1804
+	.short	3079
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1548
 	.short	1542
 	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
-	.short	1542
-	.short	1546
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2570
-	.short	3082
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
+	.short	3078
 	.short	3084
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
+	.short	1542
+	.short	1542
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
+	.short	1542
+	.short	1548
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1542
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1804
 	.short	3079
-	.short	2572
 	.short	3084
-	.short	2570
-	.short	3082
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1548
 	.short	2054
 	.short	2056
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1548
 	.short	1542
 	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
 	.short	1542
-	.short	3082
-	.short	2572
-	.short	2570
-	.short	3082
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1542
-	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2570
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1548
 	.short	1542
 	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	3084
-	.short	2570
-	.short	3084
-	.short	2572
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	2572
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
+	.short	1542
+	.short	1542
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1804
 	.short	1543
 	.short	3084
 	.short	3084
-	.short	3082
 	.short	3084
 	.short	3084
-	.short	2572
 	.short	3084
-	.short	2570
-	.short	3082
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
 	.short	2054
 	.short	1544
 	.short	1542
 	.short	2054
 	.short	1544
 	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2572
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1548
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
+	.short	3078
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	1542
 	.short	1542
-	.short	2570
-	.short	3082
-	.short	2572
-	.short	1546
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	1542
-	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
 	.short	3084
-	.short	1546
+	.short	3084
+	.short	3084
+	.short	1548
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1542
+	.short	1542
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
 	.short	1542
 	.short	1542
 	.short	3078
-	.short	2570
-	.short	2570
-	.short	3082
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	1542
 	.short	3078
 	.short	3084
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
 	.short	3084
 	.short	3084
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	3082
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	1542
 	.short	1542
 	.short	3078
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
 	.short	3084
-	.short	2572
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
@@ -1058,18 +1058,18 @@ winScreenBitmap:
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	2572
-	.short	2572
-	.short	3082
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3078
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	2056
 	.short	1544
@@ -1077,12 +1077,12 @@ winScreenBitmap:
 	.short	3078
 	.short	1542
 	.short	1548
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
 	.short	1542
 	.short	3078
 	.short	1542
@@ -1090,82 +1090,82 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
+	.short	3078
 	.short	3084
 	.short	3084
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
 	.short	3084
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
 	.short	1542
 	.short	1548
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
 	.short	1542
 	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	3082
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	2566
-	.short	2570
-	.short	3082
-	.short	2570
-	.short	3082
-	.short	3082
-	.short	2570
-	.short	2570
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	3078
 	.short	3084
@@ -1174,35 +1174,35 @@ winScreenBitmap:
 	.short	1798
 	.short	1543
 	.short	3084
-	.short	2572
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
 	.short	1548
-	.short	2566
-	.short	3082
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
 	.short	1542
 	.short	1542
 	.short	1542
@@ -1210,35 +1210,35 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
 	.short	1542
-	.short	2570
-	.short	2570
-	.short	3082
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	1542
 	.short	1542
@@ -1246,42 +1246,42 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1548
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
@@ -1301,109 +1301,109 @@ winScreenBitmap:
 	.short	1548
 	.short	1542
 	.short	1542
-	.short	2566
-	.short	3082
+	.short	3078
 	.short	3084
-	.short	2570
-	.short	2572
-	.short	3082
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
-	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
-	.short	1542
-	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
 	.short	1548
 	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
+	.short	1542
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
+	.short	1542
+	.short	1542
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
 	.short	1548
 	.short	3084
 	.short	1548
@@ -1424,105 +1424,105 @@ winScreenBitmap:
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	2570
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	2054
-	.short	1542
-	.short	2054
-	.short	1544
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
-	.short	1542
-	.short	1542
-	.short	1544
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2570
 	.short	3084
-	.short	2572
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	2054
+	.short	1542
+	.short	2054
+	.short	1544
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	1548
+	.short	1542
+	.short	1542
+	.short	1544
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1548
 	.short	1548
 	.short	1542
@@ -1543,63 +1543,63 @@ winScreenBitmap:
 	.short	3078
 	.short	1548
 	.short	3084
-	.short	2572
-	.short	3082
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	1542
 	.short	2054
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
-	.short	1542
-	.short	2054
-	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	3084
-	.short	2570
-	.short	1546
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
+	.short	1542
+	.short	2054
+	.short	1542
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	3084
+	.short	3084
+	.short	1548
 	.short	1542
 	.short	1542
 	.short	1542
@@ -1608,15 +1608,15 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	3078
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	1542
 	.short	1542
@@ -1628,21 +1628,21 @@ winScreenBitmap:
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3084
-	.short	2570
-	.short	2570
-	.short	3084
-	.short	3082
-	.short	3084
-	.short	3082
 	.short	3084
 	.short	3084
-	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	1542
 	.short	1799
@@ -1669,18 +1669,18 @@ winScreenBitmap:
 	.short	2054
 	.short	1542
 	.short	3078
-	.short	2570
 	.short	3084
 	.short	3084
-	.short	2572
-	.short	3082
 	.short	3084
 	.short	3084
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1548
 	.short	1544
 	.short	1542
-	.short	2570
+	.short	3084
 	.short	1548
 	.short	2054
 	.short	1542
@@ -1693,33 +1693,33 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	3082
-	.short	2572
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1542
-	.short	1542
-	.short	1542
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	2570
+	.short	1542
+	.short	1542
+	.short	1542
+	.short	3084
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	3078
-	.short	2570
-	.short	2570
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	1542
 	.short	1542
@@ -1728,15 +1728,15 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	2566
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
+	.short	3078
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
 	.short	2056
 	.short	1542
 	.short	2054
@@ -1749,19 +1749,19 @@ winScreenBitmap:
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	3082
-	.short	2572
-	.short	2570
-	.short	2572
-	.short	3082
-	.short	3084
-	.short	3082
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	1548
-	.short	1542
-	.short	1542
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	1542
 	.short	1542
@@ -1792,15 +1792,15 @@ winScreenBitmap:
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	3082
-	.short	2572
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
 	.short	2054
 	.short	1544
 	.short	2054
-	.short	2566
+	.short	3078
 	.short	1548
 	.short	1544
 	.short	1542
@@ -1818,12 +1818,12 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	2572
-	.short	3082
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	3082
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	2054
 	.short	1542
@@ -1838,8 +1838,8 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	3078
-	.short	2570
-	.short	2570
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	1542
 	.short	1542
@@ -1849,16 +1849,16 @@ winScreenBitmap:
 	.short	1544
 	.short	1542
 	.short	3078
-	.short	2566
-	.short	2570
-	.short	2570
+	.short	3078
 	.short	3084
-	.short	2570
-	.short	2570
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1548
-	.short	1542
-	.short	1542
+	.short	3078
+	.short	1548
 	.short	2054
 	.short	1028
 	.short	1028
@@ -1871,7 +1871,7 @@ winScreenBitmap:
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	3082
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
@@ -1912,8 +1912,8 @@ winScreenBitmap:
 	.short	3078
 	.short	1548
 	.short	3078
-	.short	3082
-	.short	2572
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
@@ -1939,10 +1939,10 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	3078
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	3082
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	2060
 	.short	1544
 	.short	2056
@@ -1958,10 +1958,10 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	2570
-	.short	2570
-	.short	2570
-	.short	1546
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	1548
 	.short	1542
 	.short	1542
 	.short	1542
@@ -1970,29 +1970,29 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	3078
-	.short	2572
-	.short	3082
-	.short	3082
-	.short	2570
-	.short	3082
-	.short	2572
 	.short	3084
 	.short	3084
-	.short	2570
-	.short	1548
-	.short	2056
-	.short	2056
-	.short	3080
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1548
 	.short	2056
 	.short	1544
 	.short	1542
 	.short	3084
-	.short	2572
-	.short	2572
 	.short	3084
-	.short	3082
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	3078
@@ -2034,7 +2034,7 @@ winScreenBitmap:
 	.short	3078
 	.short	3084
 	.short	3084
-	.short	3082
+	.short	3084
 	.short	3084
 	.short	2060
 	.short	2056
@@ -2059,11 +2059,11 @@ winScreenBitmap:
 	.short	1544
 	.short	1542
 	.short	1542
-	.short	2572
-	.short	2570
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	2060
-	.short	1028
+	.short	3084
 	.short	2056
 	.short	2056
 	.short	2056
@@ -2091,19 +2091,19 @@ winScreenBitmap:
 	.short	2054
 	.short	2056
 	.short	3078
-	.short	1542
-	.short	3084
-	.short	3084
-	.short	2572
-	.short	3084
-	.short	2572
+	.short	3078
 	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	3082
 	.short	3084
-	.short	2572
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
@@ -2153,7 +2153,7 @@ winScreenBitmap:
 	.short	1548
 	.short	3084
 	.short	3084
-	.short	2572
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	1030
@@ -2182,20 +2182,20 @@ winScreenBitmap:
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	1032
-	.short	1028
-	.short	1028
-	.short	2052
-	.short	1028
-	.short	1028
-	.short	1540
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	2060
+	.short	3084
+	.short	3084
+	.short	1548
 	.short	1542
 	.short	1542
-	.short	2572
-	.short	3082
-	.short	2570
-	.short	3082
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	1542
 	.short	1542
 	.short	1542
@@ -2214,16 +2214,16 @@ winScreenBitmap:
 	.short	1542
 	.short	3084
 	.short	3084
-	.short	2572
-	.short	3084
-	.short	2572
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	2572
-	.short	3082
 	.short	3084
-	.short	2572
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
@@ -2298,24 +2298,24 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	1542
-	.short	2572
+	.short	3078
 	.short	3084
 	.short	3084
-	.short	1032
-	.short	1028
-	.short	1028
-	.short	1028
-	.short	2052
-	.short	1028
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	2060
+	.short	3084
 	.short	2056
 	.short	1542
 	.short	1542
-	.short	2572
-	.short	2570
-	.short	2570
-	.short	3082
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	2056
 	.short	2056
 	.short	1542
@@ -2333,15 +2333,15 @@ winScreenBitmap:
 	.short	2056
 	.short	2056
 	.short	1544
-	.short	2572
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	2572
 	.short	3084
-	.short	3082
 	.short	3084
-	.short	2572
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
@@ -2418,23 +2418,23 @@ winScreenBitmap:
 	.short	2056
 	.short	1544
 	.short	1542
-	.short	1542
+	.short	3078
 	.short	3084
-	.short	3082
-	.short	3082
 	.short	3084
-	.short	2054
-	.short	1028
-	.short	1028
+	.short	3084
+	.short	3084
+	.short	3078
+	.short	3084
+	.short	3084
 	.short	2056
 	.short	3078
 	.short	1542
 	.short	3084
 	.short	3084
-	.short	2570
-	.short	3082
 	.short	3084
-	.short	2572
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	2056
 	.short	2056
@@ -2540,19 +2540,19 @@ winScreenBitmap:
 	.short	1544
 	.short	3080
 	.short	3084
-	.short	3082
-	.short	2572
-	.short	2572
-	.short	2570
 	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	2572
-	.short	3082
-	.short	2570
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
@@ -2662,7 +2662,6 @@ winScreenBitmap:
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	2572
 	.short	3084
 	.short	3084
 	.short	3084
@@ -2672,7 +2671,8 @@ winScreenBitmap:
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	2570
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
@@ -2780,16 +2780,16 @@ winScreenBitmap:
 	.short	2056
 	.short	1542
 	.short	3078
-	.short	2572
 	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
-	.short	2572
-	.short	3082
-	.short	3082
+	.short	3084
+	.short	3084
+	.short	3084
+	.short	3084
 	.short	3084
 	.short	3084
 	.short	3084
@@ -14078,8 +14078,8 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	1539
-	.short	771
+	.short	1547
+	.short	2827
 	.short	2056
 	.short	1032
 	.short	1028
@@ -14180,7 +14180,7 @@ winScreenBitmap:
 	.short	1028
 	.short	1544
 	.short	1542
-	.short	774
+	.short	2822
 	.short	1032
 	.short	2056
 	.short	2056
@@ -14196,18 +14196,18 @@ winScreenBitmap:
 	.short	2056
 	.short	1542
 	.short	1542
-	.short	1539
-	.short	774
+	.short	1547
+	.short	2822
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1544
-	.short	1539
-	.short	771
+	.short	1547
+	.short	2827
 	.short	1542
-	.short	774
+	.short	2822
 	.short	1542
-	.short	1539
+	.short	1547
 	.short	1542
 	.short	1542
 	.short	2056
@@ -14298,7 +14298,7 @@ winScreenBitmap:
 	.short	1542
 	.short	2054
 	.short	1544
-	.short	774
+	.short	2822
 	.short	1542
 	.short	1542
 	.short	2054
@@ -14313,24 +14313,24 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	1539
+	.short	1547
 	.short	1542
 	.short	1542
-	.short	783
-	.short	771
+	.short	2831
+	.short	2827
 	.short	1542
-	.short	1539
+	.short	1547
 	.short	1542
-	.short	774
+	.short	2822
 	.short	1542
-	.short	771
-	.short	771
-	.short	774
-	.short	771
-	.short	771
-	.short	771
+	.short	2827
+	.short	2827
+	.short	2822
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	1542
-	.short	1539
+	.short	1547
 	.short	1542
 	.short	1542
 	.short	1542
@@ -14435,22 +14435,22 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	1539
-	.short	783
-	.short	771
-	.short	771
-	.short	771
+	.short	1547
+	.short	2831
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	1542
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	1542
 	.short	1542
-	.short	771
+	.short	2827
 	.short	1542
 	.short	1542
 	.short	1542
@@ -14539,42 +14539,42 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	774
-	.short	1539
+	.short	2822
+	.short	1547
 	.short	1542
 	.short	1544
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	771
-	.short	771
-	.short	783
+	.short	2827
+	.short	2827
+	.short	2831
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	783
+	.short	2831
 	.short	3855
-	.short	783
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	3843
-	.short	771
-	.short	771
-	.short	771
-	.short	771
+	.short	2831
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	3851
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	1542
 	.short	1542
-	.short	771
-	.short	771
+	.short	2827
+	.short	2827
 	.short	1542
 	.short	1542
-	.short	3843
+	.short	3851
 	.short	1285
 	.short	1285
 	.short	1285
@@ -14648,53 +14648,53 @@ winScreenBitmap:
 	.short	265
 	.short	257
 	.short	265
-	.short	773
-	.short	1539
-	.short	774
-	.short	771
-	.short	1539
+	.short	2821
+	.short	1547
+	.short	2822
+	.short	2827
+	.short	1547
 	.short	1542
-	.short	774
-	.short	771
+	.short	2822
+	.short	2827
 	.short	1542
 	.short	1542
 	.short	1542
 	.short	3846
-	.short	783
-	.short	1539
+	.short	2831
+	.short	1547
 	.short	1542
-	.short	774
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	1539
+	.short	2822
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	1547
 	.short	1542
 	.short	1542
-	.short	771
-	.short	771
-	.short	1539
+	.short	2827
+	.short	2827
+	.short	1547
 	.short	3851
 	.short	3855
-	.short	771
-	.short	783
-	.short	771
-	.short	771
+	.short	2827
+	.short	2831
+	.short	2827
+	.short	2827
 	.short	3855
 	.short	3855
-	.short	783
-	.short	771
-	.short	771
-	.short	783
-	.short	771
+	.short	2831
+	.short	2827
+	.short	2827
+	.short	2831
+	.short	2827
 	.short	1542
-	.short	771
-	.short	771
+	.short	2827
+	.short	2827
 	.short	1542
 	.short	1542
-	.short	1283
+	.short	1291
 	.short	1285
 	.short	1285
 	.short	1285
@@ -14768,53 +14768,53 @@ winScreenBitmap:
 	.short	2313
 	.short	257
 	.short	2313
-	.short	773
-	.short	1539
-	.short	774
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
+	.short	2821
+	.short	1547
+	.short	2822
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	1542
 	.short	1542
-	.short	771
-	.short	783
-	.short	771
+	.short	2827
+	.short	2831
+	.short	2827
 	.short	1542
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	3855
 	.short	3855
 	.short	3855
-	.short	771
-	.short	771
-	.short	3843
-	.short	3843
+	.short	2827
+	.short	2827
+	.short	3851
+	.short	3851
 	.short	3855
 	.short	3855
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	1539
-	.short	1283
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	1547
+	.short	1291
 	.short	1285
 	.short	1285
 	.short	1285
@@ -14889,52 +14889,52 @@ winScreenBitmap:
 	.short	2305
 	.short	2313
 	.short	1289
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	3843
-	.short	1539
-	.short	774
-	.short	771
-	.short	771
-	.short	3843
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	783
-	.short	771
-	.short	783
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	3851
+	.short	1547
+	.short	2822
+	.short	2827
+	.short	2827
+	.short	3851
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2831
+	.short	2827
+	.short	2831
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	3851
 	.short	2831
 	.short	3855
 	.short	3855
 	.short	3855
 	.short	3855
-	.short	783
+	.short	2827
 	.short	3855
-	.short	783
-	.short	783
-	.short	771
+	.short	2831
+	.short	2831
+	.short	2827
 	.short	3855
 	.short	3855
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	1283
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	1291
 	.short	1285
 	.short	1285
 	.short	1285
@@ -15009,51 +15009,51 @@ winScreenBitmap:
 	.short	2313
 	.short	2313
 	.short	1289
-	.short	773
-	.short	771
-	.short	771
-	.short	771
+	.short	2821
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	3855
-	.short	771
-	.short	3843
-	.short	771
-	.short	783
-	.short	771
-	.short	771
-	.short	3843
-	.short	3843
+	.short	2827
+	.short	3851
+	.short	2827
+	.short	2831
+	.short	2827
+	.short	2827
+	.short	3851
+	.short	3851
 	.short	3855
-	.short	771
-	.short	771
-	.short	771
-	.short	771
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	3855
-	.short	783
-	.short	771
-	.short	771
+	.short	2831
+	.short	2827
+	.short	2827
 	.short	2831
 	.short	3851
 	.short	3855
-	.short	771
-	.short	771
+	.short	2827
+	.short	2827
 	.short	3855
 	.short	3851
 	.short	3851
 	.short	3855
-	.short	3843
+	.short	3851
 	.short	3855
-	.short	783
-	.short	3855
-	.short	3855
-	.short	783
-	.short	771
 	.short	2831
 	.short	3855
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	771
+	.short	3855
+	.short	2831
+	.short	2827
+	.short	2831
+	.short	3855
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	1285
 	.short	1285
 	.short	1285
@@ -15129,33 +15129,33 @@ winScreenBitmap:
 	.short	2313
 	.short	2313
 	.short	2313
-	.short	773
-	.short	771
-	.short	771
-	.short	771
+	.short	2821
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	3855
-	.short	783
-	.short	771
-	.short	771
-	.short	3843
-	.short	3855
-	.short	771
-	.short	3843
-	.short	783
-	.short	3855
-	.short	3843
-	.short	3855
-	.short	771
-	.short	771
-	.short	783
-	.short	771
-	.short	3843
-	.short	3843
+	.short	2831
+	.short	2827
+	.short	2827
 	.short	3851
 	.short	3855
 	.short	2827
-	.short	771
-	.short	771
+	.short	3851
+	.short	2831
+	.short	3855
+	.short	3851
+	.short	3855
+	.short	2827
+	.short	2827
+	.short	2831
+	.short	2827
+	.short	3851
+	.short	3851
+	.short	3851
+	.short	3855
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	3855
 	.short	2827
 	.short	3855
@@ -15165,15 +15165,15 @@ winScreenBitmap:
 	.short	3855
 	.short	2831
 	.short	3855
-	.short	771
-	.short	3843
+	.short	2827
+	.short	3851
 	.short	3851
 	.short	3855
 	.short	3855
-	.short	771
-	.short	771
-	.short	771
-	.short	3843
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	3851
 	.short	1285
 	.short	1285
 	.short	1285
@@ -15250,32 +15250,32 @@ winScreenBitmap:
 	.short	2313
 	.short	2313
 	.short	3845
-	.short	783
+	.short	2831
 	.short	3855
-	.short	771
-	.short	771
+	.short	2827
+	.short	2827
 	.short	3855
-	.short	771
-	.short	783
-	.short	3843
-	.short	771
-	.short	3843
-	.short	3843
-	.short	3855
-	.short	3855
+	.short	2827
+	.short	2831
+	.short	3851
+	.short	2827
+	.short	3851
+	.short	3851
 	.short	3855
 	.short	3855
 	.short	3855
-	.short	771
-	.short	771
-	.short	771
-	.short	771
-	.short	3843
+	.short	3855
+	.short	3855
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	3851
 	.short	2831
 	.short	3855
 	.short	3855
-	.short	771
-	.short	771
+	.short	2827
+	.short	2827
 	.short	3855
 	.short	3855
 	.short	3855
@@ -15290,7 +15290,7 @@ winScreenBitmap:
 	.short	3855
 	.short	3855
 	.short	3855
-	.short	3843
+	.short	3851
 	.short	1291
 	.short	2827
 	.short	2821
@@ -15373,23 +15373,23 @@ winScreenBitmap:
 	.short	3845
 	.short	3845
 	.short	3845
-	.short	771
-	.short	771
-	.short	771
-	.short	771
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	3855
 	.short	3855
-	.short	783
-	.short	771
-	.short	3843
+	.short	2831
+	.short	2827
+	.short	3851
 	.short	3855
 	.short	3855
 	.short	3855
 	.short	3855
 	.short	3855
-	.short	771
-	.short	771
-	.short	3843
+	.short	2827
+	.short	2827
+	.short	3851
 	.short	3855
 	.short	3851
 	.short	3855
@@ -15404,7 +15404,7 @@ winScreenBitmap:
 	.short	3855
 	.short	3855
 	.short	3855
-	.short	771
+	.short	2827
 	.short	2831
 	.short	3855
 	.short	3851
@@ -15494,21 +15494,21 @@ winScreenBitmap:
 	.short	2313
 	.short	1289
 	.short	3855
-	.short	771
-	.short	3843
-	.short	3843
+	.short	2827
+	.short	3851
+	.short	3851
 	.short	3855
 	.short	3855
-	.short	779
-	.short	771
-	.short	771
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	3855
 	.short	3855
 	.short	3855
 	.short	3855
 	.short	3855
-	.short	783
-	.short	771
+	.short	2831
+	.short	2827
 	.short	3855
 	.short	3855
 	.short	2827
@@ -15613,15 +15613,15 @@ winScreenBitmap:
 	.short	2313
 	.short	2313
 	.short	1289
-	.short	783
-	.short	771
+	.short	2831
+	.short	2827
 	.short	3855
 	.short	2831
 	.short	2831
 	.short	2831
 	.short	3855
 	.short	3855
-	.short	3843
+	.short	3851
 	.short	3855
 	.short	3855
 	.short	3855
@@ -15734,14 +15734,14 @@ winScreenBitmap:
 	.short	1285
 	.short	1285
 	.short	3855
-	.short	771
-	.short	3843
+	.short	2827
+	.short	3851
 	.short	3855
 	.short	3855
 	.short	3851
 	.short	3855
 	.short	3851
-	.short	3843
+	.short	3851
 	.short	3855
 	.short	3855
 	.short	2831
@@ -15854,7 +15854,7 @@ winScreenBitmap:
 	.short	2313
 	.short	2313
 	.short	3845
-	.short	3843
+	.short	3851
 	.short	3855
 	.short	3855
 	.short	3855
@@ -15974,7 +15974,7 @@ winScreenBitmap:
 	.short	2313
 	.short	2313
 	.short	1295
-	.short	3843
+	.short	3851
 	.short	3855
 	.short	3855
 	.short	3855
@@ -16150,7 +16150,7 @@ winScreenBitmap:
 	.short	2827
 	.short	2827
 	.short	3855
-	.short	3855
+	.short	3851
 	.short	1285
 	.short	1285
 	.short	1285
@@ -16270,7 +16270,7 @@ winScreenBitmap:
 	.short	2827
 	.short	2827
 	.short	3851
-	.short	3843
+	.short	3851
 	.short	1285
 	.short	1285
 	.short	2821
@@ -16424,7 +16424,7 @@ winScreenBitmap:
 	.short	1289
 	.short	2827
 	.short	3851
-	.short	3843
+	.short	3851
 	.short	3855
 	.short	3855
 	.short	3855
@@ -16544,7 +16544,7 @@ winScreenBitmap:
 	.short	2827
 	.short	2827
 	.short	2827
-	.short	771
+	.short	2827
 	.short	3855
 	.short	3855
 	.short	3851
@@ -16795,7 +16795,7 @@ winScreenBitmap:
 	.short	2313
 	.short	2313
 	.short	2831
-	.short	783
+	.short	2831
 	.short	3855
 	.short	3855
 	.short	3851
@@ -16886,7 +16886,7 @@ winScreenBitmap:
 	.short	2827
 	.short	3851
 	.short	2831
-	.short	2563
+	.short	2571
 	.short	2831
 	.short	2827
 	.short	2827
@@ -16916,7 +16916,7 @@ winScreenBitmap:
 	.short	2313
 	.short	3855
 	.short	3855
-	.short	783
+	.short	2831
 	.short	2570
 	.short	2827
 	.short	2827
@@ -16937,8 +16937,8 @@ winScreenBitmap:
 	.short	2827
 	.short	2827
 	.short	2827
-	.short	779
-	.short	771
+	.short	2827
+	.short	2827
 	.short	2831
 	.short	2827
 	.short	0
@@ -16949,7 +16949,7 @@ winScreenBitmap:
 	.short	2827
 	.short	11
 	.short	3855
-	.short	783
+	.short	2831
 	.short	11
 	.short	0
 	.short	0
@@ -16991,7 +16991,7 @@ winScreenBitmap:
 	.short	2827
 	.short	3851
 	.short	2831
-	.short	783
+	.short	2831
 	.short	2831
 	.short	2827
 	.short	2827
@@ -17236,7 +17236,7 @@ winScreenBitmap:
 	.short	1542
 	.short	0
 	.short	3087
-	.short	774
+	.short	2822
 	.short	2827
 	.short	3084
 	.short	3084
@@ -17285,7 +17285,7 @@ winScreenBitmap:
 	.short	1542
 	.short	3078
 	.short	11
-	.short	1539
+	.short	1547
 	.short	1542
 	.short	3084
 	.short	3078
@@ -17294,7 +17294,7 @@ winScreenBitmap:
 	.short	1542
 	.short	1542
 	.short	1542
-	.short	774
+	.short	2822
 	.short	0
 	.short	0
 	.short	2816
@@ -17351,7 +17351,7 @@ winScreenBitmap:
 	.short	514
 	.short	514
 	.short	1549
-	.short	3843
+	.short	3851
 	.short	527
 	.short	3341
 	.short	2816
@@ -17361,7 +17361,7 @@ winScreenBitmap:
 	.short	3341
 	.short	514
 	.short	3330
-	.short	770
+	.short	2818
 	.short	3851
 	.short	3340
 	.short	514
@@ -17404,7 +17404,7 @@ winScreenBitmap:
 	.short	525
 	.short	514
 	.short	3341
-	.short	2819
+	.short	2827
 	.short	3338
 	.short	3330
 	.short	3341
@@ -17829,7 +17829,7 @@ winScreenBitmap:
 	.short	1547
 	.short	3341
 	.short	3850
-	.short	783
+	.short	2831
 	.short	3341
 	.short	2818
 	.short	11
@@ -17838,9 +17838,9 @@ winScreenBitmap:
 	.short	525
 	.short	11
 	.short	522
-	.short	3085
-	.short	771
-	.short	778
+	.short	2829
+	.short	2827
+	.short	2827
 	.short	11
 	.short	1536
 	.short	3341
@@ -17865,9 +17865,9 @@ winScreenBitmap:
 	.short	3341
 	.short	2818
 	.short	3330
-	.short	770
-	.short	771
-	.short	771
+	.short	2818
+	.short	2827
+	.short	2827
 	.short	11
 	.short	2816
 	.short	0
@@ -17883,7 +17883,7 @@ winScreenBitmap:
 	.short	3330
 	.short	3842
 	.short	3855
-	.short	3843
+	.short	3851
 	.short	11
 	.short	3338
 	.short	512
@@ -17897,9 +17897,9 @@ winScreenBitmap:
 	.short	2562
 	.short	2827
 	.short	3851
-	.short	771
+	.short	2827
 	.short	3341
-	.short	770
+	.short	2818
 	.short	2831
 	.short	522
 	.short	3085
@@ -18068,8 +18068,8 @@ winScreenBitmap:
 	.short	11
 	.short	0
 	.short	3851
-	.short	783
-	.short	771
+	.short	2831
+	.short	2827
 	.short	2570
 	.short	15
 	.short	0
@@ -18079,7 +18079,7 @@ winScreenBitmap:
 	.short	0
 	.short	0
 	.short	3855
-	.short	783
+	.short	2831
 	.short	3855
 	.short	15
 	.short	0
@@ -18095,18 +18095,18 @@ winScreenBitmap:
 	.short	0
 	.short	0
 	.short	2816
-	.short	3851
-	.short	2819
-	.short	0
-	.short	3840
-	.short	771
 	.short	2827
-	.short	2816
-	.short	2563
-	.short	2831
-	.short	3851
-	.short	783
-	.short	3843
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	3855
 	.short	0
 	.short	0
@@ -18117,7 +18117,7 @@ winScreenBitmap:
 	.short	0
 	.short	0
 	.short	2816
-	.short	771
+	.short	2827
 	.short	11
 	.short	0
 	.short	2827
@@ -18215,11 +18215,11 @@ winScreenBitmap:
 	.short	0
 	.short	0
 	.short	0
-	.short	0
-	.short	0
-	.short	0
-	.short	2816
-	.short	11
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
+	.short	2827
 	.short	0
 	.short	2816
 	.short	2827

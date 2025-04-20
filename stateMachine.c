@@ -171,24 +171,36 @@ void goToPause(void) {
 void goToWin(void) {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
     
-    for (int i = 0; i < 240 * 160; i++) {
-        FRONTBUFFER[i] = 0;
+    for (int i = 0; i < (240*160)/2; i++)
         BACKBUFFER[i] = 0;
-    }
-    
-    for (int i = 0; i < 256; i++) {
-        BG_PALETTE[i] = 0;
-    }
-    
-    DMANow(3, winScreenPal, BG_PALETTE, winScreenPalLen / 2);
 
-    for (int i = 0; i < 240 * 160; i++) {
-        BACKBUFFER[i] = RGB(31, 31, 31);
-    }
-    
-    waitForVBlank();
-    flipPage();
+    DMANow(3, winScreenPal, BG_PALETTE, winScreenPalLen/2);
+
+    DMANow(3,
+           winScreenBitmap,
+           BACKBUFFER,
+           (240*160)/2);
+
     playSoundA(winSong_data, winSong_length, 1);
+
+    u16 col10 = BG_PALETTE[10];
+    u16 col3 = BG_PALETTE[3];
+    u16 col14 = BG_PALETTE[14];
+
+    while (!BUTTON_PRESSED(BUTTON_B)) {
+        for (int i = 0; i < PALETTE_HOLD_FRAMES; i++)
+            waitForVBlank();
+
+        BG_PALETTE[10] = col3;
+        BG_PALETTE[3] = col14;
+        BG_PALETTE[14] = col10;
+        for (int i = 0; i < PALETTE_HOLD_FRAMES; i++)
+        waitForVBlank();
+
+        BG_PALETTE[10] = col10;
+        BG_PALETTE[3] = col3;
+        BG_PALETTE[14] = col14;
+    }
     
     state = WIN;
 }
@@ -332,6 +344,9 @@ static void bossState(void) {
     if (BUTTON_PRESSED(BUTTON_SELECT)) {
         goToPause();
     }
+    if (BUTTON_PRESSED(BUTTON_START)) {
+        goToWin(); //remove after
+    }
 
     updateBossStage();
     drawBossStage();
@@ -375,10 +390,12 @@ static void loseState(void) {
     drawFullscreenImage4(loseScreenBitmap);
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToStart();
+        return;
     }
     waitForVBlank();
     flipPage();
 }
+
 
 void initStateMachine(void) {
     goToStart();
