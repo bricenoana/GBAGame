@@ -137,8 +137,8 @@ updateCaveAlert:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, lr}
-	ldr	r4, .L21
-	mov	r6, r1
+	ldr	r4, .L23
+	mov	r7, r1
 	add	r1, r4, #8
 	ldm	r1, {r1, ip}
 	ldr	r2, [r4, #4]
@@ -148,63 +148,55 @@ updateCaveAlert:
 	str	r1, [sp, #8]
 	str	r2, [sp, #4]
 	str	r3, [sp]
-	mov	r5, r0
-	ldr	r0, .L21+4
-	ldr	r7, .L21+8
+	mov	r6, r0
+	ldr	r0, .L23+4
+	ldr	r5, .L23+8
 	ldm	r0, {r0, r1, r2, r3}
 	mov	lr, pc
-	bx	r7
-	subs	r3, r0, #0
+	bx	r5
+	subs	r5, r0, #0
 	beq	.L15
 	mov	r0, #1
-	ldr	r3, .L21+12
+	ldr	r3, .L23+12
 	ldrh	r1, [r3]
 	ldr	r2, [r4, #4]
 	tst	r1, #1
 	ldr	r1, [r4]
-	ldr	r3, .L21+16
+	ldr	r3, .L23+16
 	sub	r2, r2, #14
-	sub	r6, r2, r6
-	sub	r5, r1, r5
-	stm	r3, {r1, r2, r5, r6}
+	sub	r7, r2, r7
+	sub	r6, r1, r6
+	stm	r3, {r1, r2, r6, r7}
 	str	r0, [r3, #16]
 	beq	.L14
-	ldr	r2, .L21+20
+	ldr	r2, .L23+20
 	ldrh	r2, [r2]
 	ands	r2, r2, r0
-	bne	.L14
-	ldr	r5, .L21+24
-	ldr	r1, [r5]
-	cmp	r1, #0
-	str	r0, [r4, #20]
-	str	r2, [r3, #16]
-	streq	r0, [r5]
-	bne	.L19
+	streq	r0, [r4, #20]
+	streq	r2, [r3, #16]
 .L14:
 	add	sp, sp, #20
 	@ sp needed
 	pop	{r4, r5, r6, r7, lr}
 	bx	lr
 .L15:
-	ldr	r5, .L21+24
-	ldr	r1, [r5]
-	ldr	r2, .L21+16
-	cmp	r1, #0
-	str	r3, [r2, #16]
+	ldr	r4, .L23+24
+	ldr	r2, [r4]
+	ldr	r3, .L23+16
+	cmp	r2, #0
+	str	r5, [r3, #16]
 	beq	.L14
-.L19:
-	ldr	r3, .L21+28
+	ldr	r3, .L23+28
 	mov	lr, pc
 	bx	r3
-	mov	r3, #0
-	str	r3, [r5]
+	str	r5, [r4]
 	add	sp, sp, #20
 	@ sp needed
 	pop	{r4, r5, r6, r7, lr}
 	bx	lr
-.L22:
+.L24:
 	.align	2
-.L21:
+.L23:
 	.word	sword
 	.word	player
 	.word	collision
@@ -225,29 +217,29 @@ drawAlert:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	ldr	r2, .L26
+	ldr	r2, .L28
 	ldr	r3, [r2, #16]
 	cmp	r3, #0
-	beq	.L24
+	beq	.L26
 	ldr	r3, [r2, #8]
 	lsl	r3, r3, #23
 	ldrb	r0, [r2, #12]	@ zero_extendqisi2
-	ldr	r1, .L26+4
-	ldr	r2, .L26+8
+	ldr	r1, .L28+4
+	ldr	r2, .L28+8
 	lsr	r3, r3, #23
 	orr	r3, r3, #16384
 	strh	r3, [r2, #26]	@ movhi
 	strh	r0, [r2, #24]	@ movhi
 	strh	r1, [r2, #28]	@ movhi
 	bx	lr
-.L24:
+.L26:
 	mov	r2, #512
-	ldr	r3, .L26+8
+	ldr	r3, .L28+8
 	strh	r2, [r3, #24]	@ movhi
 	bx	lr
-.L27:
+.L29:
 	.align	2
-.L26:
+.L28:
 	.word	alert
 	.word	5024
 	.word	shadowOAM

@@ -33,14 +33,6 @@ void updateJungleAlert(int hOff,int vOff) {
         if (BUTTON_PRESSED(BUTTON_A)) {
             npc.pickedUp = 1;
             alert.active = 0;
-            if (!showingDialogue) {
-              // drawText("HELLO ADVENTURER", 0, 0);
-              showingDialogue = 1;
-            } else {
-              eraseText();
-              
-              showingDialogue = 0;
-            }
           }
     } else {
         alert.active = 0;
@@ -64,13 +56,6 @@ void updateCaveAlert(int hOff,int vOff) {
         if (BUTTON_PRESSED(BUTTON_A)) {
             sword.pickedUp = 1;
             alert.active = 0;
-            if (!showingDialogue) {
-              // drawText("HELLO ADVENTURER", 0, 0);
-              showingDialogue = 1;
-            } else {
-              eraseText();
-              showingDialogue = 0;
-            }
           }
     } else {
         alert.active = 0;

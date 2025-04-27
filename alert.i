@@ -200,6 +200,8 @@ typedef struct {
     int active;
 } Alert;
 
+extern Alert alert;
+
 void initAlert();
 
 void updateAlert(int hOff, int vOff);
@@ -264,13 +266,6 @@ void updateCaveAlert(int hOff,int vOff) {
         if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
             sword.pickedUp = 1;
             alert.active = 0;
-            if (!showingDialogue) {
-
-              showingDialogue = 1;
-            } else {
-              eraseText();
-              showingDialogue = 0;
-            }
           }
     } else {
         alert.active = 0;
