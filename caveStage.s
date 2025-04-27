@@ -26,83 +26,68 @@ initCaveStage:
 	mov	r5, #67108864
 	mov	r2, #23040
 	ldr	r1, .L4
-	ldr	r0, .L4+4
-	ldr	r4, .L4+8
+	ldr	r4, .L4+4
 	strh	r3, [r5]	@ movhi
+	mov	r0, #3
 	strh	r2, [r5, #8]	@ movhi
 	mov	r3, #256
 	strh	r1, [r5, #10]	@ movhi
 	mov	r2, #83886080
-	strh	r0, [r5, #12]	@ movhi
-	ldr	r1, .L4+12
-	mov	r0, #3
+	ldr	r1, .L4+8
 	mov	lr, pc
 	bx	r4
 	mov	r3, #9600
 	mov	r2, #100663296
 	mov	r0, #3
-	ldr	r1, .L4+16
+	ldr	r1, .L4+12
 	mov	lr, pc
 	bx	r4
 	mov	r3, #2048
 	mov	r0, #3
-	ldr	r2, .L4+20
-	ldr	r1, .L4+24
+	ldr	r2, .L4+16
+	ldr	r1, .L4+20
 	mov	lr, pc
 	bx	r4
 	mov	r3, #256
 	mov	r2, #83886080
 	mov	r0, #3
-	ldr	r1, .L4+28
+	ldr	r1, .L4+24
 	mov	lr, pc
 	bx	r4
 	mov	r3, #9600
 	mov	r0, #3
-	ldr	r2, .L4+32
-	ldr	r1, .L4+36
+	ldr	r2, .L4+28
+	ldr	r1, .L4+32
 	mov	lr, pc
 	bx	r4
+	ldr	r2, .L4+36
+	ldr	r1, .L4+40
+	mov	r0, #3
 	mov	r3, #2048
-	mov	r0, #3
-	ldr	r2, .L4+40
-	ldr	r1, .L4+44
 	mov	lr, pc
 	bx	r4
-	mov	r3, #3584
-	mov	r0, #3
-	ldr	r2, .L4+48
-	ldr	r1, .L4+52
-	mov	lr, pc
-	bx	r4
-	mov	r2, #83886080
-	ldr	r1, .L4+56
-	ldrh	r2, [r2, #32]
-	mov	r0, #3
-	mov	r3, #256
-	mov	lr, pc
-	bx	r4
-	ldr	r3, .L4+60
+	ldr	r3, .L4+44
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L4+64
+	ldr	r3, .L4+48
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L4+68
+	ldr	r3, .L4+52
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
 	mov	ip, #10
 	mov	r0, #110
-	ldr	r2, .L4+72
-	ldr	r1, .L4+76
+	ldr	r2, .L4+56
+	ldr	r1, .L4+60
 	str	ip, [r2]
 	str	r3, [r1]
-	ldr	ip, .L4+80
-	ldr	r1, .L4+84
+	ldr	ip, .L4+64
+	ldr	r1, .L4+68
 	str	r3, [ip]
 	str	r3, [r1]
 	strh	r3, [r5, #16]	@ movhi
-	ldr	r1, .L4+88
+	ldr	r1, .L4+72
 	strh	r3, [r5, #18]	@ movhi
 	str	r0, [r2, #4]
 	mov	lr, pc
@@ -110,7 +95,7 @@ initCaveStage:
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L4+92
+	ldr	r1, .L4+76
 	mov	lr, pc
 	bx	r4
 	pop	{r4, r5, r6, lr}
@@ -119,7 +104,6 @@ initCaveStage:
 	.align	2
 .L4:
 	.word	23300
-	.word	7944
 	.word	DMANow
 	.word	foregroundCaveTilesPal
 	.word	foregroundCaveTilesTiles
@@ -130,9 +114,6 @@ initCaveStage:
 	.word	backgroundCaveTilesTiles
 	.word	100716544
 	.word	backgroundCaveMapMap
-	.word	100696064
-	.word	textTilesTiles
-	.word	textTilesPal
 	.word	initPlayer
 	.word	initSword
 	.word	initAlert
@@ -204,79 +185,66 @@ drawCaveStage:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	ldr	r3, .L25
+	ldr	r3, .L19
+	push	{r4, r5, r6, lr}
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L19+4
 	ldr	r0, [r3]
 	subs	r0, r0, #120
-	push	{r4, r5, r6, lr}
-	bmi	.L22
+	bmi	.L17
 	cmp	r0, #272
-	ble	.L23
+	ble	.L18
 	mov	r3, #272
 	mov	r2, #136
 	mov	ip, r3
 	mov	r0, r3
-	ldr	r4, .L25+4
+	ldr	r4, .L19+8
 	str	r3, [r4]
 .L14:
 	mov	r3, #67108864
 	mov	r1, #0
-	ldr	r5, .L25+8
+	ldr	r5, .L19+12
 	str	r1, [r5]
 	strh	ip, [r3, #16]	@ movhi
 	strh	r1, [r3, #18]	@ movhi
 	strh	r2, [r3, #20]	@ movhi
-	ldr	r2, .L25+12
+	ldr	r2, .L19+16
 	strh	r1, [r3, #22]	@ movhi
 	mov	lr, pc
 	bx	r2
 	ldr	r1, [r5]
-	ldr	r3, .L25+16
 	ldr	r0, [r4]
+	ldr	r3, .L19+20
 	mov	lr, pc
 	bx	r3
 	ldr	r1, [r5]
-	ldr	r3, .L25+20
 	ldr	r0, [r4]
+	ldr	r3, .L19+24
 	mov	lr, pc
 	bx	r3
-	mvn	r3, #0
-	mov	r1, #512
-	ldr	r0, .L25+24
-.L16:
-	lsl	r2, r3, #3
-	add	r3, r3, #1
-	cmp	r3, #126
-	strh	r1, [r0, r2]	@ movhi
-	beq	.L24
-.L18:
-	cmp	r3, #1
-	bhi	.L16
-	add	r3, r3, #1
-	cmp	r3, #126
-	bne	.L18
-.L24:
+	ldr	r4, .L19+28
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L25+28
-	ldr	r4, .L25+32
+	ldr	r1, .L19+32
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L25+36
+	ldr	r3, .L19+36
 	mov	lr, pc
 	bx	r3
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L22:
+.L17:
 	mov	r3, #0
-	ldr	r4, .L25+4
+	ldr	r4, .L19+8
 	mov	r2, r3
 	mov	ip, r3
 	mov	r0, r3
 	str	r3, [r4]
 	b	.L14
-.L23:
-	ldr	r4, .L25+4
+.L18:
+	ldr	r4, .L19+8
 	asr	r2, r0, #1
 	lsl	r2, r2, #16
 	lsl	ip, r0, #16
@@ -284,18 +252,18 @@ drawCaveStage:
 	lsr	r2, r2, #16
 	lsr	ip, ip, #16
 	b	.L14
-.L26:
+.L20:
 	.align	2
-.L25:
+.L19:
+	.word	hideSprites
 	.word	player
 	.word	hOff
 	.word	vOff
 	.word	drawPlayer
 	.word	drawSword
 	.word	drawAlert
-	.word	shadowOAM+16
-	.word	shadowOAM
 	.word	DMANow
+	.word	shadowOAM
 	.word	waitForVBlank
 	.size	drawCaveStage, .-drawCaveStage
 	.comm	vOff,4,4

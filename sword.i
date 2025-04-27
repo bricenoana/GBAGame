@@ -17,17 +17,19 @@ typedef signed long long s64;
 typedef unsigned long long u64;
 
 
+typedef void (*ihp)(void);
+
+
 
 
 
 
 extern volatile unsigned short *videoBuffer;
-# 38 "gba.h"
+# 44 "gba.h"
 void waitForVBlank();
-
-
+# 60 "gba.h"
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-# 70 "gba.h"
+# 76 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 
@@ -39,8 +41,8 @@ typedef volatile struct {
     volatile void* dest;
     unsigned int ctrl;
 } DMAChannel;
-# 104 "gba.h"
-void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
+# 110 "gba.h"
+void DMANow(int channel, volatile void *src, volatile void *dest, unsigned int ctrl);
 # 2 "sword.c" 2
 # 1 "mode0.h" 1
 # 32 "mode0.h"
@@ -124,6 +126,7 @@ typedef struct {
     int width;
     int height;
     int active;
+    int pickedUp;
 } Sword;
 
 extern Sword sword;
@@ -134,7 +137,7 @@ void drawSword(int hOff, int vOff);
 # 5 "sword.c" 2
 # 1 "spriteNormal.h" 1
 # 21 "spriteNormal.h"
-extern const unsigned short spriteNormalTiles[25600];
+extern const unsigned short spriteNormalTiles[16384];
 
 
 extern const unsigned short spriteNormalPal[256];
@@ -162,7 +165,7 @@ void drawSword(int hOff, int vOff) {
     int screenY = sword.y - vOff;
     int tileIndex = 24 * 32 + 3;
 
-    shadowOAM[3].attr0 = ((screenY) & 0xFF) | (2<<14);
-    shadowOAM[3].attr1 = ((screenX) & 0x1FF) | (2<<14);
-    shadowOAM[3].attr2 = tileIndex | (((0) & 0xF) <<12) | (((0) & 3) << 10);
+    shadowOAM[5].attr0 = ((screenY) & 0xFF) | (2<<14);
+    shadowOAM[5].attr1 = ((screenX) & 0x1FF) | (2<<14);
+    shadowOAM[5].attr2 = tileIndex | (((0) & 0xF) <<12) | (((0) & 3) << 10);
 }

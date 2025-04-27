@@ -1,8 +1,8 @@
-# 1 "sprites.c"
+# 1 "dialogueBoxes.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
-# 1 "sprites.c"
-# 1 "sprites.h" 1
+# 1 "dialogueBoxes.c"
+# 1 "dialogueBoxes.h" 1
 
 
 
@@ -47,12 +47,21 @@ typedef volatile struct {
 } DMAChannel;
 # 110 "gba.h"
 void DMANow(int channel, volatile void *src, volatile void *dest, unsigned int ctrl);
-# 5 "sprites.h" 2
+# 5 "dialogueBoxes.h" 2
+# 1 "mode0.h" 1
+# 32 "mode0.h"
+typedef struct {
+ u16 tileimg[8192];
+} CB;
 
 
 
-
-
+typedef struct {
+ u16 tilemap[1024];
+} SB;
+# 6 "dialogueBoxes.h" 2
+# 1 "sprites.h" 1
+# 10 "sprites.h"
 typedef struct {
   u16 attr0;
   u16 attr1;
@@ -110,11 +119,58 @@ typedef struct {
     int numFrames;
     u8 oamIndex;
 } SPRITE;
-# 2 "sprites.c" 2
+# 7 "dialogueBoxes.h" 2
 
 
-void hideSprites() {
-    for (int i = 0; i < 128; i++) {
-        shadowOAM[i].attr0 = (2<<8);
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int oamIndex;
+    int active;
+} Box;
+
+extern Box dialogueBox[4];
+
+
+void initBoxes(void);
+
+
+void drawBoxes(void);
+# 2 "dialogueBoxes.c" 2
+
+
+Box dialogueBox[4];
+
+void initBoxes() {
+  for(int i = 0; i < 4; i++) {
+    dialogueBox[i].width = 64;
+    dialogueBox[i].height = 64;
+    dialogueBox[i].active = 1;
+  }
+  dialogueBox[0].x = 0; dialogueBox[0].y = 96; dialogueBox[0].oamIndex = 20;
+  dialogueBox[1].x = 64; dialogueBox[1].y = 96; dialogueBox[1].oamIndex = 21;
+  dialogueBox[2].x = 128; dialogueBox[2].y = 96; dialogueBox[2].oamIndex = 22;
+  dialogueBox[3].x = 192; dialogueBox[3].y = 96; dialogueBox[3].oamIndex = 23;
+}
+
+void drawBoxes() {
+  for(int i = 0; i < 4; i++) {
+    if(dialogueBox[i].active) {
+      shadowOAM[ dialogueBox[i].oamIndex ].attr0
+        = ((dialogueBox[i].y + 20) & 0xFF)
+        | (0<<8)
+        | (1<<14);
+      shadowOAM[ dialogueBox[i].oamIndex ].attr1
+        = ((dialogueBox[i].x) & 0x1FF)
+        | (3<<14);
+      shadowOAM[ dialogueBox[i].oamIndex ].attr2
+        = ((((9) * (32) + (21))) & 0x3FF)
+        | (((1) & 3) << 10);
+    } else {
+      shadowOAM[ dialogueBox[i].oamIndex ].attr0 = (2<<8);
     }
+  }
 }

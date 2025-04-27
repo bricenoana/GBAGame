@@ -253,6 +253,7 @@ void initBossStage(void) {
     DMANow(3, bossBGTestMap, &((SB*) 0x6000000)[27], (2048) / 2);
 
     initPlayer();
+    hideSprites();
     initBoss();
     initFireballs();
     initSlash();
@@ -367,6 +368,7 @@ void drawBossStage(void) {
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
 
+    hideSprites();
     if (playerBlockActive) {
         drawBlockFrame(0, 0);
     } else if (playerSlashActive) {
@@ -380,10 +382,6 @@ void drawBossStage(void) {
     drawFireballs();
     drawSlash(0, 0);
 
-    for (int i = 3 + 5 + 2; i < 128; i++) {
-         shadowOAM[i].attr0 = (2<<8);
-    }
-
-    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
     waitForVBlank();
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
 }

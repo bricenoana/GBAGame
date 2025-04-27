@@ -91,9 +91,9 @@ drawNPC:
 	and	r3, r3, #255
 	orr	r0, r0, r1
 	orr	r3, r3, r1
-	strh	r0, [r2, #10]	@ movhi
-	strh	r3, [r2, #8]	@ movhi
-	strh	ip, [r2, #12]	@ movhi
+	strh	r0, [r2, #34]	@ movhi
+	strh	r3, [r2, #32]	@ movhi
+	strh	ip, [r2, #36]	@ movhi
 	bx	lr
 .L15:
 	.align	2
@@ -102,6 +102,6 @@ drawNPC:
 	.word	-32768
 	.word	shadowOAM
 	.size	drawNPC, .-drawNPC
-	.comm	npc,28,4
+	.comm	npc,32,4
 	.comm	shadowOAM,1024,4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

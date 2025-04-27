@@ -11,13 +11,6 @@
 #define ALERT_WIDTH  16
 #define ALERT_HEIGHT 16
 
-typedef struct {
-    int worldX;
-    int worldY;
-    int screenX;
-    int screenY;
-    int active;
-} Alert;
 
 Alert alert;
 static int showingDialogue = 0;

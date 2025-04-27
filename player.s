@@ -310,7 +310,7 @@ drawPlayer:
 	.word	1022
 	.size	drawPlayer, .-drawPlayer
 	.global	collisionEnabled
-	.comm	player,56,4
+	.comm	player,64,4
 	.comm	shadowOAM,1024,4
 	.data
 	.align	2

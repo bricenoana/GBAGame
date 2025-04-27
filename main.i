@@ -116,9 +116,31 @@ extern const signed char overallSong_data[];
 
 
 
+# 1 "mode0.h" 1
+# 32 "mode0.h"
+typedef struct {
+ u16 tileimg[8192];
+} CB;
 
-void drawText(char string[], int offset, int person);
-void eraseText();
+
+
+typedef struct {
+ u16 tilemap[1024];
+} SB;
+# 6 "text.h" 2
+
+
+
+
+
+void eraseText(void);
+
+
+void textToTile(const char string[], int offset);
+
+
+
+void drawButton(void);
 # 6 "main.c" 2
 
 unsigned short buttons;

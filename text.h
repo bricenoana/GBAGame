@@ -11,7 +11,8 @@
 void eraseText(void);
 
 // Write a C-string to BG0 tilemap starting at the given offset
-void textToTile(char string[], int offset);
+void textToTile(const char string[], int offset);
+
 
 // Draw the 'A' button prompt at a fixed position in the chat box
 void drawButton(void);

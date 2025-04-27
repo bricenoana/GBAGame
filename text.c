@@ -11,7 +11,7 @@ void eraseText() {
     }
 }
 
-void textToTile(char string[], int offset) {
+void textToTile(const char string[], int offset) {
     int i = 0; 
     while(string[i] != '\0') {
         SCREENBLOCK[10].tilemap[i + offset] = TILEMAP_ENTRY_TILEID(string[i]) | TILEMAP_ENTRY_PALROW(1);

@@ -25,11 +25,11 @@ typedef void (*ihp)(void);
 
 
 extern volatile unsigned short *videoBuffer;
-# 43 "gba.h"
+# 44 "gba.h"
 void waitForVBlank();
-# 59 "gba.h"
+# 60 "gba.h"
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-# 75 "gba.h"
+# 76 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 
@@ -41,7 +41,7 @@ typedef volatile struct {
     volatile void* dest;
     unsigned int ctrl;
 } DMAChannel;
-# 109 "gba.h"
+# 110 "gba.h"
 void DMANow(int channel, volatile void *src, volatile void *dest, unsigned int ctrl);
 # 2 "fireball.c" 2
 # 1 "sprites.h" 1
@@ -125,7 +125,7 @@ void drawFireballs(void);
 # 4 "fireball.c" 2
 # 1 "spriteNormal.h" 1
 # 21 "spriteNormal.h"
-extern const unsigned short spriteNormalTiles[25600];
+extern const unsigned short spriteNormalTiles[16384];
 
 
 extern const unsigned short spriteNormalPal[256];
@@ -157,7 +157,9 @@ typedef struct {
     int health;
     int maxHealth;
     int defeated;
-    int flashtimer;
+    int flashTimer;
+    u16 baseColor;
+
 } Player;
 
 extern Player player;
@@ -317,16 +319,16 @@ void updateFireballs(void) {
 }
 
 void drawFireballs(void) {
-    int i;
-    for (i = 0; i < 5; i++){
-        if (fireballs[i].active){
-            int screenX = fireballs[i].x;
-            int screenY = fireballs[i].y;
-            shadowOAM[2 + i].attr0 = ((screenY) & 0xFF) | (0<<14);
-            shadowOAM[2 + i].attr1 = ((screenX) & 0x1FF) | (1<<14);
-            shadowOAM[2 + i].attr2 = ((((17) * (32) + (14))) & 0x3FF) | (2 << 12);
+    for (int i = 0; i < 5; i++) {
+        int oamIndex = 2 + i;
+        if (fireballs[i].active) {
+            int sx = fireballs[i].x;
+            int sy = fireballs[i].y;
+            shadowOAM[oamIndex].attr0 = ((sy) & 0xFF) | (0<<14);
+            shadowOAM[oamIndex].attr1 = ((sx) & 0x1FF) | (1<<14);
+            shadowOAM[oamIndex].attr2 = ((((17) * (32) + (14))) & 0x3FF) | (2 << 12);
         } else {
-            shadowOAM[2 + i].attr0 = (2<<8);
+            shadowOAM[oamIndex].attr0 = (2<<8);
         }
     }
 }

@@ -77,9 +77,9 @@ drawSword:
 	and	r2, r2, #255
 	orr	r0, r0, r1
 	orr	r2, r2, r1
-	strh	r0, [r3, #26]	@ movhi
-	strh	r2, [r3, #24]	@ movhi
-	strh	ip, [r3, #28]	@ movhi
+	strh	r0, [r3, #42]	@ movhi
+	strh	r2, [r3, #40]	@ movhi
+	strh	ip, [r3, #44]	@ movhi
 	bx	lr
 .L9:
 	.align	2
@@ -89,6 +89,6 @@ drawSword:
 	.word	shadowOAM
 	.word	771
 	.size	drawSword, .-drawSword
-	.comm	sword,20,4
+	.comm	sword,24,4
 	.comm	shadowOAM,1024,4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

@@ -418,9 +418,9 @@ bossFrameDelay:
 	.size	bossMoveTimer, 4
 bossMoveTimer:
 	.word	60
-	.type	fireballTimer.4125, %object
-	.size	fireballTimer.4125, 4
-fireballTimer.4125:
+	.type	fireballTimer.4129, %object
+	.size	fireballTimer.4129, 4
+fireballTimer.4129:
 	.word	90
 	.type	seed, %object
 	.size	seed, 4

@@ -171,7 +171,7 @@ void drawSword(int hOff, int vOff);
 # 6 "alert.c" 2
 # 1 "spriteNormal.h" 1
 # 21 "spriteNormal.h"
-extern const unsigned short spriteNormalTiles[25600];
+extern const unsigned short spriteNormalTiles[16384];
 
 
 extern const unsigned short spriteNormalPal[256];
@@ -192,6 +192,14 @@ typedef struct {
 
 
 
+typedef struct {
+    int worldX;
+    int worldY;
+    int screenX;
+    int screenY;
+    int active;
+} Alert;
+
 void initAlert();
 
 void updateAlert(int hOff, int vOff);
@@ -203,13 +211,6 @@ void drawAlert(int hOff, int vOff);
 
 
 
-typedef struct {
-    int worldX;
-    int worldY;
-    int screenX;
-    int screenY;
-    int active;
-} Alert;
 
 Alert alert;
 static int showingDialogue = 0;
@@ -233,7 +234,7 @@ void updateJungleAlert(int hOff,int vOff) {
             npc.pickedUp = 1;
             alert.active = 0;
             if (!showingDialogue) {
-              drawText("HELLO ADVENTURER", 0, 0);
+
               showingDialogue = 1;
             } else {
               eraseText();
@@ -264,7 +265,7 @@ void updateCaveAlert(int hOff,int vOff) {
             sword.pickedUp = 1;
             alert.active = 0;
             if (!showingDialogue) {
-              drawText("HELLO ADVENTURER", 0, 0);
+
               showingDialogue = 1;
             } else {
               eraseText();
@@ -284,10 +285,10 @@ void updateCaveAlert(int hOff,int vOff) {
 void drawAlert(int hOff, int vOff) {
     if (alert.active) {
         int tileIndex = 29 * 32;
-        shadowOAM[2].attr0 = ((alert.screenY) & 0xFF) | (0<<14);
-        shadowOAM[2].attr1 = ((alert.screenX) & 0x1FF) | (1<<14);
-        shadowOAM[2].attr2 = tileIndex | (((1) & 0xF) <<12) | (((0) & 3) << 10);
+        shadowOAM[3].attr0 = ((alert.screenY) & 0xFF) | (0<<14);
+        shadowOAM[3].attr1 = ((alert.screenX) & 0x1FF) | (1<<14);
+        shadowOAM[3].attr2 = tileIndex | (((1) & 0xF) <<12) | (((0) & 3) << 10);
     } else {
-        shadowOAM[2].attr0 = (2<<8);
+        shadowOAM[3].attr0 = (2<<8);
     }
 }

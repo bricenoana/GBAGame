@@ -31,11 +31,6 @@ initAlert:
 .L3:
 	.word	alert
 	.size	initAlert, .-initAlert
-	.section	.rodata.str1.4,"aMS",%progbits,1
-	.align	2
-.LC0:
-	.ascii	"HELLO ADVENTURER\000"
-	.text
 	.align	2
 	.global	updateJungleAlert
 	.syntax unified
@@ -66,42 +61,37 @@ updateJungleAlert:
 	bx	r7
 	subs	r3, r0, #0
 	beq	.L6
-	mov	r7, #1
+	mov	r0, #1
 	ldr	r2, [r4, #8]
 	ldr	r3, [r4]
 	add	r2, r2, r2, lsr #31
-	add	r3, r3, r2, asr r7
+	add	r3, r3, r2, asr r0
 	ldr	r2, .L12+12
-	ldrh	r2, [r2]
-	tst	r2, #1
-	ldr	r2, [r4, #4]
-	ldr	r1, .L12+16
+	ldrh	r1, [r2]
+	tst	r1, #1
+	ldr	r1, [r4, #4]
+	ldr	r2, .L12+16
 	sub	r3, r3, #16
-	sub	r2, r2, #15
+	sub	r1, r1, #15
 	sub	r6, r3, r6
-	sub	r5, r2, r5
-	str	r6, [r1, #8]
-	str	r3, [r1]
-	str	r5, [r1, #12]
-	str	r2, [r1, #4]
-	str	r7, [r1, #16]
+	sub	r5, r1, r5
+	str	r6, [r2, #8]
+	str	r3, [r2]
+	str	r5, [r2, #12]
+	str	r1, [r2, #4]
+	str	r0, [r2, #16]
 	beq	.L5
 	ldr	r3, .L12+20
 	ldrh	r3, [r3]
-	ands	r3, r3, r7
+	ands	r3, r3, r0
 	bne	.L5
 	ldr	r5, .L12+24
-	ldr	r2, [r5]
-	cmp	r2, #0
-	str	r7, [r4, #28]
-	str	r3, [r1, #16]
+	ldr	r1, [r5]
+	cmp	r1, #0
+	str	r0, [r4, #28]
+	str	r3, [r2, #16]
+	streq	r0, [r5]
 	bne	.L10
-	mov	r1, r2
-	ldr	r0, .L12+28
-	ldr	r3, .L12+32
-	mov	lr, pc
-	bx	r3
-	str	r7, [r5]
 .L5:
 	add	sp, sp, #20
 	@ sp needed
@@ -115,7 +105,7 @@ updateJungleAlert:
 	str	r3, [r2, #16]
 	beq	.L5
 .L10:
-	ldr	r3, .L12+36
+	ldr	r3, .L12+28
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
@@ -134,8 +124,6 @@ updateJungleAlert:
 	.word	alert
 	.word	buttons
 	.word	.LANCHOR0
-	.word	.LC0
-	.word	drawText
 	.word	eraseText
 	.size	updateJungleAlert, .-updateJungleAlert
 	.align	2
@@ -168,7 +156,7 @@ updateCaveAlert:
 	bx	r7
 	subs	r3, r0, #0
 	beq	.L15
-	mov	r7, #1
+	mov	r0, #1
 	ldr	r3, .L21+12
 	ldrh	r1, [r3]
 	ldr	r2, [r4, #4]
@@ -179,24 +167,19 @@ updateCaveAlert:
 	sub	r6, r2, r6
 	sub	r5, r1, r5
 	stm	r3, {r1, r2, r5, r6}
-	str	r7, [r3, #16]
+	str	r0, [r3, #16]
 	beq	.L14
 	ldr	r2, .L21+20
 	ldrh	r2, [r2]
-	ands	r1, r2, r7
+	ands	r2, r2, r0
 	bne	.L14
 	ldr	r5, .L21+24
-	ldr	r2, [r5]
-	cmp	r2, #0
-	str	r7, [r4, #20]
-	str	r1, [r3, #16]
+	ldr	r1, [r5]
+	cmp	r1, #0
+	str	r0, [r4, #20]
+	str	r2, [r3, #16]
+	streq	r0, [r5]
 	bne	.L19
-	mov	r1, r2
-	ldr	r0, .L21+28
-	ldr	r3, .L21+32
-	mov	lr, pc
-	bx	r3
-	str	r7, [r5]
 .L14:
 	add	sp, sp, #20
 	@ sp needed
@@ -210,7 +193,7 @@ updateCaveAlert:
 	str	r3, [r2, #16]
 	beq	.L14
 .L19:
-	ldr	r3, .L21+36
+	ldr	r3, .L21+28
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
@@ -229,8 +212,6 @@ updateCaveAlert:
 	.word	alert
 	.word	buttons
 	.word	.LANCHOR0
-	.word	.LC0
-	.word	drawText
 	.word	eraseText
 	.size	updateCaveAlert, .-updateCaveAlert
 	.align	2
@@ -255,14 +236,14 @@ drawAlert:
 	ldr	r2, .L26+8
 	lsr	r3, r3, #23
 	orr	r3, r3, #16384
-	strh	r3, [r2, #18]	@ movhi
-	strh	r0, [r2, #16]	@ movhi
-	strh	r1, [r2, #20]	@ movhi
+	strh	r3, [r2, #26]	@ movhi
+	strh	r0, [r2, #24]	@ movhi
+	strh	r1, [r2, #28]	@ movhi
 	bx	lr
 .L24:
 	mov	r2, #512
 	ldr	r3, .L26+8
-	strh	r2, [r3, #16]	@ movhi
+	strh	r2, [r3, #24]	@ movhi
 	bx	lr
 .L27:
 	.align	2

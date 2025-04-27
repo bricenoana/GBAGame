@@ -58,12 +58,15 @@ initBossStage:
 	ldr	r3, .L4+32
 	mov	lr, pc
 	bx	r3
+	ldr	r3, .L4+36
+	mov	lr, pc
+	bx	r3
 	mov	r3, #0
 	mov	lr, #200
 	mov	ip, #100
-	ldr	r1, .L4+36
-	ldr	r2, .L4+40
-	ldr	r0, .L4+44
+	ldr	r1, .L4+40
+	ldr	r2, .L4+44
+	ldr	r0, .L4+48
 	str	lr, [r1]
 	str	ip, [r1, #4]
 	str	r3, [r0]
@@ -80,6 +83,7 @@ initBossStage:
 	.word	100718592
 	.word	bossBGTestMap
 	.word	initPlayer
+	.word	hideSprites
 	.word	initBoss
 	.word	initFireballs
 	.word	initSlash
@@ -376,20 +380,23 @@ drawBossStage:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	mov	r3, #67108864
 	mov	r2, #0
-	ldr	r1, .L62
 	push	{r4, lr}
+	ldr	r1, .L60
 	strh	r2, [r3, #16]	@ movhi
 	strh	r2, [r3, #18]	@ movhi
-	ldr	r3, [r1]
-	cmp	r3, r2
+	mov	lr, pc
+	bx	r1
+	ldr	r3, .L60+4
+	ldr	r3, [r3]
+	cmp	r3, #0
 	beq	.L56
 	mov	ip, #6
-	ldr	r2, .L62+4
+	ldr	r2, .L60+8
 	ldr	r3, [r2]
 	ldrb	r1, [r2, #4]	@ zero_extendqisi2
-	ldr	r0, .L62+8
+	ldr	r0, .L60+12
 	lsl	r3, r3, #23
-	ldr	r2, .L62+12
+	ldr	r2, .L60+16
 	lsr	r3, r3, #23
 	orr	r3, r3, r0
 	orr	r1, r1, r0
@@ -397,43 +404,35 @@ drawBossStage:
 	strh	r1, [r2]	@ movhi
 	strh	ip, [r2, #4]	@ movhi
 .L57:
-	ldr	r3, .L62+16
+	ldr	r3, .L60+20
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L62+20
+	ldr	r3, .L60+24
 	mov	lr, pc
 	bx	r3
 	mov	r1, #0
-	ldr	r3, .L62+24
+	ldr	r3, .L60+28
 	mov	r0, r1
 	mov	lr, pc
 	bx	r3
-	mov	r1, #512
-	ldr	r3, .L62+12
-	add	r2, r3, #944
-.L59:
-	strh	r1, [r3, #80]	@ movhi
-	add	r3, r3, #8
-	cmp	r3, r2
-	bne	.L59
+	ldr	r3, .L60+32
+	mov	lr, pc
+	bx	r3
+	ldr	r4, .L60+36
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L62+12
-	ldr	r4, .L62+28
+	ldr	r1, .L60+16
 	mov	lr, pc
 	bx	r4
-	ldr	r3, .L62+32
-	mov	lr, pc
-	bx	r3
 	pop	{r4, lr}
 	bx	lr
 .L56:
-	ldr	r3, .L62+36
+	ldr	r3, .L60+40
 	ldr	r1, [r3]
 	cmp	r1, #0
 	beq	.L58
-	ldr	r2, .L62+4
+	ldr	r2, .L60+8
 	ldr	r3, [r2]
 	lsl	r3, r3, #23
 	lsr	r3, r3, #23
@@ -441,20 +440,21 @@ drawBossStage:
 	mov	r1, #640
 	mvn	r3, r3, lsr #17
 	ldrb	r0, [r2, #4]	@ zero_extendqisi2
-	ldr	r2, .L62+12
+	ldr	r2, .L60+16
 	strh	r3, [r2, #2]	@ movhi
 	strh	r0, [r2]	@ movhi
 	strh	r1, [r2, #4]	@ movhi
 	b	.L57
 .L58:
 	mov	r0, r1
-	ldr	r3, .L62+40
+	ldr	r3, .L60+44
 	mov	lr, pc
 	bx	r3
 	b	.L57
-.L63:
+.L61:
 	.align	2
-.L62:
+.L60:
+	.word	hideSprites
 	.word	playerBlockActive
 	.word	player
 	.word	-32768
@@ -462,8 +462,8 @@ drawBossStage:
 	.word	drawBoss
 	.word	drawFireballs
 	.word	drawSlash
-	.word	DMANow
 	.word	waitForVBlank
+	.word	DMANow
 	.word	.LANCHOR0
 	.word	drawPlayer
 	.size	drawBossStage, .-drawBossStage

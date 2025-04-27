@@ -116,12 +116,12 @@ typedef struct {
     u8 oamIndex;
 } SPRITE;
 # 4 "jungleStage.c" 2
-# 1 "spritesheet.h" 1
-# 21 "spritesheet.h"
-extern const unsigned short spritesheetTiles[16384];
+# 1 "spriteNormal.h" 1
+# 21 "spriteNormal.h"
+extern const unsigned short spriteNormalTiles[16384];
 
 
-extern const unsigned short spritesheetPal[256];
+extern const unsigned short spriteNormalPal[256];
 # 5 "jungleStage.c" 2
 # 1 "player.h" 1
 
@@ -205,70 +205,146 @@ extern const unsigned short singleLayerJunglePal[256];
 
 extern const unsigned short singleLayerMapMap[2048];
 # 10 "jungleStage.c" 2
+# 1 "text.h" 1
+# 11 "text.h"
+void eraseText(void);
+
+
+void textToTile(const char string[], int offset);
+
+
+
+void drawButton(void);
+# 11 "jungleStage.c" 2
+# 1 "textTiles.h" 1
+# 21 "textTiles.h"
+extern const unsigned short textTilesTiles[3584];
+
+
+extern const unsigned short textTilesPal[256];
+# 12 "jungleStage.c" 2
+
+
+
+
 
 int hOff, vOff;
+int textState;
 
 void initJungleStage(void) {
-    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
-    (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (1 << 14);
 
+    (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
+
+
+    (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((27) << 8) | (1 << 14) | 1;
     DMANow(3, singleLayerJunglePal, ((unsigned short *)0x5000000), 512/2);
-    DMANow(3, singleLayerJungleTiles, &((CB*) 0x6000000)[0], 11264 / 2);
+    DMANow(3, singleLayerJungleTiles, &((CB*) 0x6000000)[0], 11264/2);
     DMANow(3, singleLayerMapMap, &((SB*) 0x6000000)[27], (4096)/2);
+
+
+    (*(volatile unsigned short*) 0x4000008) = ((2) << 2) | ((10) << 8) | (0 << 14) | 0;
+
+    (*(volatile unsigned short*) 0x04000010) = 0;
+    (*(volatile unsigned short*) 0x04000012) = 0;
+
+    DMANow(3, textTilesTiles, &((CB*) 0x6000000)[2], 7168/2);
+    DMANow(3, textTilesPal, &((unsigned short *)0x5000000)[16], 512/2);
+    for (int i = 0; i < 32*32; i++) {
+      ((SB*) 0x6000000)[10].tilemap[i] = ((0) & 1023) | (((0) & 15) << 12);
+    }
+
+
+    DMANow(3, spriteNormalTiles, &((CB*) 0x6000000)[4], 32768/2);
+    DMANow(3, spriteNormalPal, ((u16 *)0x5000200), 512/2);
+
 
     initPlayer();
     initTemple();
     initAlert();
-    collisionEnabled = 1;
-
-    hOff = 0;
-    vOff = 0;
-    (*(volatile unsigned short*) 0x04000010) = hOff;
-    (*(volatile unsigned short*) 0x04000012) = vOff;
-
-    hideSprites();
-    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
-
     initNPC();
 
-}
+    textState = 0;
 
+    hOff = vOff = 0;
+    (*(volatile unsigned short*) 0x04000014) = hOff;
+    (*(volatile unsigned short*) 0x04000016) = vOff;
+
+    hideSprites();
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128*4);
+}
 
 void updateJungleStage(void) {
     updatePlayer();
     updateNPC(hOff, vOff);
     updateJungleAlert(hOff, vOff);
+    if (textState == 0) {
+        (*(volatile unsigned short *)0x4000000) |= (1 << (8 + (0 % 4)));
+    }
 
-    if (checkTempleCollision(player.x, player.y, player.width, player.height))
-    {
+    if (checkTempleCollision(player.x, player.y, player.width, player.height)) {
         goToBossStage();
     }
 
-    int screenX = player.x - hOff;
+    if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0)))) &&
+        collision(player.x, player.y, player.width, player.height,
+                  npc.x, npc.y, npc.width, npc.height))
+    {
+
+        eraseText();
+
+
+
+        switch (textState) {
+            case 0:
+                textToTile("NPC: HI THERE!", ((14) * 32 + (1)));
+                break;
+            case 1:
+                textToTile("I SAW AN ALEBRIJE FLY BY...", ((14) * 32 + (1)));
+                break;
+            case 2:
+                textToTile("THAT COULD ONLY MEAN TROUBLE", ((14) * 32 + (1)));
+                break;
+            case 3:
+                textToTile("TAKE THIS SHIELD WITH YOU", ((14) * 32 + (1)));
+                break;
+            case 4:
+                textToTile("USE IT TO PROTECT YOURSELF", ((14) * 32 + (1)));
+                break;
+            default:
+                (*(volatile unsigned short *)0x4000000) &= ~(1 << (8 + (0 % 4)));
+
+
+
+                eraseText();
+                textState = -1;
+                break;
+        }
+        textState++;
+    }
 }
 
-
-
 void drawJungleStage(void) {
-    hOff = player.x - (240 / 2);
-    vOff = player.y - (160 / 2);
+    hOff = player.x - (240/2);
+    vOff = player.y - (160/2);
+
     if (hOff < 0) hOff = 0;
     if (hOff > 512 - 240) hOff = 512 - 240;
     if (vOff < 0) vOff = 0;
     if (vOff > 512 - 160) vOff = 512 - 160;
 
-    (*(volatile unsigned short*) 0x04000010) = hOff;
-    (*(volatile unsigned short*) 0x04000012) = vOff;
+    (*(volatile unsigned short*) 0x04000014) = hOff;
+    (*(volatile unsigned short*) 0x04000016) = vOff;
+
+    hideSprites();
 
     drawPlayer(hOff, vOff);
     drawNPC(hOff, vOff);
     drawAlert(hOff, vOff);
 
-    for (int i = 3; i < 128; i++) {
-        shadowOAM[i].attr0 = (2<<8);
-    }
-    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
+
+
 
 
     waitForVBlank();
+    DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
 }

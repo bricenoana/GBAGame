@@ -54,16 +54,16 @@ void updateFireballs(void) {
 }
 
 void drawFireballs(void) {
-    int i;
-    for (i = 0; i < MAX_FIREBALLS; i++){
-        if (fireballs[i].active){
-            int screenX = fireballs[i].x;
-            int screenY = fireballs[i].y;
-            shadowOAM[2].attr0 = ATTR0_Y(screenY) | ATTR0_SQUARE;
-            shadowOAM[2].attr1 = ATTR1_X(screenX) | ATTR1_SMALL;
-            shadowOAM[2].attr2 = ATTR2_TILEID(14, 17) | (2 << 12);
+    for (int i = 0; i < MAX_FIREBALLS; i++) {
+        int oamIndex = 2 + i;
+        if (fireballs[i].active) {
+            int sx = fireballs[i].x;
+            int sy = fireballs[i].y;
+            shadowOAM[oamIndex].attr0 = ATTR0_Y(sy)    | ATTR0_SQUARE;
+            shadowOAM[oamIndex].attr1 = ATTR1_X(sx)    | ATTR1_SMALL;
+            shadowOAM[oamIndex].attr2 = ATTR2_TILEID(14, 17) | (2 << 12);
         } else {
-            shadowOAM[2].attr0 = ATTR0_HIDE;
+            shadowOAM[oamIndex].attr0 = ATTR0_HIDE;
         }
     }
 }

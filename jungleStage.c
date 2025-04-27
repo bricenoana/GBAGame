@@ -63,6 +63,9 @@ void updateJungleStage(void) {
     updatePlayer();
     updateNPC(hOff, vOff);
     updateJungleAlert(hOff, vOff);
+    if (textState == 0) {
+        REG_DISPCTL |= BG_ENABLE(0);
+    }
 
     if (checkTempleCollision(player.x, player.y, player.width, player.height)) {
         goToBossStage();
@@ -72,12 +75,6 @@ void updateJungleStage(void) {
         collision(player.x, player.y, player.width, player.height,
                   npc.x,      npc.y,      npc.width,      npc.height))
     {
-        if (textState == 0) {
-            REG_DISPCTL |= BG_ENABLE(0);
-            // for (int i = 0; i < BOXCOUNT; i++) {
-            //     dialogueBox[i].active = 1;
-            // }
-        }
 
         eraseText();
         // drawBoxes();

@@ -116,13 +116,6 @@ typedef struct {
     u8 oamIndex;
 } SPRITE;
 # 4 "caveStage.c" 2
-# 1 "spritesheet.h" 1
-# 21 "spritesheet.h"
-extern const unsigned short spritesheetTiles[16384];
-
-
-extern const unsigned short spritesheetPal[256];
-# 5 "caveStage.c" 2
 # 1 "player.h" 1
 
 
@@ -150,14 +143,14 @@ extern int collisionEnabled;
 void initPlayer(void);
 void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
-# 6 "caveStage.c" 2
+# 5 "caveStage.c" 2
 # 1 "backgroundCaveTiles.h" 1
 # 21 "backgroundCaveTiles.h"
 extern const unsigned short backgroundCaveTilesTiles[9600];
 
 
 extern const unsigned short backgroundCaveTilesPal[256];
-# 7 "caveStage.c" 2
+# 6 "caveStage.c" 2
 # 1 "backgroundCaveMap.h" 1
 
 
@@ -167,14 +160,14 @@ extern const unsigned short backgroundCaveTilesPal[256];
 
 
 extern const unsigned short backgroundCaveMapMap[2048];
-# 8 "caveStage.c" 2
+# 7 "caveStage.c" 2
 # 1 "foregroundCaveTiles.h" 1
 # 21 "foregroundCaveTiles.h"
 extern const unsigned short foregroundCaveTilesTiles[9600];
 
 
 extern const unsigned short foregroundCaveTilesPal[256];
-# 9 "caveStage.c" 2
+# 8 "caveStage.c" 2
 # 1 "foregroundCaveMap.h" 1
 
 
@@ -184,23 +177,25 @@ extern const unsigned short foregroundCaveTilesPal[256];
 
 
 extern const unsigned short foregroundCaveMapMap[2048];
-# 10 "caveStage.c" 2
+# 9 "caveStage.c" 2
 # 1 "text.h" 1
+# 11 "text.h"
+void eraseText(void);
+
+
+void textToTile(const char string[], int offset);
 
 
 
-
-
-void drawText(char string[], int offset, int person);
-void eraseText();
-# 11 "caveStage.c" 2
+void drawButton(void);
+# 10 "caveStage.c" 2
 # 1 "textTiles.h" 1
 # 21 "textTiles.h"
 extern const unsigned short textTilesTiles[3584];
 
 
 extern const unsigned short textTilesPal[256];
-# 12 "caveStage.c" 2
+# 11 "caveStage.c" 2
 
 int hOff, vOff;
 
@@ -209,7 +204,7 @@ void initCaveStage(void) {
 
     (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((26) << 8) | (1 << 14) | ((2) << 8);
     (*(volatile unsigned short*) 0x400000A) = ((1) << 2) | ((27) << 8) | (1 << 14) | ((1) << 8);
-    (*(volatile unsigned short*) 0x400000C) = ((2) << 2) | ((31) << 8) | (0 << 14) | (0 << 7) | ((0) << 8);
+
 
 
     DMANow(3, foregroundCaveTilesPal, ((unsigned short *)0x5000000), 512 / 2);
@@ -220,8 +215,8 @@ void initCaveStage(void) {
     DMANow(3, backgroundCaveTilesTiles, &((CB*) 0x6000000)[1], 19200 / 2);
     DMANow(3, backgroundCaveMapMap, &((SB*) 0x6000000)[26], (4096) / 2);
 
-    DMANow(3, textTilesTiles, &((CB*) 0x6000000)[2], 7168/2);
-    DMANow(3, textTilesPal, ((unsigned short *)0x5000000)[16], 512/2);
+
+
 
     initPlayer();
     initSword();
@@ -255,6 +250,8 @@ void updateCaveStage(void) {
 
 
 void drawCaveStage(void) {
+    hideSprites();
+
     hOff = player.x - (240 / 2);
     if (hOff < 0) hOff = 0;
     if (hOff > 512 - 240) hOff = 512 - 240;
@@ -271,11 +268,7 @@ void drawCaveStage(void) {
     drawSword(hOff, vOff);
     drawAlert(hOff, vOff);
 
-    for (int i = 0; i < 128; i++) {
-        if (i != 0 && i != 3 && i != 2) {
-            shadowOAM[i].attr0 = (2<<8);
-        }
-    }
+
 
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
     waitForVBlank();

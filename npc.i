@@ -17,17 +17,19 @@ typedef signed long long s64;
 typedef unsigned long long u64;
 
 
+typedef void (*ihp)(void);
+
+
 
 
 
 
 extern volatile unsigned short *videoBuffer;
-# 38 "gba.h"
+# 44 "gba.h"
 void waitForVBlank();
-
-
+# 60 "gba.h"
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-# 70 "gba.h"
+# 76 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 
@@ -39,8 +41,8 @@ typedef volatile struct {
     volatile void* dest;
     unsigned int ctrl;
 } DMAChannel;
-# 104 "gba.h"
-void DMANow(int channel, volatile void* src, volatile void* dest, unsigned int ctrl);
+# 110 "gba.h"
+void DMANow(int channel, volatile void *src, volatile void *dest, unsigned int ctrl);
 # 2 "npc.c" 2
 # 1 "sprites.h" 1
 # 10 "sprites.h"
@@ -117,6 +119,9 @@ typedef struct {
     int health;
     int maxHealth;
     int defeated;
+    int flashTimer;
+    u16 baseColor;
+
 } Player;
 
 extern Player player;
@@ -129,7 +134,7 @@ void drawPlayer(int hOff, int vOff);
 # 4 "npc.c" 2
 # 1 "spriteNormal.h" 1
 # 21 "spriteNormal.h"
-extern const unsigned short spriteNormalTiles[25600];
+extern const unsigned short spriteNormalTiles[16384];
 
 
 extern const unsigned short spriteNormalPal[256];
@@ -155,6 +160,7 @@ typedef struct {
     int width, height;
     int screenX, screenY;
     int active;
+    int pickedUp;
 } NPC;
 
 extern NPC npc;
@@ -186,8 +192,8 @@ void drawNPC(int hOff, int vOff) {
         int screenX = npc.x - hOff;
         int screenY = npc.y - vOff;
         int tileIndex = 24 * 32;
-        shadowOAM[1].attr0 = ((screenY) & 0xFF) | (2<<14);
-        shadowOAM[1].attr1 = ((screenX) & 0x1FF) | (2<<14);
-        shadowOAM[1].attr2 = tileIndex | (((1) & 0xF) <<12) | (((0) & 3) << 10);
+        shadowOAM[4].attr0 = ((screenY) & 0xFF) | (2<<14);
+        shadowOAM[4].attr1 = ((screenX) & 0x1FF) | (2<<14);
+        shadowOAM[4].attr2 = tileIndex | (((1) & 0xF) <<12) | (((0) & 3) << 10);
     }
 }

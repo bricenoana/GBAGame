@@ -29,11 +29,11 @@ typedef void (*ihp)(void);
 
 
 extern volatile unsigned short *videoBuffer;
-# 43 "gba.h"
+# 44 "gba.h"
 void waitForVBlank();
-# 59 "gba.h"
+# 60 "gba.h"
 int collision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
-# 75 "gba.h"
+# 76 "gba.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
 
@@ -45,7 +45,7 @@ typedef volatile struct {
     volatile void* dest;
     unsigned int ctrl;
 } DMAChannel;
-# 109 "gba.h"
+# 110 "gba.h"
 void DMANow(int channel, volatile void *src, volatile void *dest, unsigned int ctrl);
 # 5 "playerHealth.h" 2
 
