@@ -1,17 +1,24 @@
 #include "text.h"
 #include "gba.h"
 #include "mode0.h"
+#include "textTiles.h"
 
-void drawText(char string[], int offset, int person) {
-    int i = 0;
+#define TILE_OFFSET(r,c)  ((r) * 32 + (c))
+
+void eraseText() {
+    for(int i = 0; i < 1024; i++) {
+        SCREENBLOCK[10].tilemap[i] = TILEMAP_ENTRY_TILEID(0) | TILEMAP_ENTRY_PALROW(1);
+    }
+}
+
+void textToTile(char string[], int offset) {
+    int i = 0; 
     while(string[i] != '\0') {
-        SCREENBLOCK[31].tilemap[i + offset] = TILEMAP_ENTRY_TILEID(string[i]) | TILEMAP_ENTRY_PALROW(1);
+        SCREENBLOCK[10].tilemap[i + offset] = TILEMAP_ENTRY_TILEID(string[i]) | TILEMAP_ENTRY_PALROW(1);
         i++;
     }
 }
 
-void eraseText() {
-    for (int i = 0; i < 1024; i++) {
-        SCREENBLOCK[31].tilemap[i] = TILEMAP_ENTRY_TILEID(0) | TILEMAP_ENTRY_PALROW(1);
-    }
+void drawButton() {
+        SCREENBLOCK[10].tilemap[TILE_OFFSET(27,28)] = TILEMAP_ENTRY_TILEID(91) | TILEMAP_ENTRY_PALROW(0) | 0;
 }

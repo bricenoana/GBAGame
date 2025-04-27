@@ -121,11 +121,11 @@ void drawBoss(void) {
     
 }
 
-void fireBossFireball() {
+void fireBossFireball() { // shooting function for boss
     for (int i = 0; i < MAX_FIREBALLS; i++) {
         if (!fireballs[i].active) {
             fireballs[i].active = 1;
-            fireballs[i].x = boss.x + boss.width / 2 - 8; // center fireball to boss?? mayb change
+            fireballs[i].x = boss.x + boss.width / 2 - 8; 
             fireballs[i].y = boss.y + boss.height / 2 - 8;
 
             int dx = player.x - fireballs[i].x;
@@ -142,7 +142,7 @@ void fireBossFireball() {
     }
 }
 
-int isqrt(int n) { // approx square root function?? ask if easier way 
+int isqrt(int n) { // function to calculate firball to direction of player
     int x = n;
     int y = (x + 1) / 2;
     while (y < x) {

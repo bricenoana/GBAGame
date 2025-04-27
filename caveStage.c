@@ -1,7 +1,6 @@
 #include "gba.h" 
 #include "mode0.h"
 #include "sprites.h"
-#include "spritesheet.h"
 #include "player.h"
 #include "backgroundCaveTiles.h" //tiles
 #include "backgroundCaveMap.h" //map
@@ -17,7 +16,7 @@ void initCaveStage(void) {
 
     REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(26) | BG_SIZE_WIDE  | BG_PRIO(2);
     REG_BG1CNT = BG_CHARBLOCK(1) | BG_SCREENBLOCK(27) | BG_SIZE_WIDE  | BG_PRIO(1);
-    REG_BG2CNT = BG_CHARBLOCK(2) | BG_SCREENBLOCK(31) | BG_SIZE_SMALL | BG_4BPP | BG_PRIO(0);
+    // REG_BG2CNT = BG_CHARBLOCK(2) | BG_SCREENBLOCK(31) | BG_SIZE_SMALL | BG_4BPP | BG_PRIO(0);
 
 
     DMANow(3, foregroundCaveTilesPal, BG_PALETTE, foregroundCaveTilesPalLen / 2);
@@ -28,8 +27,8 @@ void initCaveStage(void) {
     DMANow(3, backgroundCaveTilesTiles, &CHARBLOCK[1], backgroundCaveTilesTilesLen / 2);
     DMANow(3, backgroundCaveMapMap, &SCREENBLOCK[26], backgroundCaveMapLen / 2);
 
-    DMANow(3, textTilesTiles,   &CHARBLOCK[2], textTilesTilesLen/2);
-    DMANow(3, textTilesPal, BG_PALETTE[16],     textTilesPalLen/2);
+    // DMANow(3, textTilesTiles,   &CHARBLOCK[2], textTilesTilesLen/2);
+    // DMANow(3, textTilesPal, BG_PALETTE[16],     textTilesPalLen/2);
 
     initPlayer();
     initSword();
@@ -63,6 +62,8 @@ void updateCaveStage(void) {
 
 
 void drawCaveStage(void) {
+    hideSprites(); 
+    
     hOff = player.x - (SCREENWIDTH / 2);
     if (hOff < 0) hOff = 0;
     if (hOff > 512 - SCREENWIDTH) hOff = 512 - SCREENWIDTH;
@@ -79,11 +80,7 @@ void drawCaveStage(void) {
     drawSword(hOff, vOff);
     drawAlert(hOff, vOff);
 
-    for (int i = 0; i < 128; i++) {
-        if (i != 0 && i != 3 && i != 2) {
-            shadowOAM[i].attr0 = ATTR0_HIDE;
-        }
-    }
+
     
     DMANow(3, shadowOAM, OAM, 128 * 4);
     waitForVBlank();

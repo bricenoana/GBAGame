@@ -27,9 +27,9 @@ void drawNPC(int hOff, int vOff) {
         int screenX = npc.x - hOff;
         int screenY = npc.y - vOff;
         int tileIndex = 24 * SPRITESHEET_TILE_WIDTH;
-        shadowOAM[1].attr0 = ATTR0_Y(screenY) | ATTR0_TALL;
-        shadowOAM[1].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
-        shadowOAM[1].attr2 = tileIndex | ATTR2_PALROW(1) | ATTR2_PRIORITY(0);
+        shadowOAM[4].attr0 = ATTR0_Y(screenY) | ATTR0_TALL;
+        shadowOAM[4].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+        shadowOAM[4].attr2 = tileIndex | ATTR2_PALROW(1) | ATTR2_PRIORITY(0);
     }
 }
 

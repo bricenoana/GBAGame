@@ -41,7 +41,7 @@ void updateJungleAlert(int hOff,int vOff) {
             npc.pickedUp = 1;
             alert.active = 0;
             if (!showingDialogue) {
-              drawText("HELLO ADVENTURER", 0, 0);
+              // drawText("HELLO ADVENTURER", 0, 0);
               showingDialogue = 1;
             } else {
               eraseText();
@@ -72,7 +72,7 @@ void updateCaveAlert(int hOff,int vOff) {
             sword.pickedUp = 1;
             alert.active = 0;
             if (!showingDialogue) {
-              drawText("HELLO ADVENTURER", 0, 0);
+              // drawText("HELLO ADVENTURER", 0, 0);
               showingDialogue = 1;
             } else {
               eraseText();
@@ -92,11 +92,11 @@ void updateCaveAlert(int hOff,int vOff) {
 void drawAlert(int hOff, int vOff) {
     if (alert.active) {
         int tileIndex = 29 * SPRITESHEET_TILE_WIDTH;
-        shadowOAM[2].attr0 = ATTR0_Y(alert.screenY) | ATTR0_SQUARE;
-        shadowOAM[2].attr1 = ATTR1_X(alert.screenX) | ATTR1_SMALL;
-        shadowOAM[2].attr2 = tileIndex | ATTR2_PALROW(1) | ATTR2_PRIORITY(0);
+        shadowOAM[3].attr0 = ATTR0_Y(alert.screenY) | ATTR0_SQUARE;
+        shadowOAM[3].attr1 = ATTR1_X(alert.screenX) | ATTR1_SMALL;
+        shadowOAM[3].attr2 = tileIndex | ATTR2_PALROW(1) | ATTR2_PRIORITY(0);
     } else {
-        shadowOAM[2].attr0 = ATTR0_HIDE;
+        shadowOAM[3].attr0 = ATTR0_HIDE;
     }
 }
 

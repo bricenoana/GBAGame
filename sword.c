@@ -26,7 +26,7 @@ void drawSword(int hOff, int vOff) {
     int screenY = sword.y - vOff;
     int tileIndex = 24 * SPRITESHEET_TILE_WIDTH + 3;
 
-    shadowOAM[3].attr0 = ATTR0_Y(screenY) | ATTR0_TALL;
-    shadowOAM[3].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
-    shadowOAM[3].attr2 = tileIndex | ATTR2_PALROW(0) | ATTR2_PRIORITY(0);
+    shadowOAM[5].attr0 = ATTR0_Y(screenY) | ATTR0_TALL;
+    shadowOAM[5].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+    shadowOAM[5].attr2 = tileIndex | ATTR2_PALROW(0) | ATTR2_PRIORITY(0);
 }
