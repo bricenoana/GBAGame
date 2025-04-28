@@ -112,7 +112,6 @@ typedef struct {
 } SPRITE;
 # 2 "sprites.c" 2
 
-
 void hideSprites() {
     for (int i = 0; i < 128; i++) {
         shadowOAM[i].attr0 = (2<<8);

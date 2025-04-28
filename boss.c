@@ -102,8 +102,6 @@ void updateBoss(void) {
     }
 }
 
-
-
 void drawBoss(void) {
     shadowOAM[1].attr0 = ATTR0_Y(boss.y) | ATTR0_SQUARE;
     shadowOAM[1].attr1 = ATTR1_X(boss.x) | ATTR1_LARGE;

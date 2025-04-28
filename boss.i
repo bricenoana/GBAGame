@@ -179,6 +179,7 @@ typedef struct {
     int defeated;
     int flashTimer;
     u16 baseColor;
+    int cheat;
 
 } Player;
 
@@ -286,8 +287,6 @@ void updateBoss(void) {
         bossXVel = -bossXVel;
     }
 }
-
-
 
 void drawBoss(void) {
     shadowOAM[1].attr0 = ((boss.y) & 0xFF) | (0<<14);

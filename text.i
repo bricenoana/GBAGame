@@ -86,6 +86,8 @@ extern const unsigned short textTilesPal[256];
 
 
 
+
+
 void eraseText() {
     for(int i = 0; i < 1024; i++) {
         ((SB*) 0x6000000)[10].tilemap[i] = ((0) & 1023) | (((1) & 15) << 12);

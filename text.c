@@ -5,6 +5,8 @@
 
 #define TILE_OFFSET(r,c)  ((r) * 32 + (c))
 
+// thank u matt (he helped me with this extensively)
+
 void eraseText() {
     for(int i = 0; i < 1024; i++) {
         SCREENBLOCK[10].tilemap[i] = TILEMAP_ENTRY_TILEID(0) | TILEMAP_ENTRY_PALROW(1);

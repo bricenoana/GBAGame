@@ -545,9 +545,7 @@ static int winLoseTimer = 0;
 
 
 void goToStart(void) {
-
     state = START;
-
 
     stopSounds();
 
@@ -560,14 +558,23 @@ void goToStart(void) {
 
 
     DMANow(3, startBGPal, ((unsigned short *)0x5000000), 512 / 2);
+
+
     drawFullscreenImage4(startBGBitmap);
 
+
+    waitForVBlank();
+
+
+    flipPage();
+
+
+    drawFullscreenImage4(startBGBitmap);
 
     playSoundA(overallSong_data, overallSong_length, 1);
 
 
     waitForVBlank();
-    flipPage();
 }
 
 void goToCave(void) {
@@ -702,25 +709,6 @@ void goToWin(void) {
 
     playSoundA(winSong_data, winSong_length, 1);
 
-    u16 col10 = ((unsigned short *)0x5000000)[10];
-    u16 col3 = ((unsigned short *)0x5000000)[3];
-    u16 col14 = ((unsigned short *)0x5000000)[14];
-
-    while (!(!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
-        for (int i = 0; i < 30; i++)
-            waitForVBlank();
-
-        ((unsigned short *)0x5000000)[10] = col3;
-        ((unsigned short *)0x5000000)[3] = col14;
-        ((unsigned short *)0x5000000)[14] = col10;
-        for (int i = 0; i < 30; i++)
-        waitForVBlank();
-
-        ((unsigned short *)0x5000000)[10] = col10;
-        ((unsigned short *)0x5000000)[3] = col3;
-        ((unsigned short *)0x5000000)[14] = col14;
-    }
-
     state = WIN;
 }
 
@@ -738,25 +726,6 @@ void goToLose(void) {
            (240*160)/2);
 
     playSoundA(loseSong_data, loseSong_length, 1);
-
-    u16 col2 = ((unsigned short *)0x5000000)[2];
-    u16 col5 = ((unsigned short *)0x5000000)[5];
-    u16 col14 = ((unsigned short *)0x5000000)[14];
-
-    while (!(!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
-        for (int i = 0; i < 30; i++)
-            waitForVBlank();
-
-        ((unsigned short *)0x5000000)[2] = col14;
-        ((unsigned short *)0x5000000)[5] = col2;
-        ((unsigned short *)0x5000000)[14] = col5;
-        for (int i = 0; i < 30; i++)
-        waitForVBlank();
-
-        ((unsigned short *)0x5000000)[2] = col2;
-        ((unsigned short *)0x5000000)[5] = col5;
-        ((unsigned short *)0x5000000)[14] = col14;
-    }
 
     state = LOSE;
 }
@@ -782,23 +751,17 @@ static void startState(void) {
         goToInstructions();
     }
     if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
-        goToGame();
-    }
-    if ((!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
         goToBossStage();
     }
-    if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
-        goToCave();
-    }
+
+    waitForVBlank();
+    flipPage();
 }
 
 static void instructionsState(void) {
     drawFullscreenImage4(INSTRUCTIONSBitmap);
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToOP1();
-    }
-    if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
-        goToCave();
     }
     waitForVBlank();
     flipPage();
@@ -860,7 +823,12 @@ static void bossState(void) {
     if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
         goToPause();
     }
-
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        goToWin();
+    }
+    if ((!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
+        goToLose();
+    }
     updateBossStage();
     drawBossStage();
 }
@@ -890,28 +858,94 @@ static void pauseState(void) {
 
 
 static void winState(void) {
+
+    static u16 col10;
+    static u16 col3;
+    static u16 col14;
+    static int paletteCounter = 0;
+    static int initialized = 0;
+
+
+    if (!initialized) {
+        col10 = ((unsigned short *)0x5000000)[10];
+        col3 = ((unsigned short *)0x5000000)[3];
+        col14 = ((unsigned short *)0x5000000)[14];
+        initialized = 1;
+    }
+
+
+    paletteCounter++;
+    if (paletteCounter >= 30) {
+        paletteCounter = 0;
+
+        u16 temp = ((unsigned short *)0x5000000)[10];
+        ((unsigned short *)0x5000000)[10] = ((unsigned short *)0x5000000)[3];
+        ((unsigned short *)0x5000000)[3] = ((unsigned short *)0x5000000)[14];
+        ((unsigned short *)0x5000000)[14] = temp;
+    }
+
     drawFullscreenImage4(winScreenBitmap);
     waitForVBlank();
     flipPage();
 
 
-    winLoseTimer++;
-    if (winLoseTimer > 180 || (!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        winLoseTimer = 0;
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3)))) || (!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
+
+        initialized = 0;
+        paletteCounter = 0;
+
+
+        ((unsigned short *)0x5000000)[10] = col10;
+        ((unsigned short *)0x5000000)[3] = col3;
+        ((unsigned short *)0x5000000)[14] = col14;
+
         state = START;
         goToStart();
     }
 }
 
 static void loseState(void) {
+
+    static u16 col2;
+    static u16 col5;
+    static u16 col14;
+    static int paletteCounter = 0;
+    static int initialized = 0;
+
+
+    if (!initialized) {
+        col2 = ((unsigned short *)0x5000000)[2];
+        col5 = ((unsigned short *)0x5000000)[5];
+        col14 = ((unsigned short *)0x5000000)[14];
+        initialized = 1;
+    }
+
+
+    paletteCounter++;
+    if (paletteCounter >= 30) {
+        paletteCounter = 0;
+
+        u16 temp = ((unsigned short *)0x5000000)[2];
+        ((unsigned short *)0x5000000)[2] = ((unsigned short *)0x5000000)[14];
+        ((unsigned short *)0x5000000)[5] = temp;
+        ((unsigned short *)0x5000000)[14] = ((unsigned short *)0x5000000)[5];
+    }
+
     drawFullscreenImage4(loseScreenBitmap);
     waitForVBlank();
     flipPage();
 
 
-    winLoseTimer++;
-    if (winLoseTimer > 180 || (!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        winLoseTimer = 0;
+    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3)))) || (!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
+
+        initialized = 0;
+        paletteCounter = 0;
+
+
+        ((unsigned short *)0x5000000)[2] = col2;
+        ((unsigned short *)0x5000000)[5] = col5;
+        ((unsigned short *)0x5000000)[14] = col14;
+
         state = START;
         goToStart();
     }

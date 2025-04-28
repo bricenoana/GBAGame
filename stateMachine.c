@@ -40,16 +40,22 @@ void goToStart(void) {
     REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
     for (int i = 0; i < 240*160; i++) {
         FRONTBUFFER[i] = 0;
-        BACKBUFFER[i]  = 0;
+        BACKBUFFER[i] = 0;
     }
     
     DMANow(3, startBGPal, BG_PALETTE, startBGPalLen / 2);
+    
+    drawFullscreenImage4(startBGBitmap);
+    
+    waitForVBlank();
+    
+    flipPage();
+    
     drawFullscreenImage4(startBGBitmap);
     
     playSoundA(overallSong_data, overallSong_length, 1);
     
     waitForVBlank();
-    flipPage();
 }
 
 void goToCave(void) {
@@ -183,25 +189,6 @@ void goToWin(void) {
            (240*160)/2);
 
     playSoundA(winSong_data, winSong_length, 1);
-
-    u16 col10 = BG_PALETTE[10];
-    u16 col3 = BG_PALETTE[3];
-    u16 col14 = BG_PALETTE[14];
-
-    while (!BUTTON_PRESSED(BUTTON_B)) {
-        for (int i = 0; i < PALETTE_HOLD_FRAMES; i++)
-            waitForVBlank();
-
-        BG_PALETTE[10] = col3;
-        BG_PALETTE[3] = col14;
-        BG_PALETTE[14] = col10;
-        for (int i = 0; i < PALETTE_HOLD_FRAMES; i++)
-        waitForVBlank();
-
-        BG_PALETTE[10] = col10;
-        BG_PALETTE[3] = col3;
-        BG_PALETTE[14] = col14;
-    }
     
     state = WIN;
 }
@@ -220,25 +207,6 @@ void goToLose(void) {
            (240*160)/2);
 
     playSoundA(loseSong_data, loseSong_length, 1);
-
-    u16 col2 = BG_PALETTE[2];
-    u16 col5 = BG_PALETTE[5];
-    u16 col14 = BG_PALETTE[14];
-
-    while (!BUTTON_PRESSED(BUTTON_B)) {
-        for (int i = 0; i < PALETTE_HOLD_FRAMES; i++)
-            waitForVBlank();
-
-        BG_PALETTE[2] = col14;
-        BG_PALETTE[5] = col2;
-        BG_PALETTE[14] = col5;
-        for (int i = 0; i < PALETTE_HOLD_FRAMES; i++)
-        waitForVBlank();
-
-        BG_PALETTE[2] = col2;
-        BG_PALETTE[5] = col5;
-        BG_PALETTE[14] = col14;
-    }
 
     state = LOSE;
 }
@@ -263,24 +231,15 @@ static void startState(void) {
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToInstructions();
     }
-    if (BUTTON_PRESSED(BUTTON_A)) {
-        goToGame();
-    }
-    if (BUTTON_PRESSED(BUTTON_B)) {
-        goToBossStage();
-    }
-    if (BUTTON_PRESSED(BUTTON_SELECT)) {
-        goToCave();
-    }
+
+    waitForVBlank();
+    flipPage();
 }
 
 static void instructionsState(void) {
     drawFullscreenImage4(INSTRUCTIONSBitmap);
     if (BUTTON_PRESSED(BUTTON_START)) {
         goToOP1();
-    }
-    if (BUTTON_PRESSED(BUTTON_SELECT)) {
-        goToCave();
     }
     waitForVBlank();
     flipPage();
@@ -342,7 +301,6 @@ static void bossState(void) {
     if (BUTTON_PRESSED(BUTTON_SELECT)) {
         goToPause();
     }
-
     updateBossStage();
     drawBossStage();
 }
@@ -372,26 +330,80 @@ static void pauseState(void) {
 
 
 static void winState(void) {
+    static u16 col10;
+    static u16 col3;
+    static u16 col14;
+    static int paletteCounter = 0;
+    static int initialized = 0;
+    
+    if (!initialized) {
+        col10 = BG_PALETTE[10];
+        col3 = BG_PALETTE[3];
+        col14 = BG_PALETTE[14];
+        initialized = 1;
+    }
+    
+    paletteCounter++;
+    if (paletteCounter >= PALETTE_HOLD_FRAMES) {
+        paletteCounter = 0;
+        u16 temp = BG_PALETTE[10];
+        BG_PALETTE[10] = BG_PALETTE[3];
+        BG_PALETTE[3] = BG_PALETTE[14];
+        BG_PALETTE[14] = temp;
+    }
+    
     drawFullscreenImage4(winScreenBitmap);
     waitForVBlank();
     flipPage();
     
-    winLoseTimer++;
-    if (winLoseTimer > 180 || BUTTON_PRESSED(BUTTON_START)) {
-        winLoseTimer = 0;
+    if (BUTTON_PRESSED(BUTTON_START) || BUTTON_PRESSED(BUTTON_B)) {
+        initialized = 0;
+        paletteCounter = 0;
+        
+        BG_PALETTE[10] = col10;
+        BG_PALETTE[3] = col3;
+        BG_PALETTE[14] = col14;
+        
         state = START;
         goToStart();
     }
 }
 
 static void loseState(void) {
+    static u16 col2;
+    static u16 col5;
+    static u16 col14;
+    static int paletteCounter = 0;
+    static int initialized = 0;
+    
+    if (!initialized) {
+        col2 = BG_PALETTE[2];
+        col5 = BG_PALETTE[5];
+        col14 = BG_PALETTE[14];
+        initialized = 1;
+    }
+    
+    paletteCounter++;
+    if (paletteCounter >= PALETTE_HOLD_FRAMES) {
+        paletteCounter = 0;
+        u16 temp = BG_PALETTE[2];
+        BG_PALETTE[2] = BG_PALETTE[14];
+        BG_PALETTE[5] = temp;
+        BG_PALETTE[14] = BG_PALETTE[5];
+    }
+    
     drawFullscreenImage4(loseScreenBitmap);
     waitForVBlank();
     flipPage();
     
-    winLoseTimer++;
-    if (winLoseTimer > 180 || BUTTON_PRESSED(BUTTON_START)) {
-        winLoseTimer = 0;
+    if (BUTTON_PRESSED(BUTTON_START) || BUTTON_PRESSED(BUTTON_B)) {
+        initialized = 0;
+        paletteCounter = 0;
+        
+        BG_PALETTE[2] = col2;
+        BG_PALETTE[5] = col5;
+        BG_PALETTE[14] = col14;
+        
         state = START;
         goToStart();
     }

@@ -326,12 +326,9 @@ void updateJungleStage(void) {
             player.x, player.y, player.width, player.height,
             npc.x, npc.y, npc.width, npc.height))
     {
-
         (*(volatile unsigned short *)0x4000000) &= ~(1 << (8 + (0 % 4)));
-
         boxInactive();
         eraseText();
-
         textState = 0;
     }
 
