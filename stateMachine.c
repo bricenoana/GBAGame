@@ -28,28 +28,29 @@ extern unsigned short oldButtons;
 static GameState state;
 static GameState prevState;
 
+static int winLoseTimer = 0;
+
 #define PALETTE_HOLD_FRAMES 30
 
 void goToStart(void) {
-    REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
+    state = START;
     
+    stopSounds();
+    
+    REG_DISPCTL = MODE(4) | BG_ENABLE(2) | DISP_BACKBUFFER;
     for (int i = 0; i < 240*160; i++) {
         FRONTBUFFER[i] = 0;
         BACKBUFFER[i]  = 0;
     }
     
     DMANow(3, startBGPal, BG_PALETTE, startBGPalLen / 2);
-    
     drawFullscreenImage4(startBGBitmap);
+    
     playSoundA(overallSong_data, overallSong_length, 1);
     
     waitForVBlank();
     flipPage();
-    
-    state = START;
 }
-
-
 
 void goToCave(void) {
     initCaveStage();
@@ -372,22 +373,28 @@ static void pauseState(void) {
 
 static void winState(void) {
     drawFullscreenImage4(winScreenBitmap);
-    if (BUTTON_PRESSED(BUTTON_START)) {
-        goToStart();
-    }
     waitForVBlank();
     flipPage();
+    
+    winLoseTimer++;
+    if (winLoseTimer > 180 || BUTTON_PRESSED(BUTTON_START)) {
+        winLoseTimer = 0;
+        state = START;
+        goToStart();
+    }
 }
-
 
 static void loseState(void) {
     drawFullscreenImage4(loseScreenBitmap);
-    if (BUTTON_PRESSED(BUTTON_START)) {
-        goToStart();
-        return;
-    }
     waitForVBlank();
     flipPage();
+    
+    winLoseTimer++;
+    if (winLoseTimer > 180 || BUTTON_PRESSED(BUTTON_START)) {
+        winLoseTimer = 0;
+        state = START;
+        goToStart();
+    }
 }
 
 

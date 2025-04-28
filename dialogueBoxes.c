@@ -21,7 +21,7 @@ void drawBoxes() {
       shadowOAM[ dialogueBox[i].oamIndex ].attr0
         = ATTR0_Y(dialogueBox[i].y + 20)
         | ATTR0_REGULAR
-        | ATTR0_WIDE;
+        | ATTR0_SQUARE;
       shadowOAM[ dialogueBox[i].oamIndex ].attr1
         = ATTR1_X(dialogueBox[i].x)
         | ATTR1_LARGE;
@@ -31,5 +31,17 @@ void drawBoxes() {
     } else {
       shadowOAM[ dialogueBox[i].oamIndex ].attr0 = ATTR0_HIDE;
     }
+  }
+}
+
+void boxInactive(void) {
+  for (int i = 0; i < BOXCOUNT; i++) {
+      dialogueBox[i].active = 0;
+  }
+}
+
+void boxActive(void) {
+  for (int i = 0; i < BOXCOUNT; i++) {
+      dialogueBox[i].active = 1;
   }
 }

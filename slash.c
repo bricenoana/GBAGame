@@ -13,7 +13,7 @@ void initSlashes(void) {
 }
 
 void spawnSlash(int x, int y, int dx, int dy) {
-    // Count how many slashes are already active
+    // count active slashes
     int activeCount = 0;
     for (int i = 0; i < MAX_SLASHES; i++) {
         if (slashes[i].active) {
@@ -21,13 +21,12 @@ void spawnSlash(int x, int y, int dx, int dy) {
         }
     }
 
-    // If cheat is off, only allow 1; if on, allow up to MAX_SLASHES
+    // cheat toggle
     int limit = player.cheat ? MAX_SLASHES : 1;
     if (activeCount >= limit) {
         return;
     }
 
-    // Otherwise grab the first free slot
     for (int i = 0; i < MAX_SLASHES; i++) {
         if (!slashes[i].active) {
             slashes[i].active = 1;

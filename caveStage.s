@@ -165,21 +165,25 @@ updateCaveStage:
 	rsb	r2, r2, #512
 	cmp	r0, r2
 	str	r1, [r3, #4]
-	bge	.L16
-.L7:
+	blt	.L7
 	ldr	r3, .L17+24
+	ldr	r3, [r3, #20]
+	cmp	r3, #1
+	beq	.L16
+.L7:
+	ldr	r3, .L17+28
 	ldrh	r3, [r3]
 	tst	r3, #1
 	beq	.L6
-	ldr	r3, .L17+28
+	ldr	r3, .L17+32
 	ldrh	r3, [r3]
 	ands	r3, r3, #1
 	bne	.L6
-	ldr	r2, .L17+32
+	ldr	r2, .L17+36
 	ldr	r1, [r2, #16]
 	cmp	r1, #0
 	movne	r0, #1
-	ldrne	r1, .L17+36
+	ldrne	r1, .L17+24
 	strne	r3, [r2, #16]
 	strne	r0, [r1, #20]
 .L6:
@@ -199,10 +203,10 @@ updateCaveStage:
 	.word	hOff
 	.word	updateCaveAlert
 	.word	player
+	.word	sword
 	.word	oldButtons
 	.word	buttons
 	.word	alert
-	.word	sword
 	.word	goToGame
 	.size	updateCaveStage, .-updateCaveStage
 	.align	2

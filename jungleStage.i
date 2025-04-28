@@ -224,7 +224,26 @@ extern const unsigned short textTilesTiles[3584];
 
 extern const unsigned short textTilesPal[256];
 # 12 "jungleStage.c" 2
+# 1 "dialogueBoxes.h" 1
+# 10 "dialogueBoxes.h"
+typedef struct {
+    int x;
+    int y;
+    int width;
+    int height;
+    int oamIndex;
+    int active;
+} Box;
 
+extern Box dialogueBox[4];
+
+void initBoxes(void);
+
+void drawBoxes(void);
+
+void boxInactive(void);
+void boxActive(void);
+# 13 "jungleStage.c" 2
 
 
 
@@ -233,18 +252,14 @@ int hOff, vOff;
 int textState;
 
 void initJungleStage(void) {
-
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (1 % 4))) | (1 << 12);
-
 
     (*(volatile unsigned short*) 0x400000A) = ((0) << 2) | ((27) << 8) | (1 << 14) | 1;
     DMANow(3, singleLayerJunglePal, ((unsigned short *)0x5000000), 512/2);
     DMANow(3, singleLayerJungleTiles, &((CB*) 0x6000000)[0], 11264/2);
     DMANow(3, singleLayerMapMap, &((SB*) 0x6000000)[27], (4096)/2);
 
-
     (*(volatile unsigned short*) 0x4000008) = ((2) << 2) | ((10) << 8) | (0 << 14) | 0;
-
     (*(volatile unsigned short*) 0x04000010) = 0;
     (*(volatile unsigned short*) 0x04000012) = 0;
 
@@ -254,15 +269,17 @@ void initJungleStage(void) {
       ((SB*) 0x6000000)[10].tilemap[i] = ((0) & 1023) | (((0) & 15) << 12);
     }
 
-
     DMANow(3, spriteNormalTiles, &((CB*) 0x6000000)[4], 32768/2);
     DMANow(3, spriteNormalPal, ((u16 *)0x5000200), 512/2);
-
 
     initPlayer();
     initTemple();
     initAlert();
     initNPC();
+
+
+    initBoxes();
+    boxInactive();
 
     textState = 0;
     collisionEnabled = 1;
@@ -300,8 +317,22 @@ void updateJungleStage(void) {
         (*(volatile unsigned short *)0x4000000) |= (1 << (8 + (0 % 4)));
     }
 
-    if (checkTempleCollision(player.x, player.y, player.width, player.height)) {
+    if (checkTempleCollision(player.x, player.y, player.width, player.height) && sword.pickedUp == 1 && npc.pickedUp == 1) {
         goToBossStage();
+    }
+
+    if (textState > 0 &&
+        !collision(
+            player.x, player.y, player.width, player.height,
+            npc.x, npc.y, npc.width, npc.height))
+    {
+
+        (*(volatile unsigned short *)0x4000000) &= ~(1 << (8 + (0 % 4)));
+
+        boxInactive();
+        eraseText();
+
+        textState = 0;
     }
 
     if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0)))) &&
@@ -311,29 +342,31 @@ void updateJungleStage(void) {
 
         eraseText();
 
+        boxActive();
 
 
         switch (textState) {
             case 0:
-                textToTile("NPC: HI THERE!", ((14) * 32 + (1)));
+                textToTile("JUAN: HI THERE!", ((16) * 32 + (1)));
                 break;
             case 1:
-                textToTile("I SAW AN ALEBRIJE FLY BY...", ((14) * 32 + (1)));
+                textToTile("I SAW AN ALEBRIJE FLY BY...", ((16) * 32 + (1)));
                 break;
             case 2:
-                textToTile("THAT COULD ONLY MEAN TROUBLE", ((14) * 32 + (1)));
+                textToTile("THAT COULD ONLY MEAN TROUBLE", ((16) * 32 + (1)));
                 break;
             case 3:
-                textToTile("TAKE THIS SHIELD WITH YOU", ((14) * 32 + (1)));
+                textToTile("TAKE THIS SHIELD WITH YOU", ((16) * 32 + (1)));
                 break;
             case 4:
-                textToTile("USE IT TO PROTECT YOURSELF", ((14) * 32 + (1)));
+                textToTile("USE IT TO PROTECT YOURSELF", ((16) * 32 + (1)));
+                break;
+            case 5:
+                textToTile("!YOU HAVE RECEIVED A SHIELD!", ((16) * 32 + (1)));
                 break;
             default:
                 (*(volatile unsigned short *)0x4000000) &= ~(1 << (8 + (0 % 4)));
-
-
-
+                boxInactive();
                 eraseText();
                 textState = -1;
                 break;
@@ -360,9 +393,9 @@ void drawJungleStage(void) {
     drawNPC(hOff, vOff);
     drawAlert(hOff, vOff);
 
-
-
-
+    if ((*(volatile unsigned short *)0x4000000) & (1 << (8 + (0 % 4)))) {
+      drawBoxes();
+    }
 
     waitForVBlank();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);

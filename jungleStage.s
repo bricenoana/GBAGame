@@ -95,19 +95,25 @@ initJungleStage:
 	ldr	r3, .L6+76
 	mov	lr, pc
 	bx	r3
+	ldr	r3, .L6+80
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L6+84
+	mov	lr, pc
+	bx	r3
 	mov	r1, #1
 	mov	r3, #67108864
-	ldr	r2, .L6+80
-	ldr	ip, .L6+84
+	ldr	r2, .L6+88
+	ldr	ip, .L6+92
 	str	r1, [r2]
-	ldr	r0, .L6+88
-	ldr	r2, .L6+92
-	ldr	r1, .L6+96
+	ldr	r0, .L6+96
+	ldr	r2, .L6+100
+	ldr	r1, .L6+104
 	str	r4, [ip]
 	str	r4, [r0]
 	str	r4, [r2]
 	strh	r4, [r3, #20]	@ movhi
-	ldr	r2, .L6+100
+	ldr	r2, .L6+108
 	strh	r4, [r3, #22]	@ movhi
 	str	r4, [r1, #64]
 	mov	lr, pc
@@ -115,7 +121,7 @@ initJungleStage:
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L6+104
+	ldr	r1, .L6+112
 	mov	lr, pc
 	bx	r5
 	pop	{r4, r5, r6, lr}
@@ -143,6 +149,8 @@ initJungleStage:
 	.word	initTemple
 	.word	initAlert
 	.word	initNPC
+	.word	initBoxes
+	.word	boxInactive
 	.word	collisionEnabled
 	.word	textState
 	.word	vOff
@@ -154,7 +162,7 @@ initJungleStage:
 	.section	.rodata.str1.4,"aMS",%progbits,1
 	.align	2
 .LC0:
-	.ascii	"NPC: HI THERE!\000"
+	.ascii	"JUAN: HI THERE!\000"
 	.align	2
 .LC1:
 	.ascii	"I SAW AN ALEBRIJE FLY BY...\000"
@@ -167,6 +175,9 @@ initJungleStage:
 	.align	2
 .LC4:
 	.ascii	"USE IT TO PROTECT YOURSELF\000"
+	.align	2
+.LC5:
+	.ascii	"!YOU HAVE RECEIVED A SHIELD!\000"
 	.text
 	.align	2
 	.global	updateJungleStage
@@ -179,33 +190,33 @@ updateJungleStage:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	ldr	r6, .L40
-	ldr	r5, .L40+4
+	ldr	r6, .L45
+	ldr	r5, .L45+4
 	sub	sp, sp, #16
-	ldr	r3, .L40+8
+	ldr	r3, .L45+8
 	mov	lr, pc
 	bx	r3
-	ldr	r4, .L40+12
+	ldr	r4, .L45+12
 	ldr	r1, [r6]
 	ldr	r0, [r5]
-	ldr	r3, .L40+16
+	ldr	r3, .L45+16
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L40+20
+	ldr	r3, .L45+20
 	ldr	r1, [r6]
 	ldr	r0, [r5]
 	mov	lr, pc
 	bx	r3
 	ldr	r3, [r4, #64]
 	cmp	r3, #0
-	bne	.L36
-	ldr	r3, .L40+24
+	bne	.L40
+	ldr	r3, .L45+24
 	ldrh	r3, [r3]
 	tst	r3, #768
 	ldm	r4, {r0, r1}
-	beq	.L37
+	beq	.L41
 .L10:
-	ldr	r5, .L40+28
+	ldr	r5, .L45+28
 	ldr	r3, [r5]
 	cmp	r3, #0
 	moveq	r2, #67108864
@@ -214,26 +225,34 @@ updateJungleStage:
 	strheq	r3, [r2]	@ movhi
 	add	r2, r4, #8
 	ldm	r2, {r2, r3}
-	ldr	r6, .L40+32
+	ldr	r6, .L45+32
 	mov	lr, pc
 	bx	r6
 	cmp	r0, #0
-	bne	.L38
+	beq	.L14
+	ldr	r3, .L45+36
+	ldr	r3, [r3, #20]
+	cmp	r3, #1
+	beq	.L42
 .L14:
-	ldr	r3, .L40+36
+	ldr	r3, [r5]
+	cmp	r3, #0
+	bgt	.L43
+.L16:
+	ldr	r3, .L45+40
 	ldrh	r3, [r3]
 	tst	r3, #1
 	beq	.L8
-	ldr	r3, .L40+24
+	ldr	r3, .L45+24
 	ldrh	r3, [r3]
 	tst	r3, #1
-	beq	.L39
+	beq	.L44
 .L8:
 	add	sp, sp, #16
 	@ sp needed
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L37:
+.L41:
 	subs	r2, r0, #165
 	rsbmi	r2, r0, #165
 	subs	r3, r1, #15
@@ -243,20 +262,53 @@ updateJungleStage:
 	bgt	.L10
 	mov	r2, #1
 	mov	r0, #9
-	ldr	r3, .L40+40
+	ldr	r3, .L45+44
 	str	r2, [r4, #64]
 	mov	lr, pc
 	bx	r3
-.L36:
+.L40:
 	ldm	r4, {r0, r1}
 	b	.L10
-.L38:
-	ldr	r3, .L40+44
+.L43:
+	ldr	r3, .L45+48
+	ldr	r0, [r3, #12]
+	ldr	r1, [r3, #8]
+	ldr	r2, [r3, #4]
+	ldr	r3, [r3]
+	str	r0, [sp, #12]
+	str	r1, [sp, #8]
+	str	r2, [sp, #4]
+	str	r3, [sp]
+	ldr	r6, .L45+52
+	ldm	r4, {r0, r1, r2, r3}
+	mov	lr, pc
+	bx	r6
+	subs	r6, r0, #0
+	bne	.L16
+	mov	r2, #67108864
+	ldr	r3, .L45+56
+	ldrh	r1, [r2]
+	and	r3, r3, r1
+	strh	r3, [r2]	@ movhi
+	ldr	r3, .L45+60
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L45+64
+	mov	lr, pc
+	bx	r3
+	str	r6, [r5]
+	b	.L16
+.L42:
+	ldr	r3, .L45+48
+	ldr	r3, [r3, #28]
+	cmp	r3, #1
+	bne	.L14
+	ldr	r3, .L45+68
 	mov	lr, pc
 	bx	r3
 	b	.L14
-.L39:
-	ldr	r3, .L40+48
+.L44:
+	ldr	r3, .L45+48
 	ldr	r0, [r3, #12]
 	ldr	r1, [r3, #8]
 	ldr	r2, [r3, #4]
@@ -266,84 +318,100 @@ updateJungleStage:
 	str	r2, [sp, #4]
 	str	r3, [sp]
 	ldm	r4, {r0, r1, r2, r3}
-	ldr	r4, .L40+52
+	ldr	r4, .L45+52
 	mov	lr, pc
 	bx	r4
 	cmp	r0, #0
 	beq	.L8
-	ldr	r4, .L40+56
+	ldr	r4, .L45+64
 	mov	lr, pc
 	bx	r4
+	ldr	r3, .L45+72
+	mov	lr, pc
+	bx	r3
 	ldr	r3, [r5]
-	cmp	r3, #4
+	cmp	r3, #5
 	ldrls	pc, [pc, r3, asl #2]
-	b	.L18
-.L20:
+	b	.L21
+.L23:
+	.word	.L28
+	.word	.L27
+	.word	.L26
+	.word	.L25
 	.word	.L24
-	.word	.L23
 	.word	.L22
-	.word	.L21
-	.word	.L19
-.L19:
-	ldr	r3, .L40+60
-	ldr	r1, .L40+64
-	ldr	r0, .L40+68
+.L22:
+	ldr	r3, .L45+76
+	ldr	r1, .L45+80
+	ldr	r0, .L45+84
 	mov	lr, pc
 	bx	r3
 	ldr	r3, [r5]
 	add	r3, r3, #1
-.L25:
+.L29:
 	str	r3, [r5]
 	b	.L8
-.L21:
-	ldr	r3, .L40+60
-	ldr	r1, .L40+64
-	ldr	r0, .L40+72
-	mov	lr, pc
-	bx	r3
-	ldr	r3, [r5]
-	add	r3, r3, #1
-	b	.L25
-.L22:
-	ldr	r3, .L40+60
-	ldr	r1, .L40+64
-	ldr	r0, .L40+76
-	mov	lr, pc
-	bx	r3
-	ldr	r3, [r5]
-	add	r3, r3, #1
-	b	.L25
-.L23:
-	ldr	r3, .L40+60
-	ldr	r1, .L40+64
-	ldr	r0, .L40+80
-	mov	lr, pc
-	bx	r3
-	ldr	r3, [r5]
-	add	r3, r3, #1
-	b	.L25
 .L24:
-	ldr	r3, .L40+60
-	ldr	r1, .L40+64
-	ldr	r0, .L40+84
+	ldr	r3, .L45+76
+	ldr	r1, .L45+80
+	ldr	r0, .L45+88
 	mov	lr, pc
 	bx	r3
 	ldr	r3, [r5]
 	add	r3, r3, #1
-	b	.L25
-.L18:
+	b	.L29
+.L25:
+	ldr	r3, .L45+76
+	ldr	r1, .L45+80
+	ldr	r0, .L45+92
+	mov	lr, pc
+	bx	r3
+	ldr	r3, [r5]
+	add	r3, r3, #1
+	b	.L29
+.L26:
+	ldr	r3, .L45+76
+	ldr	r1, .L45+80
+	ldr	r0, .L45+96
+	mov	lr, pc
+	bx	r3
+	ldr	r3, [r5]
+	add	r3, r3, #1
+	b	.L29
+.L27:
+	ldr	r3, .L45+76
+	ldr	r1, .L45+80
+	ldr	r0, .L45+100
+	mov	lr, pc
+	bx	r3
+	ldr	r3, [r5]
+	add	r3, r3, #1
+	b	.L29
+.L28:
+	ldr	r3, .L45+76
+	ldr	r1, .L45+80
+	ldr	r0, .L45+104
+	mov	lr, pc
+	bx	r3
+	ldr	r3, [r5]
+	add	r3, r3, #1
+	b	.L29
+.L21:
 	mov	r2, #67108864
-	ldr	r3, .L40+88
+	ldr	r3, .L45+56
 	ldrh	r1, [r2]
 	and	r3, r3, r1
 	strh	r3, [r2]	@ movhi
+	ldr	r3, .L45+60
+	mov	lr, pc
+	bx	r3
 	mov	lr, pc
 	bx	r4
 	mov	r3, #0
-	b	.L25
-.L41:
+	b	.L29
+.L46:
 	.align	2
-.L40:
+.L45:
 	.word	vOff
 	.word	hOff
 	.word	updatePlayer
@@ -353,20 +421,24 @@ updateJungleStage:
 	.word	buttons
 	.word	textState
 	.word	checkTempleCollision
+	.word	sword
 	.word	oldButtons
 	.word	playAnalogSound
-	.word	goToBossStage
 	.word	npc
 	.word	collision
+	.word	65279
+	.word	boxInactive
 	.word	eraseText
+	.word	goToBossStage
+	.word	boxActive
 	.word	textToTile
-	.word	449
+	.word	513
+	.word	.LC5
 	.word	.LC4
 	.word	.LC3
 	.word	.LC2
 	.word	.LC1
 	.word	.LC0
-	.word	65279
 	.size	updateJungleStage, .-updateJungleStage
 	.align	2
 	.global	drawJungleStage
@@ -378,73 +450,82 @@ drawJungleStage:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	ldr	r3, .L50
+	ldr	r3, .L60
 	ldm	r3, {r2, r3}
 	push	{r4, r5, r6, lr}
 	sub	r2, r2, #120
-	ldr	r4, .L50+4
+	ldr	r4, .L60+4
 	cmp	r2, #0
 	str	r2, [r4]
 	movlt	r2, #0
-	ldr	r5, .L50+8
+	ldr	r5, .L60+8
 	sub	r3, r3, #80
 	str	r3, [r5]
 	strlt	r2, [r4]
-	blt	.L44
+	blt	.L49
 	cmp	r2, #272
 	movgt	r1, #272
 	movgt	r2, r1
 	lslle	r2, r2, #16
 	strgt	r1, [r4]
 	lsrle	r2, r2, #16
-.L44:
+.L49:
 	cmp	r3, #0
 	movlt	r3, #0
 	strlt	r3, [r5]
-	blt	.L47
+	blt	.L52
 	cmp	r3, #352
 	movgt	r1, #352
 	movgt	r3, r1
 	lslle	r3, r3, #16
 	strgt	r1, [r5]
 	lsrle	r3, r3, #16
-.L47:
-	mov	r1, #67108864
-	strh	r2, [r1, #20]	@ movhi
-	ldr	r2, .L50+12
-	strh	r3, [r1, #22]	@ movhi
+.L52:
+	mov	r6, #67108864
+	ldr	r1, .L60+12
+	strh	r2, [r6, #20]	@ movhi
+	strh	r3, [r6, #22]	@ movhi
 	mov	lr, pc
-	bx	r2
+	bx	r1
 	ldr	r1, [r5]
 	ldr	r0, [r4]
-	ldr	r3, .L50+16
-	mov	lr, pc
-	bx	r3
-	ldr	r1, [r5]
-	ldr	r0, [r4]
-	ldr	r3, .L50+20
+	ldr	r3, .L60+16
 	mov	lr, pc
 	bx	r3
 	ldr	r1, [r5]
 	ldr	r0, [r4]
-	ldr	r3, .L50+24
+	ldr	r3, .L60+20
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L50+28
+	ldr	r3, .L60+24
+	ldr	r1, [r5]
+	ldr	r0, [r4]
 	mov	lr, pc
 	bx	r3
-	ldr	r4, .L50+32
+	ldrh	r3, [r6]
+	tst	r3, #256
+	bne	.L59
+.L54:
+	ldr	r3, .L60+28
+	mov	lr, pc
+	bx	r3
+	ldr	r4, .L60+32
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L50+36
+	ldr	r1, .L60+36
 	mov	lr, pc
 	bx	r4
 	pop	{r4, r5, r6, lr}
 	bx	lr
-.L51:
+.L59:
+	ldr	r3, .L60+40
+	mov	lr, pc
+	bx	r3
+	b	.L54
+.L61:
 	.align	2
-.L50:
+.L60:
 	.word	player
 	.word	hOff
 	.word	vOff
@@ -455,6 +536,7 @@ drawJungleStage:
 	.word	waitForVBlank
 	.word	DMANow
 	.word	shadowOAM
+	.word	drawBoxes
 	.size	drawJungleStage, .-drawJungleStage
 	.comm	textState,4,4
 	.comm	vOff,4,4

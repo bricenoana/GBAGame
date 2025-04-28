@@ -540,28 +540,35 @@ extern unsigned short oldButtons;
 static GameState state;
 static GameState prevState;
 
+static int winLoseTimer = 0;
+
 
 
 void goToStart(void) {
-    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
 
+    state = START;
+
+
+    stopSounds();
+
+
+    (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
     for (int i = 0; i < 240*160; i++) {
         ((unsigned short*) 0x06000000)[i] = 0;
         ((unsigned short*) 0x0600A000)[i] = 0;
     }
 
-    DMANow(3, startBGPal, ((unsigned short *)0x5000000), 512 / 2);
 
+    DMANow(3, startBGPal, ((unsigned short *)0x5000000), 512 / 2);
     drawFullscreenImage4(startBGBitmap);
+
+
     playSoundA(overallSong_data, overallSong_length, 1);
+
 
     waitForVBlank();
     flipPage();
-
-    state = START;
 }
-
-
 
 void goToCave(void) {
     initCaveStage();
@@ -884,22 +891,30 @@ static void pauseState(void) {
 
 static void winState(void) {
     drawFullscreenImage4(winScreenBitmap);
-    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        goToStart();
-    }
     waitForVBlank();
     flipPage();
-}
 
+
+    winLoseTimer++;
+    if (winLoseTimer > 180 || (!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        winLoseTimer = 0;
+        state = START;
+        goToStart();
+    }
+}
 
 static void loseState(void) {
     drawFullscreenImage4(loseScreenBitmap);
-    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        goToStart();
-        return;
-    }
     waitForVBlank();
     flipPage();
+
+
+    winLoseTimer++;
+    if (winLoseTimer > 180 || (!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
+        winLoseTimer = 0;
+        state = START;
+        goToStart();
+    }
 }
 
 

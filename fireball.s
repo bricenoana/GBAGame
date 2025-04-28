@@ -46,7 +46,7 @@ updateFireballs:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
-	ldr	r4, .L30
+	ldr	r4, .L29
 	mov	lr, #0
 	mov	r3, r4
 	sub	sp, sp, #20
@@ -61,33 +61,33 @@ updateFireballs:
 	ldr	r0, [r3, #20]
 	add	r1, r1, ip
 	add	r2, r2, r0
-	cmp	r2, #160
-	cmpls	r1, #240
+	cmp	r1, #240
+	cmpls	r2, #160
 	stm	r3, {r1, r2}
 	strhi	lr, [r3, #24]
 .L7:
 	add	r3, r3, #28
 	cmp	r3, r5
 	bne	.L9
-	ldr	r6, .L30+4
-	ldr	r7, .L30+8
-	ldr	r9, .L30+12
-	ldr	r8, .L30+16
-	ldr	fp, .L30+20
-	ldr	r10, .L30+24
-.L15:
+	ldr	r6, .L29+4
+	ldr	r7, .L29+8
+	ldr	r9, .L29+12
+	ldr	r8, .L29+16
+	ldr	fp, .L29+20
+	ldr	r10, .L29+24
+.L14:
 	ldr	r3, [r4, #24]
 	cmp	r3, #0
-	bne	.L28
+	bne	.L27
 .L11:
 	add	r4, r4, #28
 	cmp	r4, r5
-	bne	.L15
+	bne	.L14
 	add	sp, sp, #20
 	@ sp needed
 	pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
 	bx	lr
-.L28:
+.L27:
 	mov	r3, #16
 	ldr	r1, [r4, #4]
 	ldr	r2, [r4]
@@ -103,41 +103,30 @@ updateFireballs:
 	ldrh	r3, [r9]
 	tst	r3, #2
 	str	r0, [r4, #24]
-	bne	.L29
+	bne	.L28
 .L13:
 	ldr	r3, [r8]
-	cmp	r3, #0
+	ldr	r2, [r6, #56]
+	orrs	r3, r3, r2
 	bne	.L11
-	ldr	r1, [r6, #56]
-	cmp	r1, #0
-	moveq	r1, #30
+	mov	r1, #30
 	ldr	r2, [r6, #44]
-	sub	r3, r2, #20
-	str	r3, [r6, #44]
-	subeq	r3, r2, #40
-	streq	r3, [r6, #44]
-	streq	r1, [r6, #56]
-	cmp	r3, #0
-	bgt	.L11
-	mov	r3, #0
-	str	r3, [r6, #44]
-	mov	lr, pc
-	bx	fp
-	ldr	r2, [r6, #44]
+	sub	r2, r2, #20
 	cmp	r2, #0
+	str	r2, [r6, #44]
+	str	r1, [r6, #56]
 	bgt	.L11
-	mov	r3, #0
 	str	r3, [r6, #44]
 	mov	lr, pc
 	bx	fp
 	b	.L11
-.L29:
+.L28:
 	mov	lr, pc
 	bx	r10
 	b	.L13
-.L31:
-	.align	2
 .L30:
+	.align	2
+.L29:
 	.word	fireballs
 	.word	player
 	.word	collision
@@ -158,12 +147,12 @@ drawFireballs:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, lr}
 	mov	r5, #512
-	ldr	r3, .L38
-	ldr	r2, .L38+4
-	ldr	r4, .L38+8
-	ldr	lr, .L38+12
+	ldr	r3, .L37
+	ldr	r2, .L37+4
+	ldr	r4, .L37+8
+	ldr	lr, .L37+12
 	add	r0, r3, #140
-.L35:
+.L34:
 	ldr	r1, [r3, #24]
 	cmp	r1, #0
 	ldrne	r1, [r3]
@@ -177,12 +166,12 @@ drawFireballs:
 	strheq	r5, [r2, #16]	@ movhi
 	cmp	r3, r0
 	add	r2, r2, #8
-	bne	.L35
+	bne	.L34
 	pop	{r4, r5, lr}
 	bx	lr
-.L39:
-	.align	2
 .L38:
+	.align	2
+.L37:
 	.word	fireballs
 	.word	shadowOAM
 	.word	511

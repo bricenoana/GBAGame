@@ -16,7 +16,7 @@ int main(void) {
 
     while (1) {
         oldButtons = buttons;
-        buttons     = REG_BUTTONS;
+        buttons = REG_BUTTONS;
         updateStateMachine();
     }
 }

@@ -237,13 +237,16 @@ void spawnSlash(int x, int y, int dx, int dy);
 void updateSlashes(void);
 void drawSlashes(int hOff, int vOff);
 # 12 "BossStage.c" 2
-
+# 23 "BossStage.c"
 int hOff, vOff;
 
 static int playerSlashActive = 0;
 static int playerSlashTimer = 0;
 
 int playerBlockActive;
+
+static void drawHearts(void);
+static void drawBossHearts(void);
 
 
 void initBossStage(void) {
@@ -379,6 +382,9 @@ void drawBossStage(void) {
     (*(volatile unsigned short*) 0x04000012) = 0;
 
     hideSprites();
+    drawHearts();
+    drawBossHearts();
+
     if (playerBlockActive) {
         drawBlockFrame(0,0);
     } else {
@@ -394,11 +400,49 @@ void drawBossStage(void) {
         }
     }
 
-
     drawBoss();
     drawFireballs();
     drawSlashes(0, 0);
 
     waitForVBlank();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);
+}
+
+
+void drawHearts(void) {
+
+    int fullHearts = (player.health + 19) / 20;
+    for (int i = 0; i < 5; i++) {
+        int oam = 120 + i;
+        if (i < fullHearts) {
+            int x = 240 - (i+1)*16 - 2;
+            int y = 2;
+            shadowOAM[oam].attr0 = ((y) & 0xFF) | (0<<14);
+            shadowOAM[oam].attr1 = ((x) & 0x1FF) | (1<<14);
+            shadowOAM[oam].attr2 = ((((24) * (32) + (6))) & 0x3FF);
+        } else {
+            shadowOAM[oam].attr0 = (2<<8);
+        }
+    }
+}
+
+static void drawBossHearts(void) {
+
+    int full = (boss.health + 9) / 10;
+    if (full > 10) full = 10;
+    for (int i = 0; i < 10; i++) {
+        int oam = 110 + i;
+        if (i < full) {
+            int x = 2 + i * 16;
+            int y = 160 - 16 - 2;
+            shadowOAM[oam].attr0 = ((y) & 0xFF) | (0<<14);
+            shadowOAM[oam].attr1 = ((x) & 0x1FF) | (1<<14);
+            shadowOAM[oam].attr2 = ((((24) * (32) + (8))) & 0x3FF)
+
+
+                                   ;
+        } else {
+            shadowOAM[oam].attr0 = (2<<8);
+        }
+    }
 }

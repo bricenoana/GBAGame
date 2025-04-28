@@ -383,97 +383,156 @@ drawBossStage:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, r5, r6, lr}
 	mov	r3, #67108864
-	mov	r2, #0
-	push	{r4, lr}
-	ldr	r1, .L65
-	strh	r2, [r3, #16]	@ movhi
-	strh	r2, [r3, #18]	@ movhi
+	mov	r4, #0
+	ldr	r2, .L75
+	strh	r4, [r3, #16]	@ movhi
+	strh	r4, [r3, #18]	@ movhi
 	mov	lr, pc
-	bx	r1
-	ldr	r3, .L65+4
+	bx	r2
+	mov	r5, #512
+	mov	r2, r4
+	mov	r3, #222
+	mov	r4, #2
+	ldr	ip, .L75+4
+	ldr	r1, [ip, #44]
+	ldr	r0, .L75+8
+	add	r1, r1, #19
+	smull	r6, lr, r0, r1
+	asr	r0, r1, #31
+	ldr	r6, .L75+12
+	ldr	r1, .L75+16
+	rsb	r0, r0, lr, asr #3
+.L60:
+	cmp	r0, r2
+	orr	lr, r3, #16384
+	add	r2, r2, #1
+	sub	r3, r3, #16
+	strhgt	r4, [r1]	@ movhi
+	strhgt	lr, [r1, #2]	@ movhi
+	strhgt	r6, [r1, #4]	@ movhi
+	strhle	r5, [r1]	@ movhi
+	lsl	r3, r3, #16
+	cmp	r2, #5
+	lsr	r3, r3, #16
+	add	r1, r1, #8
+	bne	.L60
+	ldr	r3, .L75+20
+	ldr	r3, [r3, #16]
+	cmp	r3, #100
+	ldrle	r0, .L75+8
+	addle	r3, r3, #9
+	smullle	r2, r0, r3, r0
+	asrle	r3, r3, #31
+	rsble	r0, r3, r0, asr #2
+	movgt	r0, #10
+	mov	r3, #2
+	mov	r1, #0
+	mov	r6, #512
+	mov	r5, #142
+	mov	r4, #776
+	ldr	r2, .L75+24
+.L64:
+	cmp	r0, r1
+	orr	lr, r3, #16384
+	add	r1, r1, #1
+	add	r3, r3, #16
+	strhgt	r5, [r2]	@ movhi
+	strhgt	lr, [r2, #2]	@ movhi
+	strhgt	r4, [r2, #4]	@ movhi
+	strhle	r6, [r2]	@ movhi
+	lsl	r3, r3, #16
+	cmp	r1, #10
+	lsr	r3, r3, #16
+	add	r2, r2, #8
+	bne	.L64
+	ldr	r3, .L75+28
 	ldr	r3, [r3]
 	cmp	r3, #0
-	bne	.L58
-	ldr	r3, .L65+8
+	bne	.L65
+	ldr	r3, .L75+32
 	ldr	r1, [r3, #16]
 	ldr	r2, [r3, #36]
 	ldr	r3, [r3, #56]
 	orr	r1, r1, r2
 	orrs	r1, r1, r3
-	bne	.L64
+	bne	.L74
 	mov	r0, r1
-	ldr	r3, .L65+12
+	ldr	r3, .L75+36
 	mov	lr, pc
 	bx	r3
-.L61:
-	ldr	r3, .L65+16
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L65+20
-	mov	lr, pc
-	bx	r3
-	mov	r1, #0
-	ldr	r3, .L65+24
-	mov	r0, r1
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L65+28
-	mov	lr, pc
-	bx	r3
-	ldr	r4, .L65+32
-	mov	r3, #512
-	mov	r2, #117440512
-	mov	r0, #3
-	ldr	r1, .L65+36
-	mov	lr, pc
-	bx	r4
-	pop	{r4, lr}
-	bx	lr
-.L64:
-	ldr	r2, .L65+40
-	ldr	r3, [r2]
+	b	.L68
+.L65:
+	mov	lr, #6
+	ldr	r3, [ip]
+	ldr	r0, .L75+40
+	ldrb	r1, [ip, #4]	@ zero_extendqisi2
 	lsl	r3, r3, #23
-	lsr	r3, r3, #23
-	mvn	r3, r3, lsl #17
-	mov	r1, #640
-	mvn	r3, r3, lsr #17
-	ldrb	r0, [r2, #4]	@ zero_extendqisi2
-	ldr	r2, .L65+36
-	strh	r3, [r2, #2]	@ movhi
-	strh	r0, [r2]	@ movhi
-	strh	r1, [r2, #4]	@ movhi
-	b	.L61
-.L58:
-	mov	ip, #6
-	ldr	r2, .L65+40
-	ldr	r3, [r2]
-	ldrb	r1, [r2, #4]	@ zero_extendqisi2
-	ldr	r0, .L65+44
-	lsl	r3, r3, #23
-	ldr	r2, .L65+36
+	ldr	r2, .L75+44
 	lsr	r3, r3, #23
 	orr	r3, r3, r0
 	orr	r1, r1, r0
 	strh	r3, [r2, #2]	@ movhi
 	strh	r1, [r2]	@ movhi
-	strh	ip, [r2, #4]	@ movhi
-	b	.L61
-.L66:
+	strh	lr, [r2, #4]	@ movhi
+.L68:
+	ldr	r3, .L75+48
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L75+52
+	mov	lr, pc
+	bx	r3
+	mov	r1, #0
+	ldr	r3, .L75+56
+	mov	r0, r1
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L75+60
+	mov	lr, pc
+	bx	r3
+	ldr	r4, .L75+64
+	mov	r3, #512
+	mov	r2, #117440512
+	mov	r0, #3
+	ldr	r1, .L75+44
+	mov	lr, pc
+	bx	r4
+	pop	{r4, r5, r6, lr}
+	bx	lr
+.L74:
+	ldr	r3, [ip]
+	lsl	r3, r3, #23
+	lsr	r3, r3, #23
+	mvn	r3, r3, lsl #17
+	mov	r1, #640
+	mvn	r3, r3, lsr #17
+	ldr	r2, .L75+44
+	ldrb	r0, [ip, #4]	@ zero_extendqisi2
+	strh	r3, [r2, #2]	@ movhi
+	strh	r0, [r2]	@ movhi
+	strh	r1, [r2, #4]	@ movhi
+	b	.L68
+.L76:
 	.align	2
-.L65:
+.L75:
 	.word	hideSprites
+	.word	player
+	.word	1717986919
+	.word	774
+	.word	shadowOAM+960
+	.word	boss
+	.word	shadowOAM+880
 	.word	playerBlockActive
 	.word	slashes
 	.word	drawPlayer
+	.word	-32768
+	.word	shadowOAM
 	.word	drawBoss
 	.word	drawFireballs
 	.word	drawSlashes
 	.word	waitForVBlank
 	.word	DMANow
-	.word	shadowOAM
-	.word	player
-	.word	-32768
 	.size	drawBossStage, .-drawBossStage
 	.comm	playerBlockActive,4,4
 	.comm	vOff,4,4
@@ -490,8 +549,8 @@ playerSlashActive:
 	.size	playerSlashTimer, 4
 playerSlashTimer:
 	.space	4
-	.type	winDelay.4158, %object
-	.size	winDelay.4158, 4
-winDelay.4158:
+	.type	winDelay.4162, %object
+	.size	winDelay.4162, 4
+winDelay.4162:
 	.space	4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

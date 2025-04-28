@@ -116,7 +116,7 @@ typedef struct {
     int active;
 } Slash;
 
-extern Slash slashes[5];
+extern Slash slashes[3];
 
 void initSlashes(void);
 void spawnSlash(int x, int y, int dx, int dy);
@@ -160,10 +160,10 @@ void updatePlayer(void);
 void drawPlayer(int hOff, int vOff);
 # 6 "slash.c" 2
 
-Slash slashes[5];
+Slash slashes[3];
 
 void initSlashes(void) {
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 3; i++) {
         slashes[i].active = 0;
     }
 }
@@ -171,20 +171,19 @@ void initSlashes(void) {
 void spawnSlash(int x, int y, int dx, int dy) {
 
     int activeCount = 0;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 3; i++) {
         if (slashes[i].active) {
             activeCount++;
         }
     }
 
 
-    int limit = player.cheat ? 5 : 1;
+    int limit = player.cheat ? 3 : 1;
     if (activeCount >= limit) {
         return;
     }
 
-
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 3; i++) {
         if (!slashes[i].active) {
             slashes[i].active = 1;
             slashes[i].x = x;
@@ -198,7 +197,7 @@ void spawnSlash(int x, int y, int dx, int dy) {
 
 
 void updateSlashes(void) {
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 3; i++) {
         if (slashes[i].active) {
             slashes[i].x += slashes[i].xVel;
             slashes[i].y += slashes[i].yVel;
@@ -211,7 +210,7 @@ void updateSlashes(void) {
 }
 
 void drawSlashes(int hOff, int vOff) {
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 3; i++) {
         int oamIndex = 7 + i;
         if (slashes[i].active) {
             int sx = slashes[i].x - hOff;

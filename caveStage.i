@@ -133,6 +133,7 @@ typedef struct {
     int defeated;
     int flashTimer;
     u16 baseColor;
+    int cheat;
 
 } Player;
 
@@ -253,6 +254,7 @@ extern const unsigned short textTiles2Pal[256];
 
 
 
+
 int hOff, vOff;
 
 void initCaveStage(void) {
@@ -261,37 +263,28 @@ void initCaveStage(void) {
                | (1 << (8 + (2 % 4)))
                | (1 << 12);
 
-
-
-
     (*(volatile unsigned short*) 0x400000A) = ((0) << 2)
                 | ((26) << 8)
                 | (1 << 14);
-
     DMANow(3, foregroundCaveTilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, foregroundCaveTilesTiles, &((CB*) 0x6000000)[0], 19200 / 2);
     DMANow(3, foregroundCaveMapMap, &((SB*) 0x6000000)[26], (4096) / 2);
 
-
     (*(volatile unsigned short*) 0x400000C) = ((1) << 2)
                 | ((27) << 8)
                 | (1 << 14);
-
     DMANow(3, backgroundCaveTilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, backgroundCaveTilesTiles, &((CB*) 0x6000000)[1], 19200 / 2);
     DMANow(3, backgroundCaveMapMap, &((SB*) 0x6000000)[27], (4096) / 2);
 
-
     DMANow(3, spriteNormalTiles, &((CB*) 0x6000000)[4], 32768/2);
     DMANow(3, spriteNormalPal, ((u16 *)0x5000200), 512/2);
-
 
     initPlayer();
     initSword();
     initAlert();
 
     collisionEnabled = 0;
-
     hOff = vOff = 0;
     (*(volatile unsigned short*) 0x04000014) = hOff;
     (*(volatile unsigned short*) 0x04000016) = vOff;
@@ -307,20 +300,17 @@ void updateCaveStage(void) {
 
     player.y = 110;
 
-    if (player.x >= (512 - player.width)) {
+    if (player.x >= (512 - player.width) && sword.pickedUp == 1) {
         goToGame();
     }
 
-
     if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0)))) && alert.active) {
-
         sword.pickedUp = 1;
         alert.active = 0;
     }
 }
 
 void drawCaveStage(void) {
-
     hOff = player.x - (240/2);
     if (hOff < 0) hOff = 0;
     if (hOff > 512 - 240) hOff = 512 - 240;
@@ -334,9 +324,7 @@ void drawCaveStage(void) {
 
     hideSprites();
 
-
     drawPlayer(hOff, vOff);
-
 
     if (!sword.pickedUp) {
         drawSword(hOff, vOff);

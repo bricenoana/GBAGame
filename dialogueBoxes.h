@@ -18,10 +18,11 @@ typedef struct {
 
 extern Box dialogueBox[BOXCOUNT];
 
-// Initialize the dialogue box sprites (positions, dimensions, active states)
 void initBoxes(void);
 
-// Draw active dialogue box sprites to shadowOAM
 void drawBoxes(void);
 
-#endif // DIALOGUEBOXES_H
+void boxInactive(void);
+void boxActive(void);
+
+#endif

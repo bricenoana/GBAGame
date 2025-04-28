@@ -10,12 +10,25 @@
 #include "fireball.h"
 #include "slash.h"
 
+#define MAX_HEARTS      5
+#define HEART_TILE_COL  24
+#define HEART_TILE_ROW  6
+#define HEART_OAM_BASE  120
+
+#define MAX_BOSS_HEARTS     10
+#define BOSS_HEART_TILE_ROW  8
+#define BOSS_HEART_TILE_COL 24
+#define BOSS_HEART_OAM_BASE 110
+
 int hOff, vOff;
 
 static int playerSlashActive = 0;
 static int playerSlashTimer = 0;
 
 int playerBlockActive; 
+
+static void drawHearts(void);
+static void drawBossHearts(void);
 
 
 void initBossStage(void) {
@@ -151,6 +164,9 @@ void drawBossStage(void) {
     REG_BG0VOFF = 0;
  
     hideSprites();
+    drawHearts();
+    drawBossHearts();
+
     if (playerBlockActive) {
         drawBlockFrame(0,0);
     } else {
@@ -166,11 +182,49 @@ void drawBossStage(void) {
         }
     }
 
-    
     drawBoss();
     drawFireballs();
     drawSlashes(0, 0);
  
     waitForVBlank();
     DMANow(3, shadowOAM, OAM, 128 * 4);
+}
+
+
+void drawHearts(void) {
+    // how many hearts to show
+    int fullHearts = (player.health + 19) / 20;
+    for (int i = 0; i < MAX_HEARTS; i++) {
+        int oam = HEART_OAM_BASE + i;
+        if (i < fullHearts) {
+            int x = SCREENWIDTH - (i+1)*16 - 2;
+            int y = 2;
+            shadowOAM[oam].attr0 = ATTR0_Y(y)      | ATTR0_SQUARE;
+            shadowOAM[oam].attr1 = ATTR1_X(x)      | ATTR1_SMALL;
+            shadowOAM[oam].attr2 = ATTR2_TILEID(HEART_TILE_ROW, HEART_TILE_COL);
+        } else {
+            shadowOAM[oam].attr0 = ATTR0_HIDE;
+        }
+    }
+}
+
+static void drawBossHearts(void) {
+    // 1 heart per 10 hp
+    int full = (boss.health + 9) / 10;
+    if (full > MAX_BOSS_HEARTS) full = MAX_BOSS_HEARTS;
+    for (int i = 0; i < MAX_BOSS_HEARTS; i++) {
+        int oam = BOSS_HEART_OAM_BASE + i;
+        if (i < full) {
+            int x = 2 + i * 16;
+            int y = SCREENHEIGHT - 16 - 2;
+            shadowOAM[oam].attr0 = ATTR0_Y(y)      | ATTR0_SQUARE;
+            shadowOAM[oam].attr1 = ATTR1_X(x)      | ATTR1_SMALL;
+            shadowOAM[oam].attr2 = ATTR2_TILEID(
+                                    BOSS_HEART_TILE_ROW,
+                                    BOSS_HEART_TILE_COL
+                                  );
+        } else {
+            shadowOAM[oam].attr0 = ATTR0_HIDE;
+        }
+    }
 }

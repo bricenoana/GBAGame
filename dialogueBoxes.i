@@ -134,11 +134,12 @@ typedef struct {
 
 extern Box dialogueBox[4];
 
-
 void initBoxes(void);
 
-
 void drawBoxes(void);
+
+void boxInactive(void);
+void boxActive(void);
 # 2 "dialogueBoxes.c" 2
 
 
@@ -162,7 +163,7 @@ void drawBoxes() {
       shadowOAM[ dialogueBox[i].oamIndex ].attr0
         = ((dialogueBox[i].y + 20) & 0xFF)
         | (0<<8)
-        | (1<<14);
+        | (0<<14);
       shadowOAM[ dialogueBox[i].oamIndex ].attr1
         = ((dialogueBox[i].x) & 0x1FF)
         | (3<<14);
@@ -172,5 +173,17 @@ void drawBoxes() {
     } else {
       shadowOAM[ dialogueBox[i].oamIndex ].attr0 = (2<<8);
     }
+  }
+}
+
+void boxInactive(void) {
+  for (int i = 0; i < 4; i++) {
+      dialogueBox[i].active = 0;
+  }
+}
+
+void boxActive(void) {
+  for (int i = 0; i < 4; i++) {
+      dialogueBox[i].active = 1;
   }
 }

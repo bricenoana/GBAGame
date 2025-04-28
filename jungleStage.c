@@ -9,27 +9,23 @@
 #include "singleLayerMap.h" //map
 #include "text.h"
 #include "textTiles.h" // tileset for my ascii-aligned letters
-// #include "dialogueBoxes.h"
+#include "dialogueBoxes.h"
 
-#define DIALOGUE_ROW 14
+#define DIALOGUE_ROW 16
 #define DIALOGUE_COL 1
 
 int hOff, vOff;
-int textState;       // GLOBAL textState
+int textState;
 
 void initJungleStage(void) {
-    // Display: BG1 (map) + sprites on, leave BG0 off until dialogue
     REG_DISPCTL = MODE(0) | BG_ENABLE(1) | SPRITE_ENABLE;
 
-    // BG1 = jungle
     REG_BG1CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(27) | BG_SIZE_WIDE | 1;
     DMANow(3, singleLayerJunglePal,   BG_PALETTE,            singleLayerJunglePalLen/2);
     DMANow(3, singleLayerJungleTiles, &CHARBLOCK[0],         singleLayerJungleTilesLen/2);
     DMANow(3, singleLayerMapMap,      &SCREENBLOCK[27],      singleLayerMapLen/2);
 
-    // BG0 = text (off for now)
     REG_BG0CNT = BG_CHARBLOCK(2) | BG_SCREENBLOCK(10) | BG_SIZE_SMALL | 0;
-    // in initJungleStage() after you set REG_BG0CNT:
     REG_BG0HOFF = 0;
     REG_BG0VOFF = 0;
 
@@ -39,16 +35,18 @@ void initJungleStage(void) {
       SCREENBLOCK[10].tilemap[i] = TILEMAP_ENTRY_TILEID(0) | TILEMAP_ENTRY_PALROW(0);
     }
 
-    // OAM tiles + palette for all sprites (player, boss, fireball, boxes…)
     DMANow(3, spriteNormalTiles, &CHARBLOCK[4], spriteNormalTilesLen/2);
     DMANow(3, spriteNormalPal,   SPRITE_PAL,     spriteNormalPalLen/2);
 
-    //rest of my inits
     initPlayer();
     initTemple();
     initAlert();
     initNPC();
-    // initBoxes();
+
+    // for my dialogue:
+    initBoxes();
+    boxInactive();
+
     textState = 0;
     collisionEnabled = 1;
     player.cheat = 0; 
@@ -74,7 +72,7 @@ void updateJungleStage(void) {
         int dy = player.y - 15;
         if (dy < 0) dy = -dy;
 
-        // around 15 of margin
+        // around 15 of margin for cheat toggle
         if (dx <= 15 && dy <= 15) {
             player.cheat = 1;
             playAnalogSound(9);
@@ -85,8 +83,19 @@ void updateJungleStage(void) {
         REG_DISPCTL |= BG_ENABLE(0);
     }
 
-    if (checkTempleCollision(player.x, player.y, player.width, player.height)) {
+    if (checkTempleCollision(player.x, player.y, player.width, player.height) && sword.pickedUp == 1 && npc.pickedUp == 1) {
         goToBossStage();
+    }
+
+    if (textState > 0 &&
+        !collision(
+            player.x, player.y, player.width, player.height,
+            npc.x, npc.y, npc.width, npc.height))
+    {
+        REG_DISPCTL &= ~BG_ENABLE(0);
+        boxInactive();
+        eraseText();
+        textState = 0;
     }
 
     if (BUTTON_PRESSED(BUTTON_A) &&
@@ -95,12 +104,13 @@ void updateJungleStage(void) {
     {
 
         eraseText();
-        // drawBoxes();
+
+        boxActive();
 
         //switch for my npc dialogue
         switch (textState) {
             case 0:
-                textToTile("NPC: HI THERE!", TILE_OFFSET(DIALOGUE_ROW, DIALOGUE_COL));
+                textToTile("JUAN: HI THERE!", TILE_OFFSET(DIALOGUE_ROW, DIALOGUE_COL));
                 break;
             case 1:
                 textToTile("I SAW AN ALEBRIJE FLY BY...", TILE_OFFSET(DIALOGUE_ROW, DIALOGUE_COL));
@@ -114,13 +124,14 @@ void updateJungleStage(void) {
             case 4:
                 textToTile("USE IT TO PROTECT YOURSELF", TILE_OFFSET(DIALOGUE_ROW, DIALOGUE_COL));
                 break;
+            case 5:
+                textToTile("!YOU HAVE RECEIVED A SHIELD!", TILE_OFFSET(DIALOGUE_ROW, DIALOGUE_COL));
+                break;
             default:
                 REG_DISPCTL &= ~BG_ENABLE(0);
-                // for (int i = 0; i < BOXCOUNT; i++) {
-                //     dialogueBox[i].active = 0;
-                // }
+                boxInactive();
                 eraseText();
-                textState = -1;  // reset so next press starts at 0
+                textState = -1;  // reset so next press restarts diakogue
                 break;
         }
         textState++;
@@ -145,9 +156,9 @@ void drawJungleStage(void) {
     drawNPC(hOff, vOff);
     drawAlert(hOff, vOff);
 
-    // if (REG_DISPCTL & BG_ENABLE(0)) {
-    //   drawBoxes();
-    // }
+    if (REG_DISPCTL & BG_ENABLE(0)) {
+      drawBoxes();
+    }
 
     waitForVBlank();
     DMANow(3, shadowOAM, OAM, 128 * 4);

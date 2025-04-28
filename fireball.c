@@ -38,18 +38,10 @@ void updateFireballs(void) {
             if (!BUTTON_HELD(BUTTON_B)) {
                 playAnalogSound(0);
             }
-            
-            // if player blocking no dmg
-            if (!playerBlockActive) {
-                player.health -= 20;
-                if (player.flashTimer == 0) {
-                    player.health -= 20;
-                    player.flashTimer = 30;
-                }
-                if (player.health <= 0) {
-                    player.health = 0;
-                    goToLose();
-                }
+        
+            if (!playerBlockActive && player.flashTimer == 0) {
+                player.health   -= 20;
+                player.flashTimer = 30;
         
                 if (player.health <= 0) {
                     player.health = 0;
@@ -57,7 +49,6 @@ void updateFireballs(void) {
                 }
             }
         }
-        
     }
 }
 
