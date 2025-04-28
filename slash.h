@@ -1,7 +1,7 @@
 #ifndef SLASH_H
 #define SLASH_H
 
-#define MAX_SLASHES 1
+#define MAX_SLASHES 5
 
 typedef struct {
     int x, y;
@@ -9,10 +9,11 @@ typedef struct {
     int active;
 } Slash;
 
-extern Slash slash;
+extern Slash slashes[MAX_SLASHES];
 
-void initSlash(void);
-void updateSlash(void);
-void drawSlash(int hOff, int vOff);
+void initSlashes(void);
+void spawnSlash(int x, int y, int dx, int dy);
+void updateSlashes(void);
+void drawSlashes(int hOff, int vOff);
 
 #endif

@@ -50,6 +50,7 @@ void initJungleStage(void) {
     initNPC();
     // initBoxes();
     textState = 0;
+    collisionEnabled = 1;
 
     hOff = vOff = 0;
     REG_BG1HOFF = hOff;
@@ -63,6 +64,22 @@ void updateJungleStage(void) {
     updatePlayer();
     updateNPC(hOff, vOff);
     updateJungleAlert(hOff, vOff);
+
+    if (!player.cheat
+        && (BUTTON_HELD(BUTTON_LSHOULDER) && BUTTON_HELD(BUTTON_RSHOULDER)))
+    {
+        int dx = player.x - 165;
+        if (dx < 0) dx = -dx;
+        int dy = player.y - 15;
+        if (dy < 0) dy = -dy;
+
+        // around 15 of margin
+        if (dx <= 15 && dy <= 15) {
+            player.cheat = 1;
+            playAnalogSound(9);
+        }
+    }
+
     if (textState == 0) {
         REG_DISPCTL |= BG_ENABLE(0);
     }

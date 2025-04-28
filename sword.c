@@ -22,11 +22,15 @@ void updateSword(void) {
 }
 
 void drawSword(int hOff, int vOff) {
-    int screenX = sword.x - hOff;
-    int screenY = sword.y - vOff;
-    int tileIndex = 24 * SPRITESHEET_TILE_WIDTH + 3;
+    if (!sword.pickedUp) {
+        int screenX = sword.x - hOff;
+        int screenY = sword.y - vOff;
+        int tileIndex = 24 * SPRITESHEET_TILE_WIDTH + 3;
 
-    shadowOAM[5].attr0 = ATTR0_Y(screenY) | ATTR0_TALL;
-    shadowOAM[5].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
-    shadowOAM[5].attr2 = tileIndex | ATTR2_PALROW(0) | ATTR2_PRIORITY(0);
+        shadowOAM[5].attr0 = ATTR0_Y(screenY) | ATTR0_TALL;
+        shadowOAM[5].attr1 = ATTR1_X(screenX) | ATTR1_MEDIUM;
+        shadowOAM[5].attr2 = tileIndex | ATTR2_PALROW(0) | ATTR2_PRIORITY(0);
+    } else {
+        shadowOAM[5].attr0 = ATTR0_HIDE;
+    }
 }

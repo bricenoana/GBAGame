@@ -116,11 +116,12 @@ typedef struct {
     int active;
 } Slash;
 
-extern Slash slash;
+extern Slash slashes[5];
 
-void initSlash(void);
-void updateSlash(void);
-void drawSlash(int hOff, int vOff);
+void initSlashes(void);
+void spawnSlash(int x, int y, int dx, int dy);
+void updateSlashes(void);
+void drawSlashes(int hOff, int vOff);
 # 4 "slash.c" 2
 # 1 "spriteNormal.h" 1
 # 21 "spriteNormal.h"
@@ -130,32 +131,51 @@ extern const unsigned short spriteNormalTiles[16384];
 extern const unsigned short spriteNormalPal[256];
 # 5 "slash.c" 2
 
-Slash slash;
+Slash slashes[5];
 
-void initSlash(void) {
-    slash.active = 0;
+void initSlashes(void) {
+    for (int i = 0; i < 5; i++) {
+        slashes[i].active = 0;
+    }
 }
 
-void updateSlash(void) {
-    if (slash.active) {
-        slash.x += slash.xVel;
-        slash.y += slash.yVel;
-        if (slash.x < 0 || slash.x > 240 ||
-            slash.y < 0 || slash.y > 160) {
-            slash.active = 0;
+void spawnSlash(int x, int y, int dx, int dy) {
+    for (int i = 0; i < 5; i++) {
+        if (!slashes[i].active) {
+            slashes[i].active = 1;
+            slashes[i].x = x;
+            slashes[i].y = y;
+            slashes[i].xVel = dx;
+            slashes[i].yVel = dy;
+            break;
         }
     }
 }
 
-void drawSlash(int hOff, int vOff) {
-    if (slash.active) {
-        int screenX = slash.x - hOff;
-        int screenY = slash.y - vOff;
+void updateSlashes(void) {
+    for (int i = 0; i < 5; i++) {
+        if (slashes[i].active) {
+            slashes[i].x += slashes[i].xVel;
+            slashes[i].y += slashes[i].yVel;
+            if (slashes[i].x < 0 || slashes[i].x > 240 ||
+                slashes[i].y < 0 || slashes[i].y > 160) {
+                slashes[i].active = 0;
+            }
+        }
+    }
+}
 
-        shadowOAM[7].attr0 = ((screenY) & 0xFF) | (0<<14);
-        shadowOAM[7].attr1 = ((screenX) & 0x1FF) | (1<<14);
-        shadowOAM[7].attr2 = ((((20) * (32) + (6))) & 0x3FF);
-    } else {
-        shadowOAM[7].attr0 = (2<<8);
+void drawSlashes(int hOff, int vOff) {
+    for (int i = 0; i < 5; i++) {
+        int oamIndex = 7 + i;
+        if (slashes[i].active) {
+            int sx = slashes[i].x - hOff;
+            int sy = slashes[i].y - vOff;
+            shadowOAM[oamIndex].attr0 = ((sy) & 0xFF) | (0<<14);
+            shadowOAM[oamIndex].attr1 = ((sx) & 0x1FF) | (1<<14);
+            shadowOAM[oamIndex].attr2 = ((((20) * (32) + (6))) & 0x3FF);
+        } else {
+            shadowOAM[oamIndex].attr0 = (2<<8);
+        }
     }
 }

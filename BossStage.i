@@ -167,6 +167,7 @@ typedef struct {
     int defeated;
     int flashTimer;
     u16 baseColor;
+    int cheat;
 
 } Player;
 
@@ -229,11 +230,12 @@ typedef struct {
     int active;
 } Slash;
 
-extern Slash slash;
+extern Slash slashes[5];
 
-void initSlash(void);
-void updateSlash(void);
-void drawSlash(int hOff, int vOff);
+void initSlashes(void);
+void spawnSlash(int x, int y, int dx, int dy);
+void updateSlashes(void);
+void drawSlashes(int hOff, int vOff);
 # 12 "BossStage.c" 2
 
 int hOff, vOff;
@@ -248,15 +250,18 @@ void initBossStage(void) {
     (*(volatile unsigned short *)0x4000000) = ((0) & 7) | (1 << (8 + (0 % 4))) | (1 << 12);
     (*(volatile unsigned short*) 0x4000008) = ((0) << 2) | ((27) << 8) | (0 << 14) | (0 << 7);
 
+    int oldCheat = player.cheat;
+
     DMANow(3, bossBGTilesPal, ((unsigned short *)0x5000000), 512 / 2);
     DMANow(3, bossBGTilesTiles, &((CB*) 0x6000000)[0], 19200 / 2);
     DMANow(3, bossBGTestMap, &((SB*) 0x6000000)[27], (2048) / 2);
 
     initPlayer();
+    player.cheat = oldCheat;
     hideSprites();
     initBoss();
     initFireballs();
-    initSlash();
+    initSlashes();
 
     player.x = 200;
     player.y = 100;
@@ -269,7 +274,8 @@ void initBossStage(void) {
 void updateBossStage(void) {
     updateBoss();
     updateFireballs();
-    updateSlash();
+    updateSlashes();
+
 
     if (player.x < 0) player.x = 0;
     if (player.x > 240 - player.width) player.x = 240 - player.width;
@@ -277,47 +283,50 @@ void updateBossStage(void) {
     if (player.y > 160 - player.height) player.y = 160 - player.height;
 
     if (collision(player.x, player.y, player.width, player.height,
-                  boss.x, boss.y, boss.width, boss.height)) {
+        boss.x, boss.y, boss.width, boss.height)) {
         player.health -= 20;
-        if (player.health <= 0) {
-            player.health = 0;
-            goToLose();
-        }
-    }
-
-    static int winDelay = 0;
-    if (boss.defeated) {
-        if (winDelay == 0) {
-            winDelay = 30;
-        } else {
-            winDelay--;
-            if (winDelay <= 0) {
-                goToWin();
+            if (player.health <= 0) {
+                player.health = 0;
+                goToLose();
             }
         }
+
+        static int winDelay = 0;
+        if (boss.defeated) {
+            if (winDelay == 0) {
+            winDelay = 30;
+            } else {
+                winDelay--;
+                if (winDelay <= 0) {
+                goToWin();
+                }
+            }
+        } else {
+            winDelay = 0;
+        }
+
+
+    if (player.cheat) {
+        if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
+
+            spawnSlash(player.x, player.y, -2, 0);
+        }
     } else {
-        winDelay = 0;
-    }
 
-    if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
-        playerSlashActive = 1;
-        playerSlashTimer = 20;
-
-        if (!slash.active) {
-            slash.active = 1;
-            slash.x = player.x;
-            slash.y = player.y;
-            slash.xVel = -2;
-            slash.yVel = 0;
+        if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0)))) && !playerSlashActive) {
+            playerSlashActive = 1;
+            playerSlashTimer = 20;
+            spawnSlash(player.x, player.y, -2, 0);
+        }
+        if (playerSlashActive) {
+            playerSlashTimer--;
+            if (playerSlashTimer <= 0) {
+                playerSlashActive = 0;
+            }
         }
     }
 
-    if (playerSlashActive) {
-        playerSlashTimer--;
-        if (playerSlashTimer <= 0) {
-            playerSlashActive = 0;
-        }
-    }
+
 
     if ((~(buttons) & ((1<<1)))) {
         playerBlockActive = 1;
@@ -328,22 +337,24 @@ void updateBossStage(void) {
         updatePlayer();
     }
 
-    if (!playerBlockActive && (!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
-        playerSlashActive = 1;
-        playerSlashTimer = 20;
-    }
 
 
-    if (slash.active && collision(slash.x, slash.y, 16, 16, boss.x, boss.y, boss.width, boss.height)) {
-        boss.health -= 10;
-        playAnalogSound(4);
-        slash.active = 0;
-        if (boss.health <= 0) {
-            boss.health = 0;
-            boss.defeated = 1;
+
+    for (int i = 0; i < 5; i++) {
+        if (slashes[i].active &&
+            collision(slashes[i].x, slashes[i].y, 16, 16,
+                      boss.x, boss.y, boss.width, boss.height)) {
+            boss.health -= 10;
+            playAnalogSound(4);
+            slashes[i].active = 0;
+            if (boss.health <= 0) {
+                boss.health = 0;
+                boss.defeated = 1;
+            }
         }
     }
 }
+
 
 void drawSwordSlash(int hOff, int vOff) {
     int screenX = player.x - hOff;
@@ -380,7 +391,7 @@ void drawBossStage(void) {
 
     drawBoss();
     drawFireballs();
-    drawSlash(0, 0);
+    drawSlashes(0, 0);
 
     waitForVBlank();
     DMANow(3, shadowOAM, ((OBJ_ATTR*)(0x7000000)), 128 * 4);

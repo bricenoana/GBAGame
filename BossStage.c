@@ -22,15 +22,18 @@ void initBossStage(void) {
     REG_DISPCTL = MODE(0) | BG_ENABLE(0) | SPRITE_ENABLE;
     REG_BG0CNT = BG_CHARBLOCK(0) | BG_SCREENBLOCK(27) | BG_SIZE_SMALL | BG_4BPP;
 
+    int oldCheat = player.cheat;
+
     DMANow(3, bossBGTilesPal, BG_PALETTE, bossBGTilesPalLen / 2);
     DMANow(3, bossBGTilesTiles, &CHARBLOCK[0], bossBGTilesTilesLen / 2);
     DMANow(3, bossBGTestMap, &SCREENBLOCK[27], bossBGTestLen / 2);
     
     initPlayer();
+    player.cheat = oldCheat;
     hideSprites();
     initBoss();
     initFireballs();
-    initSlash();
+    initSlashes();
 
     player.x = 200;
     player.y = 100;
@@ -43,56 +46,57 @@ void initBossStage(void) {
 void updateBossStage(void) {
     updateBoss();
     updateFireballs();
-    updateSlash();
+    updateSlashes();
 
-    if (player.x < 0) player.x = 0;
-    if (player.x > SCREENWIDTH - player.width) player.x = SCREENWIDTH - player.width;
-    if (player.y < 0) player.y = 0;
-    if (player.y > SCREENHEIGHT - player.height) player.y = SCREENHEIGHT - player.height;
-    
+    // keep player on screen…
+    if (player.x < 0)                             player.x = 0;
+    if (player.x > SCREENWIDTH - player.width)    player.x = SCREENWIDTH - player.width;
+    if (player.y < 0)                             player.y = 0;
+    if (player.y > SCREENHEIGHT - player.height)  player.y = SCREENHEIGHT - player.height;
+
     if (collision(player.x, player.y, player.width, player.height,
-                  boss.x, boss.y, boss.width, boss.height)) {
+        boss.x, boss.y, boss.width, boss.height)) {
         player.health -= 20;
-        if (player.health <= 0) {
-            player.health = 0;
-            goToLose();
+            if (player.health <= 0) {
+                player.health = 0;
+                goToLose();
+            }   
         }
-    }
-    
-    static int winDelay = 0;
-    if (boss.defeated) {
-        if (winDelay == 0) {
+
+        static int winDelay = 0;
+        if (boss.defeated) {
+            if (winDelay == 0) {
             winDelay = 30;
-        } else {
-            winDelay--;
-            if (winDelay <= 0) {
+            } else {
+                winDelay--;
+                if (winDelay <= 0) {
                 goToWin();
+                }
             }
+        } else {
+            winDelay = 0;   
+        }
+
+    if (player.cheat) {
+        if (BUTTON_PRESSED(BUTTON_A)) {
+            spawnSlash(player.x, player.y, -2, 0);
         }
     } else {
-        winDelay = 0;
-    }
-    
-    if (BUTTON_PRESSED(BUTTON_A)) {
-        playerSlashActive = 1;
-        playerSlashTimer = 20;
-        
-        if (!slash.active) {
-            slash.active = 1;
-            slash.x = player.x;
-            slash.y = player.y;
-            slash.xVel = -2;
-            slash.yVel = 0;
+        if (BUTTON_PRESSED(BUTTON_A) && !playerSlashActive) {
+            playerSlashActive  = 1;
+            playerSlashTimer   = 20;
+            spawnSlash(player.x, player.y, -2, 0);
+        }
+        if (playerSlashActive) {
+            playerSlashTimer--;
+            if (playerSlashTimer <= 0) {
+                playerSlashActive = 0;
+            }
         }
     }
-    
-    if (playerSlashActive) {
-        playerSlashTimer--;
-        if (playerSlashTimer <= 0) {
-            playerSlashActive = 0;
-        }
-    }
+    // ——————————————————————————
 
+    // blocking & movement
     if (BUTTON_HELD(BUTTON_B)) {
         playerBlockActive = 1;
     } else {
@@ -101,23 +105,25 @@ void updateBossStage(void) {
     if (!playerBlockActive) {
         updatePlayer();
     }
-    
-    if (!playerBlockActive && BUTTON_PRESSED(BUTTON_A)) {
-        playerSlashActive = 1;
-        playerSlashTimer  = 20;
-    }
 
+    // even without cheat we already guard A‐press above,
+    // so you can remove the duplicate A‐press block lower down.
 
-    if (slash.active && collision(slash.x, slash.y, 16, 16, boss.x, boss.y, boss.width, boss.height)) {
-        boss.health -= 10;
-        playAnalogSound(4);
-        slash.active = 0;
-        if (boss.health <= 0) {
-            boss.health = 0;
-            boss.defeated = 1;
+    for (int i = 0; i < MAX_SLASHES; i++) {
+        if (slashes[i].active &&
+            collision(slashes[i].x, slashes[i].y, 16, 16,
+                      boss.x,        boss.y,        boss.width, boss.height)) {
+            boss.health -= 10;
+            playAnalogSound(4);
+            slashes[i].active = 0;
+            if (boss.health <= 0) {
+                boss.health   = 0;
+                boss.defeated = 1;
+            }
         }
     }
 }
+
 
 void drawSwordSlash(int hOff, int vOff) {
     int screenX = player.x - hOff;
@@ -154,7 +160,7 @@ void drawBossStage(void) {
     
     drawBoss();
     drawFireballs();
-    drawSlash(0, 0);
+    drawSlashes(0, 0);
  
     waitForVBlank();
     DMANow(3, shadowOAM, OAM, 128 * 4);

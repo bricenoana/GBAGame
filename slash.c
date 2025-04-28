@@ -3,32 +3,51 @@
 #include "slash.h"
 #include "spriteNormal.h"
 
-Slash slash;
+Slash slashes[MAX_SLASHES];
 
-void initSlash(void) {
-    slash.active = 0;
+void initSlashes(void) {
+    for (int i = 0; i < MAX_SLASHES; i++) {
+        slashes[i].active = 0;
+    }
 }
 
-void updateSlash(void) {
-    if (slash.active) {
-        slash.x += slash.xVel;
-        slash.y += slash.yVel;
-        if (slash.x < 0 || slash.x > SCREENWIDTH ||
-            slash.y < 0 || slash.y > SCREENHEIGHT) {
-            slash.active = 0;
+void spawnSlash(int x, int y, int dx, int dy) {
+    for (int i = 0; i < MAX_SLASHES; i++) {
+        if (!slashes[i].active) {
+            slashes[i].active = 1;
+            slashes[i].x      = x;
+            slashes[i].y      = y;
+            slashes[i].xVel   = dx;
+            slashes[i].yVel   = dy;
+            break;
         }
     }
 }
 
-void drawSlash(int hOff, int vOff) {
-    if (slash.active) {
-        int screenX = slash.x - hOff;
-        int screenY = slash.y - vOff;
+void updateSlashes(void) {
+    for (int i = 0; i < MAX_SLASHES; i++) {
+        if (slashes[i].active) {
+            slashes[i].x += slashes[i].xVel;
+            slashes[i].y += slashes[i].yVel;
+            if (slashes[i].x < 0 || slashes[i].x > SCREENWIDTH ||
+                slashes[i].y < 0 || slashes[i].y > SCREENHEIGHT) {
+                slashes[i].active = 0;
+            }
+        }
+    }
+}
 
-        shadowOAM[7].attr0 = ATTR0_Y(screenY) | ATTR0_SQUARE;
-        shadowOAM[7].attr1 = ATTR1_X(screenX) | ATTR1_SMALL;
-        shadowOAM[7].attr2 = ATTR2_TILEID(6,20);
-    } else {
-        shadowOAM[7].attr0 = ATTR0_HIDE;
+void drawSlashes(int hOff, int vOff) {
+    for (int i = 0; i < MAX_SLASHES; i++) {
+        int oamIndex = 7 + i;            // slots 7–11
+        if (slashes[i].active) {
+            int sx = slashes[i].x - hOff;
+            int sy = slashes[i].y - vOff;
+            shadowOAM[oamIndex].attr0 = ATTR0_Y(sy)     | ATTR0_SQUARE;
+            shadowOAM[oamIndex].attr1 = ATTR1_X(sx)     | ATTR1_SMALL;
+            shadowOAM[oamIndex].attr2 = ATTR2_TILEID(6,20);
+        } else {
+            shadowOAM[oamIndex].attr0 = ATTR0_HIDE;
+        }
     }
 }

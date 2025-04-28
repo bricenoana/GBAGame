@@ -64,26 +64,34 @@ drawSword:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	ldr	ip, .L8
-	ldr	r3, [ip]
-	ldr	r2, [ip, #4]
+	ldr	r2, .L10
+	ldr	r3, [r2, #20]
+	cmp	r3, #0
+	bne	.L8
+	ldr	r3, [r2]
+	ldr	r2, [r2, #4]
 	sub	r0, r3, r0
-	sub	r2, r2, r1
 	lsl	r0, r0, #23
-	ldr	r1, .L8+4
-	ldr	r3, .L8+8
-	ldr	ip, .L8+12
+	sub	r3, r2, r1
+	ldr	r1, .L10+4
+	ldr	r2, .L10+8
+	ldr	ip, .L10+12
 	lsr	r0, r0, #23
-	and	r2, r2, #255
+	and	r3, r3, #255
 	orr	r0, r0, r1
-	orr	r2, r2, r1
-	strh	r0, [r3, #42]	@ movhi
-	strh	r2, [r3, #40]	@ movhi
-	strh	ip, [r3, #44]	@ movhi
+	orr	r3, r3, r1
+	strh	r0, [r2, #42]	@ movhi
+	strh	r3, [r2, #40]	@ movhi
+	strh	ip, [r2, #44]	@ movhi
 	bx	lr
-.L9:
-	.align	2
 .L8:
+	mov	r2, #512
+	ldr	r3, .L10+8
+	strh	r2, [r3, #40]	@ movhi
+	bx	lr
+.L11:
+	.align	2
+.L10:
 	.word	sword
 	.word	-32768
 	.word	shadowOAM

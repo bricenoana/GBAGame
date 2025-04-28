@@ -11,13 +11,13 @@
 	.file	"slash.c"
 	.text
 	.align	2
-	.global	initSlash
+	.global	initSlashes
 	.arch armv4t
 	.syntax unified
 	.arm
 	.fpu softvfp
-	.type	initSlash, %function
-initSlash:
+	.type	initSlashes, %function
+initSlashes:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
@@ -25,83 +25,134 @@ initSlash:
 	mov	r2, #0
 	ldr	r3, .L3
 	str	r2, [r3, #16]
+	str	r2, [r3, #36]
+	str	r2, [r3, #56]
+	str	r2, [r3, #76]
+	str	r2, [r3, #96]
 	bx	lr
 .L4:
 	.align	2
 .L3:
-	.word	slash
-	.size	initSlash, .-initSlash
+	.word	slashes
+	.size	initSlashes, .-initSlashes
 	.align	2
-	.global	updateSlash
+	.global	spawnSlash
 	.syntax unified
 	.arm
 	.fpu softvfp
-	.type	updateSlash, %function
-updateSlash:
+	.type	spawnSlash, %function
+spawnSlash:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	@ link register save eliminated.
-	ldr	r3, .L12
-	ldr	r2, [r3, #16]
-	cmp	r2, #0
-	bxeq	lr
-	ldm	r3, {r1, r2, ip}
-	ldr	r0, [r3, #12]
-	add	r1, r1, ip
-	add	r2, r2, r0
-	cmp	r2, #160
-	cmpls	r1, #240
-	stm	r3, {r1, r2}
-	movhi	r2, #0
-	strhi	r2, [r3, #16]
+	push	{r4, r5, lr}
+	ldr	r5, .L12
+	mov	ip, #0
+	mov	lr, r5
+.L8:
+	ldr	r4, [lr, #16]
+	cmp	r4, #0
+	beq	.L11
+	add	ip, ip, #1
+	cmp	ip, #5
+	add	lr, lr, #20
+	bne	.L8
+	pop	{r4, r5, lr}
+	bx	lr
+.L11:
+	mov	lr, #1
+	add	ip, ip, ip, lsl #2
+	str	r0, [r5, ip, lsl #2]
+	add	ip, r5, ip, lsl #2
+	stmib	ip, {r1, r2, r3, lr}
+	pop	{r4, r5, lr}
 	bx	lr
 .L13:
 	.align	2
 .L12:
-	.word	slash
-	.size	updateSlash, .-updateSlash
+	.word	slashes
+	.size	spawnSlash, .-spawnSlash
 	.align	2
-	.global	drawSlash
+	.global	updateSlashes
 	.syntax unified
 	.arm
 	.fpu softvfp
-	.type	drawSlash, %function
-drawSlash:
+	.type	updateSlashes, %function
+updateSlashes:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	@ link register save eliminated.
-	ldr	r2, .L17
-	ldr	r3, [r2, #16]
-	cmp	r3, #0
-	beq	.L15
-	ldr	r3, [r2]
-	ldr	r2, [r2, #4]
-	sub	r0, r3, r0
-	lsl	r0, r0, #23
-	ldr	r3, .L17+4
-	sub	r1, r2, r1
-	lsr	r0, r0, #23
-	ldr	r2, .L17+8
-	orr	r0, r0, #16384
-	and	r1, r1, #255
-	strh	r0, [r3, #58]	@ movhi
-	strh	r1, [r3, #56]	@ movhi
-	strh	r2, [r3, #60]	@ movhi
-	bx	lr
-.L15:
-	mov	r2, #512
-	ldr	r3, .L17+4
-	strh	r2, [r3, #56]	@ movhi
-	bx	lr
+	push	{r4, lr}
+	mov	r4, #0
+	ldr	r3, .L24
+	add	r0, r3, #100
 .L18:
+	ldr	r2, [r3, #16]
+	cmp	r2, #0
+	beq	.L16
+	ldm	r3, {r1, r2, lr}
+	ldr	ip, [r3, #12]
+	add	r1, r1, lr
+	add	r2, r2, ip
+	cmp	r2, #160
+	cmpls	r1, #240
+	stm	r3, {r1, r2}
+	strhi	r4, [r3, #16]
+.L16:
+	add	r3, r3, #20
+	cmp	r3, r0
+	bne	.L18
+	pop	{r4, lr}
+	bx	lr
+.L25:
 	.align	2
-.L17:
-	.word	slash
+.L24:
+	.word	slashes
+	.size	updateSlashes, .-updateSlashes
+	.align	2
+	.global	drawSlashes
+	.syntax unified
+	.arm
+	.fpu softvfp
+	.type	drawSlashes, %function
+drawSlashes:
+	@ Function supports interworking.
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	push	{r4, r5, r6, r7, lr}
+	mov	r7, #512
+	ldr	r3, .L32
+	ldr	r2, .L32+4
+	ldr	r6, .L32+8
+	ldr	r5, .L32+12
+	add	r4, r3, #100
+.L29:
+	ldr	ip, [r3, #16]
+	cmp	ip, #0
+	ldmne	r3, {ip, lr}
+	subne	ip, ip, r0
+	andne	ip, ip, r6
+	subne	lr, lr, r1
+	orrne	ip, ip, #16384
+	andne	lr, lr, #255
+	add	r3, r3, #20
+	strhne	r5, [r2, #60]	@ movhi
+	strhne	ip, [r2, #58]	@ movhi
+	strhne	lr, [r2, #56]	@ movhi
+	strheq	r7, [r2, #56]	@ movhi
+	cmp	r3, r4
+	add	r2, r2, #8
+	bne	.L29
+	pop	{r4, r5, r6, r7, lr}
+	bx	lr
+.L33:
+	.align	2
+.L32:
+	.word	slashes
 	.word	shadowOAM
+	.word	511
 	.word	646
-	.size	drawSlash, .-drawSlash
-	.comm	slash,20,4
+	.size	drawSlashes, .-drawSlashes
+	.comm	slashes,100,4
 	.comm	shadowOAM,1024,4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

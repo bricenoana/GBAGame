@@ -45,7 +45,7 @@ void updateJungleAlert(int hOff,int vOff) {
 
 void updateCaveAlert(int hOff,int vOff) {
     if (collision(player.x, player.y, player.width, player.height,
-                  sword.x,  sword.y,  sword.width, sword.height))
+                  sword.x,  sword.y,  sword.width, sword.height) && !sword.pickedUp)
     {
         alert.active = 1;
         alert.worldX = sword.x;

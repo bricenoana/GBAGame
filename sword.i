@@ -161,11 +161,15 @@ void updateSword(void) {
 }
 
 void drawSword(int hOff, int vOff) {
-    int screenX = sword.x - hOff;
-    int screenY = sword.y - vOff;
-    int tileIndex = 24 * 32 + 3;
+    if (!sword.pickedUp) {
+        int screenX = sword.x - hOff;
+        int screenY = sword.y - vOff;
+        int tileIndex = 24 * 32 + 3;
 
-    shadowOAM[5].attr0 = ((screenY) & 0xFF) | (2<<14);
-    shadowOAM[5].attr1 = ((screenX) & 0x1FF) | (2<<14);
-    shadowOAM[5].attr2 = tileIndex | (((0) & 0xF) <<12) | (((0) & 3) << 10);
+        shadowOAM[5].attr0 = ((screenY) & 0xFF) | (2<<14);
+        shadowOAM[5].attr1 = ((screenX) & 0x1FF) | (2<<14);
+        shadowOAM[5].attr2 = tileIndex | (((0) & 0xF) <<12) | (((0) & 3) << 10);
+    } else {
+        shadowOAM[5].attr0 = (2<<8);
+    }
 }
