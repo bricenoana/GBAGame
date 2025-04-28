@@ -104,17 +104,28 @@ updateBossStage:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, lr}
-	ldr	r3, .L50
+	ldr	r3, .L48
 	sub	sp, sp, #16
 	mov	lr, pc
 	bx	r3
-	ldr	r4, .L50+4
-	ldr	r3, .L50+8
+	ldr	r4, .L48+4
+	ldr	r3, .L48+8
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L50+12
+	ldr	r3, .L48+12
 	mov	lr, pc
 	bx	r3
+	ldr	r3, [r4, #56]
+	cmp	r3, #0
+	ble	.L7
+	sub	r3, r3, #1
+	tst	r3, #1
+	movne	r2, #31
+	str	r3, [r4, #56]
+	ldrheq	r2, [r4, #60]
+	ldr	r3, .L48+16
+	strh	r2, [r3, #8]	@ movhi
+.L7:
 	ldr	r0, [r4]
 	cmp	r0, #0
 	movlt	r3, #0
@@ -131,7 +142,7 @@ updateBossStage:
 	movlt	r1, r3
 	strlt	r3, [r4, #4]
 	ldr	r3, [r4, #12]
-	ldr	r5, .L50+16
+	ldr	r5, .L48+20
 	rsb	ip, r3, #160
 	cmp	ip, r1
 	strlt	ip, [r4, #4]
@@ -142,64 +153,66 @@ updateBossStage:
 	str	ip, [sp, #8]
 	ldr	lr, [r5, #4]
 	ldr	ip, [r5]
-	ldr	r7, .L50+20
+	ldr	r7, .L48+24
 	stm	sp, {ip, lr}
 	mov	lr, pc
 	bx	r7
 	cmp	r0, #0
-	beq	.L12
+	beq	.L14
 	ldr	r3, [r4, #44]
 	sub	r3, r3, #20
 	cmp	r3, #0
 	strgt	r3, [r4, #44]
-	ble	.L44
-.L12:
+	ble	.L42
+.L14:
 	ldr	r3, [r5, #24]
-	ldr	r6, .L50+24
+	ldr	r6, .L48+28
 	cmp	r3, #0
 	streq	r3, [r6, #8]
-	beq	.L17
+	beq	.L19
 	ldr	r3, [r6, #8]
 	cmp	r3, #0
 	moveq	r3, #30
 	streq	r3, [r6, #8]
-	bne	.L45
-.L17:
-	ldr	r3, .L50+28
-	ldr	r2, [r4, #64]
-	ldrh	r3, [r3]
-	ldr	r8, .L50+32
-	cmp	r2, #0
-	and	r3, r3, #1
-	ldrh	r2, [r8]
-	beq	.L18
-	cmp	r3, #0
-	bne	.L46
+	bne	.L43
 .L19:
+	ldr	r3, .L48+32
+	ldrh	r3, [r3]
+	ldr	r8, .L48+36
+	tst	r3, #1
+	ldrh	r2, [r8]
+	ldr	r3, [r6]
+	beq	.L20
+	tst	r2, #1
+	beq	.L44
+.L20:
+	cmp	r3, #0
+	bne	.L21
+.L22:
 	and	r2, r2, #2
 	cmp	r2, #0
 	moveq	r2, #1
 	movne	r2, #0
-	ldr	r3, .L50+36
+	ldr	r3, .L48+40
 	str	r2, [r3]
-	bne	.L47
-.L22:
-	ldr	r4, .L50+40
-	ldr	r8, .L50+44
-	add	r6, r4, #100
-.L26:
+	bne	.L45
+.L23:
+	ldr	r4, .L48+44
+	ldr	r8, .L48+48
+	add	r6, r4, #60
+.L27:
 	ldr	r3, [r4, #16]
 	cmp	r3, #0
-	bne	.L48
-.L24:
+	bne	.L46
+.L25:
 	add	r4, r4, #20
 	cmp	r6, r4
-	bne	.L26
+	bne	.L27
 	add	sp, sp, #16
 	@ sp needed
 	pop	{r4, r5, r6, r7, r8, lr}
 	bx	lr
-.L48:
+.L46:
 	mov	r3, #16
 	ldmib	r5, {r0, ip, lr}
 	ldr	r1, [r5]
@@ -210,7 +223,7 @@ updateBossStage:
 	mov	lr, pc
 	bx	r7
 	cmp	r0, #0
-	beq	.L24
+	beq	.L25
 	ldr	r3, [r5, #16]
 	mov	r0, #4
 	sub	r3, r3, #10
@@ -224,15 +237,10 @@ updateBossStage:
 	str	r3, [r4, #16]
 	strle	r3, [r5, #16]
 	strle	r2, [r5, #24]
-	b	.L24
-.L18:
+	b	.L25
+.L44:
 	cmp	r3, #0
-	ldr	r3, [r6]
-	beq	.L20
-	tst	r2, #1
-	bne	.L20
-	cmp	r3, #0
-	beq	.L49
+	beq	.L47
 .L21:
 	ldr	r3, [r6, #4]
 	sub	r3, r3, #1
@@ -240,61 +248,49 @@ updateBossStage:
 	str	r3, [r6, #4]
 	movle	r3, #0
 	strle	r3, [r6]
+	b	.L22
+.L43:
+	sub	r3, r3, #1
+	cmp	r3, #0
+	str	r3, [r6, #8]
+	bgt	.L19
+	ldr	r3, .L48+52
+	mov	lr, pc
+	bx	r3
 	b	.L19
-.L49:
+.L45:
+	ldr	r3, .L48+56
+	mov	lr, pc
+	bx	r3
+	b	.L23
+.L42:
+	mov	r2, #0
+	ldr	r3, .L48+60
+	str	r2, [r4, #44]
+	mov	lr, pc
+	bx	r3
+	b	.L14
+.L47:
 	mov	lr, #1
 	mov	ip, #20
 	mvn	r2, #1
 	ldm	r4, {r0, r1}
-	ldr	r4, .L50+48
+	ldr	r4, .L48+64
 	str	lr, [r6]
 	str	ip, [r6, #4]
 	mov	lr, pc
 	bx	r4
 	ldrh	r2, [r8]
 	ldr	r3, [r6]
-.L20:
-	cmp	r3, #0
-	beq	.L19
-	b	.L21
-.L46:
-	ands	r3, r2, #1
-	bne	.L19
-	mvn	r2, #1
-	ldm	r4, {r0, r1}
-	ldr	r4, .L50+48
-	mov	lr, pc
-	bx	r4
-	ldrh	r2, [r8]
-	b	.L19
-.L45:
-	sub	r3, r3, #1
-	cmp	r3, #0
-	str	r3, [r6, #8]
-	bgt	.L17
-	ldr	r3, .L50+52
-	mov	lr, pc
-	bx	r3
-	b	.L17
-.L47:
-	ldr	r3, .L50+56
-	mov	lr, pc
-	bx	r3
-	b	.L22
-.L44:
-	mov	r2, #0
-	ldr	r3, .L50+60
-	str	r2, [r4, #44]
-	mov	lr, pc
-	bx	r3
-	b	.L12
-.L51:
+	b	.L20
+.L49:
 	.align	2
-.L50:
+.L48:
 	.word	updateBoss
 	.word	player
 	.word	updateFireballs
 	.word	updateSlashes
+	.word	83886592
 	.word	boss
 	.word	collision
 	.word	.LANCHOR0
@@ -303,10 +299,10 @@ updateBossStage:
 	.word	playerBlockActive
 	.word	slashes
 	.word	playAnalogSound
-	.word	spawnSlash
 	.word	goToWin
 	.word	updatePlayer
 	.word	goToLose
+	.word	spawnSlash
 	.size	updateBossStage, .-updateBossStage
 	.align	2
 	.global	drawSwordSlash
@@ -319,7 +315,7 @@ drawSwordSlash:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	ldr	r2, .L53
+	ldr	r2, .L51
 	ldr	r3, [r2]
 	sub	r0, r3, r0
 	lsl	r0, r0, #23
@@ -328,16 +324,16 @@ drawSwordSlash:
 	mov	ip, #640
 	mvn	r0, r0, lsr #17
 	ldr	r3, [r2, #4]
-	ldr	r2, .L53+4
+	ldr	r2, .L51+4
 	sub	r3, r3, r1
 	and	r3, r3, #255
 	strh	r0, [r2, #2]	@ movhi
 	strh	r3, [r2]	@ movhi
 	strh	ip, [r2, #4]	@ movhi
 	bx	lr
-.L54:
+.L52:
 	.align	2
-.L53:
+.L51:
 	.word	player
 	.word	shadowOAM
 	.size	drawSwordSlash, .-drawSwordSlash
@@ -353,14 +349,14 @@ drawBlockFrame:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	str	lr, [sp, #-4]!
 	mov	lr, #6
-	ldr	ip, .L57
+	ldr	ip, .L55
 	ldr	r3, [ip]
 	ldr	r2, [ip, #4]
 	sub	r0, r3, r0
 	sub	r2, r2, r1
 	lsl	r0, r0, #23
-	ldr	r1, .L57+4
-	ldr	r3, .L57+8
+	ldr	r1, .L55+4
+	ldr	r3, .L55+8
 	lsr	r0, r0, #23
 	and	r2, r2, #255
 	orr	r0, r0, r1
@@ -370,9 +366,9 @@ drawBlockFrame:
 	strh	r2, [r3]	@ movhi
 	ldr	lr, [sp], #4
 	bx	lr
-.L58:
+.L56:
 	.align	2
-.L57:
+.L55:
 	.word	player
 	.word	-32768
 	.word	shadowOAM
@@ -390,58 +386,52 @@ drawBossStage:
 	mov	r3, #67108864
 	mov	r2, #0
 	push	{r4, lr}
-	ldr	r1, .L64
+	ldr	r1, .L65
 	strh	r2, [r3, #16]	@ movhi
 	strh	r2, [r3, #18]	@ movhi
 	mov	lr, pc
 	bx	r1
-	ldr	r3, .L64+4
+	ldr	r3, .L65+4
 	ldr	r3, [r3]
 	cmp	r3, #0
-	beq	.L60
-	mov	ip, #6
-	ldr	r2, .L64+8
-	ldr	r3, [r2]
-	ldrb	r1, [r2, #4]	@ zero_extendqisi2
-	ldr	r0, .L64+12
-	lsl	r3, r3, #23
-	ldr	r2, .L64+16
-	lsr	r3, r3, #23
-	orr	r3, r3, r0
-	orr	r1, r1, r0
-	strh	r3, [r2, #2]	@ movhi
-	strh	r1, [r2]	@ movhi
-	strh	ip, [r2, #4]	@ movhi
-.L61:
-	ldr	r3, .L64+20
+	bne	.L58
+	ldr	r3, .L65+8
+	ldr	r1, [r3, #16]
+	ldr	r2, [r3, #36]
+	ldr	r3, [r3, #56]
+	orr	r1, r1, r2
+	orrs	r1, r1, r3
+	bne	.L64
+	mov	r0, r1
+	ldr	r3, .L65+12
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L64+24
+.L61:
+	ldr	r3, .L65+16
+	mov	lr, pc
+	bx	r3
+	ldr	r3, .L65+20
 	mov	lr, pc
 	bx	r3
 	mov	r1, #0
-	ldr	r3, .L64+28
+	ldr	r3, .L65+24
 	mov	r0, r1
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L64+32
+	ldr	r3, .L65+28
 	mov	lr, pc
 	bx	r3
-	ldr	r4, .L64+36
+	ldr	r4, .L65+32
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L64+16
+	ldr	r1, .L65+36
 	mov	lr, pc
 	bx	r4
 	pop	{r4, lr}
 	bx	lr
-.L60:
-	ldr	r3, .L64+40
-	ldr	r1, [r3]
-	cmp	r1, #0
-	beq	.L62
-	ldr	r2, .L64+8
+.L64:
+	ldr	r2, .L65+40
 	ldr	r3, [r2]
 	lsl	r3, r3, #23
 	lsr	r3, r3, #23
@@ -449,32 +439,41 @@ drawBossStage:
 	mov	r1, #640
 	mvn	r3, r3, lsr #17
 	ldrb	r0, [r2, #4]	@ zero_extendqisi2
-	ldr	r2, .L64+16
+	ldr	r2, .L65+36
 	strh	r3, [r2, #2]	@ movhi
 	strh	r0, [r2]	@ movhi
 	strh	r1, [r2, #4]	@ movhi
 	b	.L61
-.L62:
-	mov	r0, r1
-	ldr	r3, .L64+44
-	mov	lr, pc
-	bx	r3
+.L58:
+	mov	ip, #6
+	ldr	r2, .L65+40
+	ldr	r3, [r2]
+	ldrb	r1, [r2, #4]	@ zero_extendqisi2
+	ldr	r0, .L65+44
+	lsl	r3, r3, #23
+	ldr	r2, .L65+36
+	lsr	r3, r3, #23
+	orr	r3, r3, r0
+	orr	r1, r1, r0
+	strh	r3, [r2, #2]	@ movhi
+	strh	r1, [r2]	@ movhi
+	strh	ip, [r2, #4]	@ movhi
 	b	.L61
-.L65:
+.L66:
 	.align	2
-.L64:
+.L65:
 	.word	hideSprites
 	.word	playerBlockActive
-	.word	player
-	.word	-32768
-	.word	shadowOAM
+	.word	slashes
+	.word	drawPlayer
 	.word	drawBoss
 	.word	drawFireballs
 	.word	drawSlashes
 	.word	waitForVBlank
 	.word	DMANow
-	.word	.LANCHOR0
-	.word	drawPlayer
+	.word	shadowOAM
+	.word	player
+	.word	-32768
 	.size	drawBossStage, .-drawBossStage
 	.comm	playerBlockActive,4,4
 	.comm	vOff,4,4

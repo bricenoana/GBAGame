@@ -195,7 +195,10 @@ void initPlayer(void) {
     player.xVel = 1;
     player.yVel = 1;
     player.defeated = 0;
+    player.flashTimer = 0;
+    player.baseColor = ((u16 *)0x5000200)[4];
     player.cheat = 0;
+
 
     DMANow(3, spriteNormalTiles, &((CB*) 0x6000000)[4], 32768 / 2);
     DMANow(3, spriteNormalPal, ((u16 *)0x5000200), 256);

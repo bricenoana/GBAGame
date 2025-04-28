@@ -1,7 +1,7 @@
 #ifndef SLASH_H
 #define SLASH_H
 
-#define MAX_SLASHES 5
+#define MAX_SLASHES 3
 
 typedef struct {
     int x, y;

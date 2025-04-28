@@ -333,9 +333,6 @@ static void gameState(void) {
     if (BUTTON_PRESSED(BUTTON_SELECT)) {
         goToPause();
     }
-    // if (BUTTON_PRESSED(BUTTON_B)) {
-    //     goToCave();
-    // }
     updateJungleStage();
     drawJungleStage();
 }
@@ -343,9 +340,6 @@ static void gameState(void) {
 static void bossState(void) {
     if (BUTTON_PRESSED(BUTTON_SELECT)) {
         goToPause();
-    }
-    if (BUTTON_PRESSED(BUTTON_START)) {
-        goToWin(); //remove after
     }
 
     updateBossStage();

@@ -792,7 +792,7 @@ updateStateMachine:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, lr}
-	ldr	r4, .L185
+	ldr	r4, .L181
 	ldrb	r3, [r4]	@ zero_extendqisi2
 	cmp	r3, #11
 	ldrls	pc, [pc, r3, asl #2]
@@ -811,15 +811,15 @@ updateStateMachine:
 	.word	.L99
 	.word	.L97
 .L109:
-	ldr	r5, .L185+4
-	ldr	r3, .L185+8
-	ldr	r0, .L185+12
+	ldr	r5, .L181+4
+	ldr	r3, .L181+8
+	ldr	r0, .L181+12
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r5]
 	tst	r3, #8
 	beq	.L110
-	ldr	r2, .L185+16
+	ldr	r2, .L181+16
 	ldrh	r2, [r2]
 	tst	r2, #8
 	bne	.L110
@@ -828,17 +828,17 @@ updateStateMachine:
 .L110:
 	tst	r3, #1
 	beq	.L111
-	ldr	r2, .L185+16
+	ldr	r2, .L181+16
 	ldrh	r2, [r2]
 	ands	r2, r2, #1
 	bne	.L111
 	mov	r3, #83886080
-	ldr	r1, .L185+20
+	ldr	r1, .L181+20
 .L112:
 	strh	r2, [r3], #2	@ movhi
 	cmp	r3, r1
 	bne	.L112
-	ldr	r3, .L185+24
+	ldr	r3, .L181+24
 	mov	lr, pc
 	bx	r3
 	mov	r2, #7
@@ -847,7 +847,7 @@ updateStateMachine:
 .L111:
 	tst	r3, #2
 	beq	.L113
-	ldr	r2, .L185+16
+	ldr	r2, .L181+16
 	ldrh	r2, [r2]
 	tst	r2, #2
 	bne	.L113
@@ -856,11 +856,11 @@ updateStateMachine:
 .L113:
 	tst	r3, #4
 	beq	.L95
-	ldr	r3, .L185+16
+	ldr	r3, .L181+16
 	ldrh	r3, [r3]
 	tst	r3, #4
 	bne	.L95
-	ldr	r3, .L185+28
+	ldr	r3, .L181+28
 	mov	lr, pc
 	bx	r3
 	mov	r3, #6
@@ -869,37 +869,37 @@ updateStateMachine:
 	pop	{r4, r5, r6, lr}
 	bx	lr
 .L97:
-	ldr	r3, .L185+8
-	ldr	r0, .L185+32
+	ldr	r3, .L181+8
+	ldr	r0, .L181+32
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L185+4
+	ldr	r3, .L181+4
 	ldrh	r3, [r3]
 	tst	r3, #8
 	beq	.L118
-	ldr	r3, .L185+16
+	ldr	r3, .L181+16
 	ldrh	r3, [r3]
 	tst	r3, #8
-	beq	.L183
+	beq	.L179
 .L118:
-	ldr	r3, .L185+36
+	ldr	r3, .L181+36
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L185+40
+	ldr	r3, .L181+40
 	mov	lr, pc
 	bx	r3
 	pop	{r4, r5, r6, lr}
 	bx	lr
 .L108:
-	ldr	r5, .L185+4
-	ldr	r3, .L185+8
-	ldr	r0, .L185+44
+	ldr	r5, .L181+4
+	ldr	r3, .L181+8
+	ldr	r0, .L181+44
 	mov	lr, pc
 	bx	r3
 	ldrh	r3, [r5]
 	tst	r3, #8
 	beq	.L116
-	ldr	r2, .L185+16
+	ldr	r2, .L181+16
 	ldrh	r2, [r2]
 	tst	r2, #8
 	bne	.L116
@@ -908,195 +908,186 @@ updateStateMachine:
 .L116:
 	tst	r3, #4
 	beq	.L118
-	ldr	r3, .L185+16
+	ldr	r3, .L181+16
 	ldrh	r3, [r3]
 	tst	r3, #4
 	bne	.L118
 .L120:
-	ldr	r3, .L185+28
+	ldr	r3, .L181+28
 	mov	lr, pc
 	bx	r3
 	mov	r3, #6
 	strb	r3, [r4]
 	b	.L118
 .L107:
-	ldr	r3, .L185+8
-	ldr	r0, .L185+48
+	ldr	r3, .L181+8
+	ldr	r0, .L181+48
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L185+4
+	ldr	r3, .L181+4
 	ldrh	r3, [r3]
 	tst	r3, #8
 	beq	.L118
-	ldr	r3, .L185+16
+	ldr	r3, .L181+16
 	ldrh	r3, [r3]
 	tst	r3, #8
 	bne	.L118
 	bl	goToOP2
 	b	.L118
 .L106:
-	ldr	r3, .L185+8
-	ldr	r0, .L185+52
+	ldr	r3, .L181+8
+	ldr	r0, .L181+52
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L185+4
+	ldr	r3, .L181+4
 	ldrh	r3, [r3]
 	tst	r3, #8
 	beq	.L118
-	ldr	r3, .L185+16
+	ldr	r3, .L181+16
 	ldrh	r3, [r3]
 	tst	r3, #8
 	bne	.L118
 	bl	goToOP3
 	b	.L118
 .L105:
-	ldr	r3, .L185+8
-	ldr	r0, .L185+56
+	ldr	r3, .L181+8
+	ldr	r0, .L181+56
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L185+4
+	ldr	r3, .L181+4
 	ldrh	r3, [r3]
 	tst	r3, #8
 	beq	.L118
-	ldr	r3, .L185+16
+	ldr	r3, .L181+16
 	ldrh	r3, [r3]
 	tst	r3, #8
 	bne	.L118
 	bl	goToOP4
 	b	.L118
 .L104:
-	ldr	r3, .L185+8
-	ldr	r0, .L185+60
+	ldr	r3, .L181+8
+	ldr	r0, .L181+60
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L185+4
+	ldr	r3, .L181+4
 	ldrh	r3, [r3]
 	tst	r3, #8
 	beq	.L118
-	ldr	r3, .L185+16
+	ldr	r3, .L181+16
 	ldrh	r3, [r3]
 	tst	r3, #8
 	bne	.L118
 	b	.L120
 .L103:
-	ldr	r3, .L185+4
+	ldr	r3, .L181+4
 	ldrh	r3, [r3]
 	tst	r3, #4
 	beq	.L121
-	ldr	r3, .L185+16
+	ldr	r3, .L181+16
 	ldrh	r3, [r3]
 	tst	r3, #4
 	bleq	goToPause
 .L121:
-	ldr	r3, .L185+64
+	ldr	r3, .L181+64
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L185+68
+	ldr	r3, .L181+68
 	mov	lr, pc
 	bx	r3
 	b	.L95
 .L102:
-	ldr	r3, .L185+4
+	ldr	r3, .L181+4
 	ldrh	r3, [r3]
 	tst	r3, #4
 	beq	.L122
-	ldr	r3, .L185+16
+	ldr	r3, .L181+16
 	ldrh	r3, [r3]
 	tst	r3, #4
 	bleq	goToPause
 .L122:
-	ldr	r3, .L185+72
+	ldr	r3, .L181+72
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L185+76
+	ldr	r3, .L181+76
 	mov	lr, pc
 	bx	r3
 	b	.L95
 .L100:
-	ldr	r0, .L185+80
-	ldr	r3, .L185+8
+	ldr	r0, .L181+80
+	ldr	r3, .L181+8
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L185+36
+	ldr	r3, .L181+36
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L185+40
+	ldr	r3, .L181+40
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L185+4
+	ldr	r3, .L181+4
 	ldrh	r3, [r3]
 	tst	r3, #4
 	beq	.L95
-	ldr	r3, .L185+16
+	ldr	r3, .L181+16
 	ldrh	r2, [r3]
 	ands	r2, r2, #4
 	bne	.L95
 	ldrb	r5, [r4, #1]	@ zero_extendqisi2
 	cmp	r5, #7
-	beq	.L129
+	beq	.L128
 	cmp	r5, #8
 	beq	.L124
 	cmp	r5, #6
 	movne	r3, #83886080
-	ldrne	r1, .L185+20
-	beq	.L184
+	ldrne	r1, .L181+20
+	beq	.L180
 .L125:
 	strh	r2, [r3], #2	@ movhi
 	cmp	r3, r1
 	bne	.L125
 .L126:
-	ldr	r3, .L185+24
+	ldr	r3, .L181+24
 	mov	lr, pc
 	bx	r3
 	mov	r3, #7
 	strb	r3, [r4]
 	b	.L95
 .L101:
-	ldr	r4, .L185+4
-	ldrh	r3, [r4]
+	ldr	r3, .L181+4
+	ldrh	r3, [r3]
 	tst	r3, #4
 	beq	.L127
-	ldr	r2, .L185+16
-	ldrh	r2, [r2]
-	tst	r2, #4
-	bne	.L127
-	bl	goToPause
-	ldrh	r3, [r4]
-.L127:
-	tst	r3, #8
-	beq	.L128
-	ldr	r3, .L185+16
+	ldr	r3, .L181+16
 	ldrh	r3, [r3]
-	tst	r3, #8
-	bleq	goToWin
-.L128:
-	ldr	r3, .L185+84
+	tst	r3, #4
+	bleq	goToPause
+.L127:
+	ldr	r3, .L181+84
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L185+88
+	ldr	r3, .L181+88
 	mov	lr, pc
 	bx	r3
 	b	.L95
 .L99:
-	ldr	r3, .L185+8
-	ldr	r0, .L185+92
+	ldr	r3, .L181+8
+	ldr	r0, .L181+92
 	mov	lr, pc
 	bx	r3
-	ldr	r3, .L185+4
+	ldr	r3, .L181+4
 	ldrh	r3, [r3]
 	tst	r3, #8
 	beq	.L118
-	ldr	r3, .L185+16
+	ldr	r3, .L181+16
 	ldrh	r3, [r3]
 	tst	r3, #8
 	bne	.L118
 	bl	goToStart
 	b	.L118
-.L183:
+.L179:
 	pop	{r4, r5, r6, lr}
 	b	goToStart
-.L184:
-	ldr	r3, .L185+28
+.L180:
+	ldr	r3, .L181+28
 	mov	lr, pc
 	bx	r3
 	strb	r5, [r4]
@@ -1104,17 +1095,17 @@ updateStateMachine:
 .L124:
 	pop	{r4, r5, r6, lr}
 	b	goToBossStage
-.L129:
+.L128:
 	mov	r3, #83886080
-	ldr	r1, .L185+20
+	ldr	r1, .L181+20
 .L123:
 	strh	r2, [r3], #2	@ movhi
 	cmp	r3, r1
 	bne	.L123
 	b	.L126
-.L186:
+.L182:
 	.align	2
-.L185:
+.L181:
 	.word	.LANCHOR0
 	.word	oldButtons
 	.word	drawFullscreenImage4

@@ -230,7 +230,7 @@ typedef struct {
     int active;
 } Slash;
 
-extern Slash slashes[5];
+extern Slash slashes[3];
 
 void initSlashes(void);
 void spawnSlash(int x, int y, int dx, int dy);
@@ -277,10 +277,20 @@ void updateBossStage(void) {
     updateSlashes();
 
 
+    if (player.flashTimer > 0) {
+        player.flashTimer--;
+        if (player.flashTimer & 1) {
+            ((u16 *)0x5000200)[4] = (((31) & 31) | ((0) & 31) << 5 | ((0) & 31) << 10);
+        } else {
+            ((u16 *)0x5000200)[4] = player.baseColor;
+        }
+    }
+
     if (player.x < 0) player.x = 0;
     if (player.x > 240 - player.width) player.x = 240 - player.width;
     if (player.y < 0) player.y = 0;
     if (player.y > 160 - player.height) player.y = 160 - player.height;
+
 
     if (collision(player.x, player.y, player.width, player.height,
         boss.x, boss.y, boss.width, boss.height)) {
@@ -305,17 +315,10 @@ void updateBossStage(void) {
             winDelay = 0;
         }
 
-
-    if (player.cheat) {
-        if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
-
-            spawnSlash(player.x, player.y, -2, 0);
-        }
-    } else {
-
         if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0)))) && !playerSlashActive) {
             playerSlashActive = 1;
-            playerSlashTimer = 20;
+
+            playerSlashTimer = player.cheat ? 20 : 20;
             spawnSlash(player.x, player.y, -2, 0);
         }
         if (playerSlashActive) {
@@ -324,8 +327,6 @@ void updateBossStage(void) {
                 playerSlashActive = 0;
             }
         }
-    }
-
 
 
     if ((~(buttons) & ((1<<1)))) {
@@ -338,9 +339,7 @@ void updateBossStage(void) {
     }
 
 
-
-
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 3; i++) {
         if (slashes[i].active &&
             collision(slashes[i].x, slashes[i].y, 16, 16,
                       boss.x, boss.y, boss.width, boss.height)) {
@@ -381,11 +380,18 @@ void drawBossStage(void) {
 
     hideSprites();
     if (playerBlockActive) {
-        drawBlockFrame(0, 0);
-    } else if (playerSlashActive) {
-        drawSwordSlash(0, 0);
+        drawBlockFrame(0,0);
     } else {
-        drawPlayer(0, 0);
+
+        int any = 0;
+        for (int i = 0; i < 3; i++) {
+            if (slashes[i].active) { any = 1; break; }
+        }
+        if (any) {
+            drawSwordSlash(0,0);
+        } else {
+            drawPlayer(0,0);
+        }
     }
 
 

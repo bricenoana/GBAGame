@@ -51,6 +51,7 @@ void initJungleStage(void) {
     // initBoxes();
     textState = 0;
     collisionEnabled = 1;
+    player.cheat = 0; 
 
     hOff = vOff = 0;
     REG_BG1HOFF = hOff;

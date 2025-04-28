@@ -95,25 +95,27 @@ initJungleStage:
 	ldr	r3, .L6+76
 	mov	lr, pc
 	bx	r3
-	mov	ip, #1
+	mov	r1, #1
 	mov	r3, #67108864
 	ldr	r2, .L6+80
-	ldr	r0, .L6+84
-	str	ip, [r2]
-	ldr	r1, .L6+88
+	ldr	ip, .L6+84
+	str	r1, [r2]
+	ldr	r0, .L6+88
 	ldr	r2, .L6+92
+	ldr	r1, .L6+96
+	str	r4, [ip]
 	str	r4, [r0]
-	str	r4, [r1]
 	str	r4, [r2]
 	strh	r4, [r3, #20]	@ movhi
-	ldr	r2, .L6+96
+	ldr	r2, .L6+100
 	strh	r4, [r3, #22]	@ movhi
+	str	r4, [r1, #64]
 	mov	lr, pc
 	bx	r2
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L6+100
+	ldr	r1, .L6+104
 	mov	lr, pc
 	bx	r5
 	pop	{r4, r5, r6, lr}
@@ -145,6 +147,7 @@ initJungleStage:
 	.word	textState
 	.word	vOff
 	.word	hOff
+	.word	player
 	.word	hideSprites
 	.word	shadowOAM
 	.size	initJungleStage, .-initJungleStage

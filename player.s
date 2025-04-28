@@ -22,38 +22,42 @@ initPlayer:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r4, r5, r6, r7, r8, lr}
-	mov	r1, #0
-	mov	r4, #3
-	mov	r2, #100
-	mov	r5, #140
-	mov	r3, #10
-	mov	lr, #1
-	mov	r8, #16
-	mov	r7, #32
 	mov	r6, #40
+	mov	r3, #140
+	mov	r4, #3
+	mov	r1, #0
+	mov	r2, #100
+	mov	r5, #32
+	mov	r0, #10
+	mov	lr, #1
+	mov	r7, #16
 	ldr	ip, .L4
-	mov	r0, r4
-	str	r5, [ip, #4]
-	str	r3, [ip, #32]
+	str	r6, [ip]
+	ldr	r6, .L4+4
+	str	r3, [ip, #4]
+	ldrh	r3, [r6, #8]
+	str	r5, [ip, #12]
+	str	r0, [ip, #32]
+	strh	r3, [ip, #60]	@ movhi
 	str	r2, [ip, #48]
 	str	r2, [ip, #44]
 	str	r1, [ip, #40]
 	str	r1, [ip, #52]
+	str	r1, [ip, #56]
 	str	r1, [ip, #64]
-	ldr	r5, .L4+4
+	ldr	r5, .L4+8
+	mov	r0, r4
 	mov	r3, #16384
-	ldr	r2, .L4+8
-	ldr	r1, .L4+12
+	ldr	r2, .L4+12
+	ldr	r1, .L4+16
+	str	r7, [ip, #8]
 	str	r4, [ip, #28]
-	str	r8, [ip, #8]
-	str	r7, [ip, #12]
-	str	r6, [ip]
 	str	lr, [ip, #16]
 	str	lr, [ip, #20]
 	mov	lr, pc
 	bx	r5
+	mov	r2, r6
 	mov	r0, r4
-	ldr	r2, .L4+16
 	ldr	r1, .L4+20
 	mov	r3, #256
 	mov	lr, pc
@@ -73,10 +77,10 @@ initPlayer:
 	.align	2
 .L4:
 	.word	player
+	.word	83886592
 	.word	DMANow
 	.word	100728832
 	.word	spriteNormalTiles
-	.word	83886592
 	.word	spriteNormalPal
 	.word	hideSprites
 	.word	shadowOAM

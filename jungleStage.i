@@ -266,6 +266,7 @@ void initJungleStage(void) {
 
     textState = 0;
     collisionEnabled = 1;
+    player.cheat = 0;
 
     hOff = vOff = 0;
     (*(volatile unsigned short*) 0x04000014) = hOff;

@@ -159,6 +159,7 @@ typedef struct {
     int defeated;
     int flashTimer;
     u16 baseColor;
+    int cheat;
 
 } Player;
 
@@ -307,6 +308,14 @@ void updateFireballs(void) {
 
             if (!playerBlockActive) {
                 player.health -= 20;
+                if (player.flashTimer == 0) {
+                    player.health -= 20;
+                    player.flashTimer = 30;
+                }
+                if (player.health <= 0) {
+                    player.health = 0;
+                    goToLose();
+                }
 
                 if (player.health <= 0) {
                     player.health = 0;

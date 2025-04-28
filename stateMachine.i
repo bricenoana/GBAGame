@@ -406,6 +406,7 @@ typedef struct {
     int defeated;
     int flashTimer;
     u16 baseColor;
+    int cheat;
 
 } Player;
 
@@ -844,9 +845,6 @@ static void gameState(void) {
     if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
         goToPause();
     }
-
-
-
     updateJungleStage();
     drawJungleStage();
 }
@@ -854,9 +852,6 @@ static void gameState(void) {
 static void bossState(void) {
     if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
         goToPause();
-    }
-    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        goToWin();
     }
 
     updateBossStage();

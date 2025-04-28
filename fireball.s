@@ -105,15 +105,29 @@ updateFireballs:
 	str	r0, [r4, #24]
 	bne	.L29
 .L13:
-	ldr	r2, [r8]
-	cmp	r2, #0
-	bne	.L11
-	ldr	r3, [r6, #44]
-	sub	r3, r3, #20
+	ldr	r3, [r8]
 	cmp	r3, #0
-	strgt	r3, [r6, #44]
+	bne	.L11
+	ldr	r1, [r6, #56]
+	cmp	r1, #0
+	moveq	r1, #30
+	ldr	r2, [r6, #44]
+	sub	r3, r2, #20
+	str	r3, [r6, #44]
+	subeq	r3, r2, #40
+	streq	r3, [r6, #44]
+	streq	r1, [r6, #56]
+	cmp	r3, #0
 	bgt	.L11
-	str	r2, [r6, #44]
+	mov	r3, #0
+	str	r3, [r6, #44]
+	mov	lr, pc
+	bx	fp
+	ldr	r2, [r6, #44]
+	cmp	r2, #0
+	bgt	.L11
+	mov	r3, #0
+	str	r3, [r6, #44]
 	mov	lr, pc
 	bx	fp
 	b	.L11

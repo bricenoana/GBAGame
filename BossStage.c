@@ -48,12 +48,22 @@ void updateBossStage(void) {
     updateFireballs();
     updateSlashes();
 
-    // keep player on screen…
+    // palette mod for dmg
+    if (player.flashTimer > 0) {
+        player.flashTimer--;
+        if (player.flashTimer & 1) {
+            SPRITE_PAL[4] = RGB(31, 0, 0);
+        } else {
+            SPRITE_PAL[4] = player.baseColor;
+        }
+    }
+
     if (player.x < 0)                             player.x = 0;
     if (player.x > SCREENWIDTH - player.width)    player.x = SCREENWIDTH - player.width;
     if (player.y < 0)                             player.y = 0;
     if (player.y > SCREENHEIGHT - player.height)  player.y = SCREENHEIGHT - player.height;
 
+    // auto lose if u collide with boss
     if (collision(player.x, player.y, player.width, player.height,
         boss.x, boss.y, boss.width, boss.height)) {
         player.health -= 20;
@@ -77,14 +87,10 @@ void updateBossStage(void) {
             winDelay = 0;   
         }
 
-    if (player.cheat) {
-        if (BUTTON_PRESSED(BUTTON_A)) {
-            spawnSlash(player.x, player.y, -2, 0);
-        }
-    } else {
         if (BUTTON_PRESSED(BUTTON_A) && !playerSlashActive) {
-            playerSlashActive  = 1;
-            playerSlashTimer   = 20;
+            playerSlashActive = 1;
+            // cheat? half the cooldown
+            playerSlashTimer  = player.cheat ? 20 : 20;
             spawnSlash(player.x, player.y, -2, 0);
         }
         if (playerSlashActive) {
@@ -93,8 +99,6 @@ void updateBossStage(void) {
                 playerSlashActive = 0;
             }
         }
-    }
-    // ——————————————————————————
 
     // blocking & movement
     if (BUTTON_HELD(BUTTON_B)) {
@@ -106,9 +110,7 @@ void updateBossStage(void) {
         updatePlayer();
     }
 
-    // even without cheat we already guard A‐press above,
-    // so you can remove the duplicate A‐press block lower down.
-
+    // throwing the slashes
     for (int i = 0; i < MAX_SLASHES; i++) {
         if (slashes[i].active &&
             collision(slashes[i].x, slashes[i].y, 16, 16,
@@ -150,11 +152,18 @@ void drawBossStage(void) {
  
     hideSprites();
     if (playerBlockActive) {
-        drawBlockFrame(0, 0);
-    } else if (playerSlashActive) {
-        drawSwordSlash(0, 0);
+        drawBlockFrame(0,0);
     } else {
-        drawPlayer(0, 0);
+        // see if any slashes are active
+        int any = 0;
+        for (int i = 0; i < MAX_SLASHES; i++) {
+            if (slashes[i].active) { any = 1; break; }
+        }
+        if (any) {
+            drawSwordSlash(0,0);
+        } else {
+            drawPlayer(0,0);
+        }
     }
 
     

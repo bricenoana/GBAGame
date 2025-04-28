@@ -34,7 +34,10 @@ void initPlayer(void) {
     player.xVel = 1;
     player.yVel = 1;
     player.defeated = 0;
-    player.cheat = 0;
+    player.flashTimer = 0;
+    player.baseColor = SPRITE_PAL[4]; // og palette
+    player.cheat     = 0;
+    
 
     DMANow(3, spriteNormalTiles, &CHARBLOCK[4], spriteNormalTilesLen / 2);
     DMANow(3, spriteNormalPal, SPRITE_PAL, 256);

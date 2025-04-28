@@ -130,6 +130,35 @@ extern const unsigned short spriteNormalTiles[16384];
 
 extern const unsigned short spriteNormalPal[256];
 # 5 "slash.c" 2
+# 1 "player.h" 1
+
+
+
+typedef struct {
+    int x, y;
+    int width, height;
+    int xVel, yVel;
+    int currentFrame, numFrames;
+    int timeUntilNextFrame;
+    int isAnimating;
+    int direction;
+    int health;
+    int maxHealth;
+    int defeated;
+    int flashTimer;
+    u16 baseColor;
+    int cheat;
+
+} Player;
+
+extern Player player;
+
+extern int collisionEnabled;
+
+void initPlayer(void);
+void updatePlayer(void);
+void drawPlayer(int hOff, int vOff);
+# 6 "slash.c" 2
 
 Slash slashes[5];
 
@@ -140,6 +169,21 @@ void initSlashes(void) {
 }
 
 void spawnSlash(int x, int y, int dx, int dy) {
+
+    int activeCount = 0;
+    for (int i = 0; i < 5; i++) {
+        if (slashes[i].active) {
+            activeCount++;
+        }
+    }
+
+
+    int limit = player.cheat ? 5 : 1;
+    if (activeCount >= limit) {
+        return;
+    }
+
+
     for (int i = 0; i < 5; i++) {
         if (!slashes[i].active) {
             slashes[i].active = 1;
@@ -151,6 +195,7 @@ void spawnSlash(int x, int y, int dx, int dy) {
         }
     }
 }
+
 
 void updateSlashes(void) {
     for (int i = 0; i < 5; i++) {
