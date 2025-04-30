@@ -549,30 +549,23 @@ void goToStart(void) {
 
     stopSounds();
 
-
     (*(volatile unsigned short *)0x4000000) = ((4) & 7) | (1 << (8 + (2 % 4))) | (1 << 4);
     for (int i = 0; i < 240*160; i++) {
         ((unsigned short*) 0x06000000)[i] = 0;
         ((unsigned short*) 0x0600A000)[i] = 0;
     }
 
-
     DMANow(3, startBGPal, ((unsigned short *)0x5000000), 512 / 2);
-
 
     drawFullscreenImage4(startBGBitmap);
 
-
     waitForVBlank();
 
-
     flipPage();
-
 
     drawFullscreenImage4(startBGBitmap);
 
     playSoundA(overallSong_data, overallSong_length, 1);
-
 
     waitForVBlank();
 }
@@ -750,9 +743,6 @@ static void startState(void) {
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
         goToInstructions();
     }
-    if ((!(~(oldButtons) & ((1<<0))) && (~(buttons) & ((1<<0))))) {
-        goToBossStage();
-    }
 
     waitForVBlank();
     flipPage();
@@ -823,12 +813,6 @@ static void bossState(void) {
     if ((!(~(oldButtons) & ((1<<2))) && (~(buttons) & ((1<<2))))) {
         goToPause();
     }
-    if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3))))) {
-        goToWin();
-    }
-    if ((!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
-        goToLose();
-    }
     updateBossStage();
     drawBossStage();
 }
@@ -858,13 +842,11 @@ static void pauseState(void) {
 
 
 static void winState(void) {
-
     static u16 col10;
     static u16 col3;
     static u16 col14;
     static int paletteCounter = 0;
     static int initialized = 0;
-
 
     if (!initialized) {
         col10 = ((unsigned short *)0x5000000)[10];
@@ -873,11 +855,9 @@ static void winState(void) {
         initialized = 1;
     }
 
-
     paletteCounter++;
     if (paletteCounter >= 30) {
         paletteCounter = 0;
-
         u16 temp = ((unsigned short *)0x5000000)[10];
         ((unsigned short *)0x5000000)[10] = ((unsigned short *)0x5000000)[3];
         ((unsigned short *)0x5000000)[3] = ((unsigned short *)0x5000000)[14];
@@ -888,12 +868,9 @@ static void winState(void) {
     waitForVBlank();
     flipPage();
 
-
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3)))) || (!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
-
         initialized = 0;
         paletteCounter = 0;
-
 
         ((unsigned short *)0x5000000)[10] = col10;
         ((unsigned short *)0x5000000)[3] = col3;
@@ -905,13 +882,11 @@ static void winState(void) {
 }
 
 static void loseState(void) {
-
     static u16 col2;
     static u16 col5;
     static u16 col14;
     static int paletteCounter = 0;
     static int initialized = 0;
-
 
     if (!initialized) {
         col2 = ((unsigned short *)0x5000000)[2];
@@ -920,11 +895,9 @@ static void loseState(void) {
         initialized = 1;
     }
 
-
     paletteCounter++;
     if (paletteCounter >= 30) {
         paletteCounter = 0;
-
         u16 temp = ((unsigned short *)0x5000000)[2];
         ((unsigned short *)0x5000000)[2] = ((unsigned short *)0x5000000)[14];
         ((unsigned short *)0x5000000)[5] = temp;
@@ -935,12 +908,9 @@ static void loseState(void) {
     waitForVBlank();
     flipPage();
 
-
     if ((!(~(oldButtons) & ((1<<3))) && (~(buttons) & ((1<<3)))) || (!(~(oldButtons) & ((1<<1))) && (~(buttons) & ((1<<1))))) {
-
         initialized = 0;
         paletteCounter = 0;
-
 
         ((unsigned short *)0x5000000)[2] = col2;
         ((unsigned short *)0x5000000)[5] = col5;

@@ -151,6 +151,7 @@ void initSword(void) {
     sword.y = 110;
     sword.width = 32;
     sword.height = 64;
+    sword.pickedUp = 0;
     sword.active = 1;
 }
 

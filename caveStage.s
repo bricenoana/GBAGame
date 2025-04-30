@@ -88,21 +88,25 @@ initCaveStage:
 	mov	lr, pc
 	bx	r3
 	mov	r3, #0
-	ldr	r0, .L4+72
-	ldr	r1, .L4+76
-	ldr	r2, .L4+80
-	str	r3, [r0]
-	str	r3, [r1]
+	mov	r0, #1
+	ldr	r2, .L4+72
+	ldr	ip, .L4+76
+	ldr	r1, .L4+80
 	str	r3, [r2]
-	strh	r3, [r5, #20]	@ movhi
 	ldr	r2, .L4+84
+	str	r3, [ip]
+	str	r3, [r1]
+	strh	r3, [r5, #20]	@ movhi
+	ldr	r1, .L4+88
 	strh	r3, [r5, #22]	@ movhi
+	str	r3, [r2, #20]
+	str	r0, [r2, #16]
 	mov	lr, pc
-	bx	r2
+	bx	r1
 	mov	r3, #512
 	mov	r2, #117440512
 	mov	r0, #3
-	ldr	r1, .L4+88
+	ldr	r1, .L4+92
 	mov	lr, pc
 	bx	r4
 	pop	{r4, r5, r6, lr}
@@ -131,6 +135,7 @@ initCaveStage:
 	.word	collisionEnabled
 	.word	vOff
 	.word	hOff
+	.word	sword
 	.word	hideSprites
 	.word	shadowOAM
 	.size	initCaveStage, .-initCaveStage

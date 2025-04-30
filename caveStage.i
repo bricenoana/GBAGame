@@ -284,6 +284,9 @@ void initCaveStage(void) {
     initSword();
     initAlert();
 
+    sword.pickedUp = 0;
+    sword.active = 1;
+
     collisionEnabled = 0;
     hOff = vOff = 0;
     (*(volatile unsigned short*) 0x04000014) = hOff;

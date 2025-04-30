@@ -46,6 +46,9 @@ void initCaveStage(void) {
     initSword();
     initAlert();
 
+    sword.pickedUp = 0;
+    sword.active   = 1;
+
     collisionEnabled = 0;
     hOff = vOff = 0;
     REG_BG1HOFF = hOff;

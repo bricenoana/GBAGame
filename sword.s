@@ -21,19 +21,20 @@ initSword:
 	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	str	lr, [sp, #-4]!
-	mov	ip, #110
-	mov	lr, #400
-	mov	r0, #32
-	mov	r1, #64
+	push	{r4, lr}
+	mov	ip, #32
+	mov	r4, #400
+	mov	lr, #110
+	mov	r0, #64
+	mov	r1, #0
 	mov	r2, #1
 	ldr	r3, .L4
-	str	lr, [r3]
-	str	ip, [r3, #4]
-	str	r0, [r3, #8]
-	str	r1, [r3, #12]
+	stm	r3, {r4, lr}
+	str	ip, [r3, #8]
+	str	r0, [r3, #12]
+	str	r1, [r3, #20]
 	str	r2, [r3, #16]
-	ldr	lr, [sp], #4
+	pop	{r4, lr}
 	bx	lr
 .L5:
 	.align	2
